@@ -7,13 +7,13 @@ import com.canadiancow.aqd.distance.aeroplanDistanceCsv
 import com.canadiancow.aqd.distance.airportsCsv
 
 data class AqdInput @JvmOverloads constructor(
-        var baseFare: String = "",
-        var surcharges: String = "",
-        var segments: String = "",
-        var ticket: String = "",
-        var altitudeStatus: String = "",
-        var bonusMilesPrivilege: String = "",
-        var fetch: String? = ""
+    var baseFare: String = "",
+    var surcharges: String = "",
+    var segments: String = "",
+    var ticket: String = "",
+    var altitudeStatus: String = "",
+    var bonusMilesPrivilege: String = "",
+    var fetch: String? = ""
 )
 
 class AqdHandler : RequestHandler<AqdInput, String> {
@@ -32,12 +32,12 @@ class AqdHandler : RequestHandler<AqdInput, String> {
         val hasBonusMilesPrivilege = input.bonusMilesPrivilege.toBoolean()
 
         return AqdCalculator(
-                ticket,
-                altitudeStatus,
-                hasBonusMilesPrivilege,
-                segments,
-                baseFare,
-                surcharges
+            ticket,
+            altitudeStatus,
+            hasBonusMilesPrivilege,
+            segments,
+            baseFare,
+            surcharges
         ).calculate()
     }
 }

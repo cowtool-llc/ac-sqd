@@ -1,9 +1,9 @@
 package com.canadiancow.aqd
 
 fun <T> parseResourceToCsv(
-        resourcePath: String,
-        keyParser: (List<String>) -> String = { it.first() },
-        lineParser: (Int, String, List<String>) -> T
+    resourcePath: String,
+    keyParser: (List<String>) -> String = { it.first() },
+    lineParser: (Int, String, List<String>) -> T
 ): Map<String, T> {
     val csvText = ::AqdCalculator.javaClass.getResource(resourcePath).readText()
 

@@ -1,7 +1,7 @@
 package com.canadiancow.aqd
 
 enum class FareBrand(
-        private val description: String
+    private val description: String
 ) {
     BA("Basic"),
     TG("Standard"),
