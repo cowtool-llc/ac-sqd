@@ -451,7 +451,7 @@ private val cxCalculator: EarningCalculator = calc@{ distanceResult,
         "W", "R", "E" -> CXEarningResult(aeroplanPercent = 110)
         "Y", "B", "H", "K", "M" -> CXEarningResult(aeroplanPercent = 100)
         "L" -> CXEarningResult(aeroplanPercent = 50)
-        "V", "S", "N" -> CXEarningResult(aeroplanPercent = 25)
+        "V" -> CXEarningResult(aeroplanPercent = 25)
         else -> CXEarningResult(aeroplanPercent = 0)
     }
 }
