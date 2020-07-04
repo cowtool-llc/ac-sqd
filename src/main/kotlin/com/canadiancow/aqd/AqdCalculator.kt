@@ -3,12 +3,12 @@ package com.canadiancow.aqd
 import java.text.DecimalFormat
 
 class AqdCalculator(
-        private val ticket: String,
-        private val altitudeStatus: String,
-        private val hasBonusMilesPrivilege: Boolean,
-        private val segments: String,
-        private val baseFare: Double?,
-        private val surcharges: Double?
+    private val ticket: String,
+    private val altitudeStatus: String,
+    private val hasBonusMilesPrivilege: Boolean,
+    private val segments: String,
+    private val baseFare: Double?,
+    private val surcharges: Double?
 ) {
 
     fun calculate(): String {
@@ -31,12 +31,12 @@ class AqdCalculator(
     @Throws(AqdCalculatorException::class)
     private fun calculateAqdBreakdown(): String {
         val itinerary = Itinerary.parse(
-                ticket = ticket,
-                altitudeStatus = altitudeStatus,
-                hasBonusMilesPrivilege = hasBonusMilesPrivilege,
-                segmentsCsv = segments,
-                baseFare = baseFare,
-                surcharges = surcharges
+            ticket = ticket,
+            altitudeStatus = altitudeStatus,
+            hasBonusMilesPrivilege = hasBonusMilesPrivilege,
+            segmentsCsv = segments,
+            baseFare = baseFare,
+            surcharges = surcharges
         )
 
         val builder = StringBuilder()
@@ -123,7 +123,8 @@ class AqdCalculator(
             </select></td></tr>
             <tr><td style="text-align:right"><label for="altitude_status">Altitude Status</label></td>
             <td><select name="altitude_status" id="altitude_status">
-              <option value=""${if (altitudeStatus !in setOf("25", "35", "50", "75", "100")) " selected=\"selected\"" else ""}>None</option>
+              <option value=""${
+        if (altitudeStatus !in setOf("25", "35", "50", "75", "100")) " selected=\"selected\"" else ""}>None</option>
               <option value="25"${if (altitudeStatus == "25") " selected=\"selected\"" else ""}>P25K</option>
               <option value="35"${if (altitudeStatus == "35") " selected=\"selected\"" else ""}>E35K</option>
               <option value="50"${if (altitudeStatus == "50") " selected=\"selected\"" else ""}>E50K</option>
@@ -149,7 +150,8 @@ class AqdCalculator(
 private val currencyFormat = DecimalFormat("#,##0.00")
 private fun Double.toCurrencyString() = currencyFormat.format(this)
 
-internal val defaultSegments = """
+internal val defaultSegments =
+    """
 AC,SFO,YVR,K,CO
 AC,YVR,LHR,P,EL
 LH,LHR,MUC,P,

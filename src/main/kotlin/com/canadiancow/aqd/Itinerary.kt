@@ -4,19 +4,19 @@ import com.canadiancow.aqd.aqm.getEarningResult
 import com.canadiancow.aqd.distance.airports
 
 class Itinerary(
-        val segments: List<Segment>,
-        val segmentAqd: List<Double?>,
-        val totalRow: TotalRow
+    val segments: List<Segment>,
+    val segmentAqd: List<Double?>,
+    val totalRow: TotalRow
 ) {
     companion object {
         @Throws(AqdCalculatorException::class)
         fun parse(
-                ticket: String,
-                altitudeStatus: String,
-                hasBonusMilesPrivilege: Boolean,
-                segmentsCsv: String,
-                baseFare: Double?,
-                surcharges: Double?
+            ticket: String,
+            altitudeStatus: String,
+            hasBonusMilesPrivilege: Boolean,
+            segmentsCsv: String,
+            baseFare: Double?,
+            surcharges: Double?
         ): Itinerary {
             if (baseFare == null || baseFare < 0) {
                 throw AqdCalculatorException("Invalid base fare.  If base fare is 0, enter 0.")
@@ -71,14 +71,14 @@ class Itinerary(
             }
 
             val totalRow =
-                    TotalRow(
-                            distance = totalDistance,
-                            aqm = totalAqm,
-                            aqd = totalAqd,
-                            aeroplan = totalAeroplan,
-                            bonus = totalBonus,
-                            total = total
-                    )
+                TotalRow(
+                    distance = totalDistance,
+                    aqm = totalAqm,
+                    aqd = totalAqd,
+                    aeroplan = totalAeroplan,
+                    bonus = totalBonus,
+                    total = total
+                )
 
             return Itinerary(segments, segmentAqd, totalRow)
         }
@@ -86,24 +86,24 @@ class Itinerary(
 }
 
 class Segment(
-        val airline: String,
-        val origin: String,
-        val destination: String,
-        val fareClass: String,
-        val fareBrand: String?,
-        ticketNumber: String,
-        hasAltitudeStatus: Boolean,
-        bonusMilesPercentage: Int
+    val airline: String,
+    val origin: String,
+    val destination: String,
+    val fareClass: String,
+    val fareBrand: String?,
+    ticketNumber: String,
+    hasAltitudeStatus: Boolean,
+    bonusMilesPercentage: Int
 ) {
     val earningResult = getEarningResult(
-            airline,
-            origin,
-            destination,
-            fareClass,
-            fareBasis = fareBrand,
-            ticketNumber = ticketNumber,
-            hasAltitudeStatus = hasAltitudeStatus,
-            bonusMilesPercentage = bonusMilesPercentage
+        airline,
+        origin,
+        destination,
+        fareClass,
+        fareBasis = fareBrand,
+        ticketNumber = ticketNumber,
+        hasAltitudeStatus = hasAltitudeStatus,
+        bonusMilesPercentage = bonusMilesPercentage
     )
 
     val distance = earningResult?.distance
@@ -149,7 +149,8 @@ class Segment(
             val fareBrand = if (csvValues.size > 4) {
                 when {
                     csvValues[4].isBlank() -> null
-                    FareBrand.values().map { it.name.toUpperCase() }.contains(csvValues[4].toUpperCase()) -> csvValues[4]
+                    FareBrand.values().map { it.name.toUpperCase() }
+                        .contains(csvValues[4].toUpperCase()) -> csvValues[4]
                     else -> {
                         throw AqdCalculatorException("Invalid fare brand: ${csvValues[4]}. For non-AC, leave brand blank.")
                     }
@@ -162,24 +163,24 @@ class Segment(
             val bonusMilesPercentage = (if (hasBonusMilesPrivilege) altitudeStatus.toIntOrNull() else null) ?: 0
 
             return Segment(
-                    airline,
-                    origin,
-                    destination,
-                    fareClass,
-                    fareBrand,
-                    ticketNumber,
-                    hasAltitudeStatus,
-                    bonusMilesPercentage
+                airline,
+                origin,
+                destination,
+                fareClass,
+                fareBrand,
+                ticketNumber,
+                hasAltitudeStatus,
+                bonusMilesPercentage
             )
         }
     }
 }
 
 class TotalRow(
-        val distance: Int?,
-        val aqm: Int?,
-        val aqd: Double?,
-        val aeroplan: Int?,
-        val bonus: Int?,
-        val total: Int?
+    val distance: Int?,
+    val aqm: Int?,
+    val aqd: Double?,
+    val aeroplan: Int?,
+    val bonus: Int?,
+    val total: Int?
 )

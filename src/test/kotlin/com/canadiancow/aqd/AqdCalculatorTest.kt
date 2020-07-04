@@ -8,13 +8,15 @@ internal class AqdCalculatorTest {
      */
     @Test
     fun `test basic functionality`() {
-        println(AqdCalculator(
+        println(
+            AqdCalculator(
                 baseFare = 1000.0,
                 surcharges = 500.0,
                 ticket = "014",
                 altitudeStatus = "100",
                 hasBonusMilesPrivilege = true,
                 segments = defaultSegments
-        ).calculate())
+            ).calculate()
+        )
     }
 }

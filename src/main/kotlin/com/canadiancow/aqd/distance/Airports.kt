@@ -4,10 +4,10 @@ import com.canadiancow.aqd.AqdCalculator
 import com.canadiancow.aqd.parseResourceToCsv
 
 class Airport(
-        val iataCode: String,
-        val country: String,
-        val latitude: Double,
-        val longitude: Double
+    val iataCode: String,
+    val country: String,
+    val latitude: Double,
+    val longitude: Double
 )
 
 val airports: Map<String, Airport> by lazy {

@@ -1,6 +1,10 @@
-package com.canadiancow.aqd.distance;
+package com.canadiancow.aqd.distance
 
-import kotlin.math.*
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 fun getSegmentDistance(origin: String, destination: String): DistanceResult {
     val aeroplanDistance = aeroplanDistances["$origin$destination"] ?: aeroplanDistances["$destination$origin"]
@@ -15,16 +19,16 @@ fun getSegmentDistance(origin: String, destination: String): DistanceResult {
 }
 
 class DistanceResult(
-        val distance: Int?,
-        val source: String?,
-        val error: String?
+    val distance: Int?,
+    val source: String?,
+    val error: String?
 )
 
 private fun calculateHaversine(origin: String, destination: String): HaversineResult {
     val originAirport = airports[origin.toUpperCase()]
-            ?: return HaversineResult(null, "Origin airport ($origin) not found")
+        ?: return HaversineResult(null, "Origin airport ($origin) not found")
     val destinationAirport = airports[destination.toUpperCase()]
-            ?: return HaversineResult(null, "Destination airport ($destination) not found")
+        ?: return HaversineResult(null, "Destination airport ($destination) not found")
 
     return HaversineResult(calculateHaversineDistance(originAirport, destinationAirport).toInt())
 }
@@ -43,6 +47,6 @@ private fun calculateHaversineDistance(originAirport: Airport, destinationAirpor
 private const val earthRadiusMi = 3959.toDouble()
 
 data class HaversineResult(
-        val distance: Int?,
-        val error: String? = null
+    val distance: Int?,
+    val error: String? = null
 )
