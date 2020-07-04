@@ -20,7 +20,7 @@ internal class AqmTest {
             )
         )
         assertEquals(
-            1245,
+            125,
             getEarningResult(
                 "AC",
                 "SFO",
