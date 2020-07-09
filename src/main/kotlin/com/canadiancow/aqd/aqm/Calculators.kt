@@ -265,6 +265,18 @@ private val a3Calculator = object : SimpleStarAllianceEarningCalculator() {
     }
 }
 
+private val adCalculator = object : SimplePartnerEarningCalculator() {
+    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AzulAirlines#/
+    override fun getAeroplanPercentage(fareClass: String) = when (fareClass) {
+        "J", "C", "D", "I" -> 150
+        "Y", " B", " A", " E", " F", " G", " H", " K", " L", " M", " N", " O" -> 100
+        "P", "Q" -> 75
+        "S", "T", "U" -> 50
+        "X", "Z" -> 25
+        else -> 0
+    }
+}
+
 private val aiCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAltitudeStatus, _ ->
         // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirIndia#/
@@ -966,6 +978,7 @@ private val _5tCalculator = object : SimplePartnerEarningCalculator(
 private fun getCalculator(operatingAirline: String) = when (operatingAirline.toUpperCase()) {
     "AC", "QK", "RV", "ZX" -> acCalculator // Air Canada
     "A3" -> a3Calculator // Aegean Airlines
+    "AD" -> adCalculator // Azul Airlines
     "AI" -> aiCalculator // Air India
     "AV" -> avCalculator // Avianca
     "BR" -> brCalculator // EVA Air

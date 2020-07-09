@@ -960,4 +960,29 @@ internal class AqmTest {
             )!!.bonus
         )
     }
+
+    @Test
+    fun `azul airlines`() {
+        val earningResult = getEarningResult(
+            "AD",
+            "MCO",
+            "VCP",
+            "P",
+            fareBasis = null,
+            ticketNumber = "014",
+            hasAltitudeStatus = true,
+            bonusMilesPercentage = 100
+        )!!
+
+        assertEquals(4220, earningResult.distance)
+
+        assertEquals(0, earningResult.aqmPercent)
+        assertEquals(0, earningResult.aqm)
+
+        assertEquals(75, earningResult.aeroplanPercent)
+        assertEquals(3165, earningResult.aeroplan)
+
+        assertEquals(0, earningResult.bonusPercent)
+        assertEquals(0, earningResult.bonus)
+    }
 }
