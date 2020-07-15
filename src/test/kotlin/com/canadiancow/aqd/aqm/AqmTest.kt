@@ -292,6 +292,19 @@ internal class AqmTest {
                 bonusMilesPercentage = 0
             )!!.aqmPercent
         )
+        assertEquals(
+            225,
+            getEarningResult(
+                "AC",
+                "YYZ",
+                "YOW",
+                "G",
+                "G123LFL",
+                ticketNumber = "014",
+                hasAltitudeStatus = false,
+                bonusMilesPercentage = 0
+            )!!.distance
+        )
     }
 
     @Test
