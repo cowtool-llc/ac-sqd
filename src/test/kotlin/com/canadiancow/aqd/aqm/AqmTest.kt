@@ -295,7 +295,7 @@ internal class AqmTest {
         assertEquals(
             225,
             getEarningResult(
-                "AC",
+                "KV",
                 "YYZ",
                 "YOW",
                 "G",
