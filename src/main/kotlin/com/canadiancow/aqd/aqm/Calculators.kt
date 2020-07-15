@@ -976,7 +976,7 @@ private val _5tCalculator = object : SimplePartnerEarningCalculator(
 }
 
 private fun getCalculator(operatingAirline: String) = when (operatingAirline.toUpperCase()) {
-    "AC", "QK", "RV", "ZX" -> acCalculator // Air Canada
+    "AC", "KV", "QK", "RV", "ZX" -> acCalculator // Air Canada
     "A3" -> a3Calculator // Aegean Airlines
     "AD" -> adCalculator // Azul Airlines
     "AI" -> aiCalculator // Air India
