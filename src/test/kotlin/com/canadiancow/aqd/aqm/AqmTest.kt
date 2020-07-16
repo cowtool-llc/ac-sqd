@@ -303,7 +303,7 @@ internal class AqmTest {
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
                 bonusMilesPercentage = 0
-            )!!.distance
+            )!!.distanceResult.distance
         )
     }
 
@@ -987,7 +987,7 @@ internal class AqmTest {
             bonusMilesPercentage = 100
         )!!
 
-        assertEquals(4220, earningResult.distance)
+        assertEquals(4220, earningResult.distanceResult.distance)
 
         assertEquals(0, earningResult.aqmPercent)
         assertEquals(0, earningResult.aqm)
