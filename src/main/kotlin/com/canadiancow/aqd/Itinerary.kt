@@ -1,5 +1,6 @@
 package com.canadiancow.aqd
 
+import com.canadiancow.aqd.aqm.getDistanceResult
 import com.canadiancow.aqd.aqm.getEarningResult
 import com.canadiancow.aqd.distance.airports
 
@@ -106,10 +107,11 @@ class Segment(
         bonusMilesPercentage = bonusMilesPercentage
     )
 
-    val distance = earningResult?.distance
+    private val distanceResult = earningResult?.distanceResult ?: getDistanceResult(origin, destination)
+    val distance = distanceResult.distance
 
-    val distanceString = distance?.toString() ?: "???"
-    val distanceSourceString = earningResult?.distanceSource ?: "???"
+    val distanceString = distanceResult.distance?.toString() ?: "???"
+    val distanceSourceString = distanceResult.source ?: "???"
 
     val aqmString = earningResult?.aqm?.toString() ?: "???"
     val aeroplanString = earningResult?.aeroplan?.toString() ?: "???"

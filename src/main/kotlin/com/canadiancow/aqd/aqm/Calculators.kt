@@ -9,7 +9,7 @@ import java.lang.Integer.min
 import kotlin.math.roundToInt
 
 open class EarningResult(
-    distanceResult: DistanceResult,
+    val distanceResult: DistanceResult,
     val aqmPercent: Int,
     val aeroplanPercent: Int = aqmPercent,
     val bonusPercent: Int,
@@ -18,8 +18,7 @@ open class EarningResult(
     val minimumMiles: Int = (aeroplanPercent * baseMinimumMiles / 100.0).roundToInt(),
     val isAqdEligible: Boolean
 ) {
-    val distance = distanceResult.distance
-    val distanceSource = distanceResult.source
+    private val distance = distanceResult.distance
 
     val aqm = when {
         distance == null -> null
@@ -1031,11 +1030,7 @@ fun getEarningResult(
     val destinationCountry = airports[destination]?.country
     val destinationContinent = countriesToContinent[destinationCountry]
 
-    val distanceResult = getSegmentDistance(origin, destination).also {
-        it.error?.let { error ->
-            throw AqdCalculatorException("Error calculating distance for $origin-$destination: $error")
-        }
-    }
+    val distanceResult = getDistanceResult(origin, destination)
 
     return calculator(
         distanceResult,
@@ -1051,4 +1046,10 @@ fun getEarningResult(
         hasAltitudeStatus,
         bonusMilesPercentage
     )
+}
+
+fun getDistanceResult(origin: String, destination: String) = getSegmentDistance(origin, destination).also {
+    it.error?.let { error ->
+        throw AqdCalculatorException("Error calculating distance for $origin-$destination: $error")
+    }
 }
