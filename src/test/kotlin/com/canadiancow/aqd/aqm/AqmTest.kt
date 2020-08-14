@@ -16,7 +16,9 @@ internal class AqmTest {
                 null,
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )
         )
         assertEquals(
@@ -29,7 +31,9 @@ internal class AqmTest {
                 "YCONFPLT",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -42,7 +46,9 @@ internal class AqmTest {
                 "IJBP00",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -55,7 +61,9 @@ internal class AqmTest {
                 "J1234EF",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -68,7 +76,9 @@ internal class AqmTest {
                 "J1234EF",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -81,7 +91,9 @@ internal class AqmTest {
                 "Z1234EL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -94,7 +106,9 @@ internal class AqmTest {
                 "O1234PF",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -107,7 +121,9 @@ internal class AqmTest {
                 "E1234PL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -120,7 +136,9 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -133,7 +151,9 @@ internal class AqmTest {
                 "K1234CO",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -146,7 +166,9 @@ internal class AqmTest {
                 "G1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -159,7 +181,9 @@ internal class AqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -172,7 +196,9 @@ internal class AqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -185,7 +211,9 @@ internal class AqmTest {
                 "DUNNO",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -198,7 +226,9 @@ internal class AqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -211,7 +241,9 @@ internal class AqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -224,7 +256,9 @@ internal class AqmTest {
                 "G1234BA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -237,7 +271,9 @@ internal class AqmTest {
                 "G123LGT",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -250,7 +286,9 @@ internal class AqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -263,7 +301,9 @@ internal class AqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -276,7 +316,9 @@ internal class AqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -289,7 +331,9 @@ internal class AqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.aqmPercent
         )
         assertEquals(
@@ -302,17 +346,43 @@ internal class AqmTest {
                 "G123LFL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
             )!!.distanceResult.distance
         )
     }
 
     @Test
     fun `getEarningResult() handles unknown fare classes`() {
-        assertNull(getEarningResult("A3", "YYZ", "YUL", null, null, "014", true, bonusMilesPercentage = 0))
+        assertNull(
+            getEarningResult(
+                "A3",
+                "YYZ",
+                "YUL",
+                null,
+                null,
+                "014",
+                true,
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )
+        )
         assertEquals(
             0,
-            getEarningResult("A3", "YYZ", "YUL", "F", null, "014", true, bonusMilesPercentage = 0)!!.aqmPercent
+            getEarningResult(
+                "A3",
+                "YYZ",
+                "YUL",
+                "F",
+                null,
+                "014",
+                true,
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.aqmPercent
         )
     }
 
@@ -328,7 +398,9 @@ internal class AqmTest {
                 "Z1234EL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 4,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -341,7 +413,9 @@ internal class AqmTest {
                 "O1234PF",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 4,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -354,7 +428,9 @@ internal class AqmTest {
                 "K1234CO",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 4,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -367,7 +443,9 @@ internal class AqmTest {
                 "G1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -380,7 +458,9 @@ internal class AqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -393,7 +473,9 @@ internal class AqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -406,7 +488,9 @@ internal class AqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
 
@@ -420,7 +504,9 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -433,7 +519,9 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
 
@@ -447,7 +535,9 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -460,7 +550,9 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -473,7 +565,9 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
         assertEquals(
@@ -486,7 +580,9 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
+                bonusMilesPercentage = 0,
+                statusRate = 1,
+                bonusRate = 0
             )!!.minimumMiles
         )
     }
@@ -503,8 +599,10 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonusPercent
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMilesPercent
         )
         assertEquals(
             75,
@@ -516,8 +614,10 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 75
-            )!!.bonusPercent
+                bonusMilesPercentage = 75,
+                statusRate = 3,
+                bonusRate = 3
+            )!!.bonusMilesPercent
         )
         assertEquals(
             50,
@@ -529,8 +629,10 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 50
-            )!!.bonusPercent
+                bonusMilesPercentage = 50,
+                statusRate = 2,
+                bonusRate = 2
+            )!!.bonusMilesPercent
         )
         assertEquals(
             35,
@@ -542,8 +644,10 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 35
-            )!!.bonusPercent
+                bonusMilesPercentage = 35,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -555,8 +659,10 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 25
-            )!!.bonusPercent
+                bonusMilesPercentage = 25,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -568,8 +674,10 @@ internal class AqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -582,8 +690,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 75
-            )!!.bonusPercent
+                bonusMilesPercentage = 75,
+                statusRate = 3,
+                bonusRate = 3
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -595,8 +705,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -609,8 +721,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 75
-            )!!.bonusPercent
+                bonusMilesPercentage = 75,
+                statusRate = 3,
+                bonusRate = 3
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -622,8 +736,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -636,8 +752,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonusPercent
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -649,8 +767,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 35
-            )!!.bonusPercent
+                bonusMilesPercentage = 35,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -662,8 +782,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 25
-            )!!.bonusPercent
+                bonusMilesPercentage = 25,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -675,8 +797,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -689,8 +813,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonusPercent
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -702,8 +828,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 35
-            )!!.bonusPercent
+                bonusMilesPercentage = 35,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -715,8 +843,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 25
-            )!!.bonusPercent
+                bonusMilesPercentage = 25,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -728,8 +858,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -742,8 +874,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonusPercent
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -755,8 +889,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 35
-            )!!.bonusPercent
+                bonusMilesPercentage = 35,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -768,8 +904,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 25
-            )!!.bonusPercent
+                bonusMilesPercentage = 25,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -781,8 +919,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -795,8 +935,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonusPercent
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -808,8 +950,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 35
-            )!!.bonusPercent
+                bonusMilesPercentage = 35,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             25,
@@ -821,8 +965,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 25
-            )!!.bonusPercent
+                bonusMilesPercentage = 25,
+                statusRate = 1,
+                bonusRate = 1
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -834,8 +980,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
 
         assertEquals(
@@ -848,8 +996,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 75
-            )!!.bonusPercent
+                bonusMilesPercentage = 75,
+                statusRate = 3,
+                bonusRate = 3
+            )!!.bonusMilesPercent
         )
         assertEquals(
             0,
@@ -861,8 +1011,10 @@ internal class AqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0
-            )!!.bonusPercent
+                bonusMilesPercentage = 0,
+                statusRate = 3,
+                bonusRate = 0
+            )!!.bonusMilesPercent
         )
     }
 
@@ -878,8 +1030,10 @@ internal class AqmTest {
                 "J1234EF",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             2254,
@@ -891,8 +1045,10 @@ internal class AqmTest {
                 "O1234PF",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             2254,
@@ -904,8 +1060,10 @@ internal class AqmTest {
                 "N1234PL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             2254,
@@ -917,8 +1075,10 @@ internal class AqmTest {
                 "Y1234LT",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             2254,
@@ -930,8 +1090,10 @@ internal class AqmTest {
                 "M1234CO",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             2254,
@@ -943,8 +1105,10 @@ internal class AqmTest {
                 "V1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             1127,
@@ -956,8 +1120,10 @@ internal class AqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
         assertEquals(
             0,
@@ -969,8 +1135,10 @@ internal class AqmTest {
                 "K1234BA",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100
-            )!!.bonus
+                bonusMilesPercentage = 100,
+                statusRate = 4,
+                bonusRate = 4
+            )!!.bonusMiles
         )
     }
 
@@ -984,7 +1152,9 @@ internal class AqmTest {
             fareBasis = null,
             ticketNumber = "014",
             hasAltitudeStatus = true,
-            bonusMilesPercentage = 100
+            bonusMilesPercentage = 100,
+            statusRate = 4,
+            bonusRate = 4
         )!!
 
         assertEquals(4220, earningResult.distanceResult.distance)
@@ -992,10 +1162,10 @@ internal class AqmTest {
         assertEquals(0, earningResult.aqmPercent)
         assertEquals(0, earningResult.aqm)
 
-        assertEquals(75, earningResult.aeroplanPercent)
-        assertEquals(3165, earningResult.aeroplan)
+        assertEquals(75, earningResult.aeroplanMilesPercent)
+        assertEquals(3165, earningResult.aeroplanMiles)
 
-        assertEquals(0, earningResult.bonusPercent)
-        assertEquals(0, earningResult.bonus)
+        assertEquals(0, earningResult.bonusMilesPercent)
+        assertEquals(0, earningResult.bonusMiles)
     }
 }
