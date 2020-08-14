@@ -58,7 +58,14 @@ open class EarningResult(
     }
 
     val totalPoints: Int?
-        get() = sqd?.let { if (totalRate != null) (it * totalRate).toInt() else null }
+        get() {
+            sqd?.let {
+                if (totalRate != null) {
+                    return (it * totalRate).toInt()
+                }
+            }
+            return null
+        }
 }
 
 open class StarAllianceEarningResult(
