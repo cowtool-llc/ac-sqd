@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 
-internal class AqmTest {
+internal class SqmTest {
     @Test
-    fun `getEarningResult() handles AC AQM`() {
+    fun `getEarningResult() handles AC SQM`() {
         assertNull(
             getEarningResult(
                 "AC",
@@ -34,7 +34,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             0,
@@ -49,7 +49,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             150,
@@ -64,7 +64,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             150,
@@ -79,7 +79,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             150,
@@ -94,7 +94,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             125,
@@ -109,7 +109,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             125,
@@ -124,7 +124,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             100,
@@ -139,7 +139,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             115,
@@ -154,7 +154,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             100,
@@ -169,7 +169,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             50,
@@ -184,10 +184,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
-            25,
+            50,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -199,7 +199,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             50,
@@ -214,7 +214,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             50,
@@ -229,10 +229,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
-            25,
+            50,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -244,7 +244,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             0,
@@ -259,10 +259,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -274,10 +274,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -289,10 +289,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -304,7 +304,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             0,
@@ -319,7 +319,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             0,
@@ -334,7 +334,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
         assertEquals(
             225,
@@ -382,7 +382,7 @@ internal class AqmTest {
                 bonusMilesPercentage = 0,
                 statusRate = 3,
                 bonusRate = 0
-            )!!.aqmPercent
+            )!!.sqmPercent
         )
     }
 
@@ -588,440 +588,9 @@ internal class AqmTest {
     }
 
     @Test
-    fun `getEarningResult calculates the correct bonus mileage`() {
+    fun `getEarningResult calculates the proper total`() {
         assertEquals(
-            100,
-            getEarningResult(
-                "AC",
-                "SFO",
-                "YYZ",
-                "M",
-                "M1234FL",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            75,
-            getEarningResult(
-                "AC",
-                "SFO",
-                "YYZ",
-                "M",
-                "M1234FL",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 75,
-                statusRate = 3,
-                bonusRate = 3
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            50,
-            getEarningResult(
-                "AC",
-                "SFO",
-                "YYZ",
-                "M",
-                "M1234FL",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 50,
-                statusRate = 2,
-                bonusRate = 2
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            35,
-            getEarningResult(
-                "AC",
-                "SFO",
-                "YYZ",
-                "M",
-                "M1234FL",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 35,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "AC",
-                "SFO",
-                "YYZ",
-                "M",
-                "M1234FL",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 25,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "AC",
-                "SFO",
-                "YYZ",
-                "M",
-                "M1234FL",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 0,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            75,
-            getEarningResult(
-                "UA",
-                "SFO",
-                "LAX",
-                "W",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 75,
-                statusRate = 3,
-                bonusRate = 3
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "UA",
-                "SFO",
-                "LAX",
-                "W",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            75,
-            getEarningResult(
-                "CM",
-                "SFO",
-                "PTY",
-                "W",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 75,
-                statusRate = 3,
-                bonusRate = 3
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "CM",
-                "SFO",
-                "PTY",
-                "W",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            25,
-            getEarningResult(
-                "OS",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "OS",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 35,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "OS",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 25,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "OS",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            25,
-            getEarningResult(
-                "SN",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "SN",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 35,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "SN",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 25,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "SN",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            25,
-            getEarningResult(
-                "LH",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "LH",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 35,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "LH",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 25,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "LH",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            25,
-            getEarningResult(
-                "LX",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "LX",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 35,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            25,
-            getEarningResult(
-                "LX",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 25,
-                statusRate = 1,
-                bonusRate = 1
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "LX",
-                "FRA",
-                "SFO",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-
-        assertEquals(
-            0,
-            getEarningResult(
-                "BR",
-                "SFO",
-                "TPE",
-                "W",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 75,
-                statusRate = 3,
-                bonusRate = 3
-            )!!.bonusMilesPercent
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "BR",
-                "SFO",
-                "TPE",
-                "W",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 3,
-                bonusRate = 0
-            )!!.bonusMilesPercent
-        )
-    }
-
-    @Test
-    fun `getEarningResult calculates the proper bonus`() {
-        assertEquals(
-            2254,
+            11_000,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1033,10 +602,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
-            )!!.bonusMiles
+            )!!.apply { sqd = 1000.00 }.totalPoints
         )
         assertEquals(
-            2254,
+            8800,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1048,10 +617,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
-            )!!.bonusMiles
+            )!!.apply { sqd = 800.00 }.totalPoints
         )
         assertEquals(
-            2254,
+            6750,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1060,13 +629,13 @@ internal class AqmTest {
                 "N1234PL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMiles
+                bonusMilesPercentage = 75,
+                statusRate = 3,
+                bonusRate = 3
+            )!!.apply { sqd = 750.00 }.totalPoints
         )
         assertEquals(
-            2254,
+            3500,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1075,13 +644,13 @@ internal class AqmTest {
                 "Y1234LT",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMiles
+                bonusMilesPercentage = 50,
+                statusRate = 2,
+                bonusRate = 2
+            )!!.apply { sqd = 500.00 }.totalPoints
         )
         assertEquals(
-            2254,
+            4400,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1093,10 +662,10 @@ internal class AqmTest {
                 bonusMilesPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
-            )!!.bonusMiles
+            )!!.apply { sqd = 400.00 }.totalPoints
         )
         assertEquals(
-            2254,
+            1200,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1105,13 +674,13 @@ internal class AqmTest {
                 "V1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMiles
+                bonusMilesPercentage = 35,
+                statusRate = 1,
+                bonusRate = 0
+            )!!.apply { sqd = 300.00 }.totalPoints
         )
         assertEquals(
-            1127,
+            4200,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1122,11 +691,11 @@ internal class AqmTest {
                 hasAltitudeStatus = true,
                 bonusMilesPercentage = 100,
                 statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMiles
+                bonusRate = 0
+            )!!.apply { sqd = 600.00 }.totalPoints
         )
         assertEquals(
-            0,
+            200,
             getEarningResult(
                 "AC",
                 "SFO",
@@ -1134,38 +703,11 @@ internal class AqmTest {
                 "K",
                 "K1234BA",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
-                statusRate = 4,
-                bonusRate = 4
-            )!!.bonusMiles
+                hasAltitudeStatus = false,
+                bonusMilesPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.apply { sqd = 100.00 }.totalPoints
         )
-    }
-
-    @Test
-    fun `azul airlines`() {
-        val earningResult = getEarningResult(
-            "AD",
-            "MCO",
-            "VCP",
-            "P",
-            fareBasis = null,
-            ticketNumber = "014",
-            hasAltitudeStatus = true,
-            bonusMilesPercentage = 100,
-            statusRate = 4,
-            bonusRate = 4
-        )!!
-
-        assertEquals(4220, earningResult.distanceResult.distance)
-
-        assertEquals(0, earningResult.aqmPercent)
-        assertEquals(0, earningResult.aqm)
-
-        assertEquals(75, earningResult.aeroplanMilesPercent)
-        assertEquals(3165, earningResult.aeroplanMiles)
-
-        assertEquals(0, earningResult.bonusMilesPercent)
-        assertEquals(0, earningResult.bonusMiles)
     }
 }

@@ -6,7 +6,6 @@ import com.canadiancow.aqd.distance.airports
 
 class Itinerary(
     val segments: List<Segment>,
-    val segmentAqd: List<Double?>,
     val totalRow: TotalRow
 ) {
     companion object {
@@ -33,16 +32,16 @@ class Itinerary(
             val missingAnyDistance = segments.none { it.distance == null }
             val totalDistance = segments.mapNotNull { it.distance }.sum()
             val totalFare = baseFare + surcharges
-            val segmentAqd = segments.map {
-                when {
+            segments.forEach {
+                it.earningResult?.sqd = when {
                     !missingAnyDistance || it.earningResult == null || it.distance == null -> null
                     it.earningResult.isAqdEligible -> it.distance.toLong() * totalFare / totalDistance
                     else -> 0.0
                 }
             }
 
-            val totalAqd = if (segmentAqd.none { it == null }) {
-                segmentAqd.mapNotNull { it }.sum()
+            val totalAqd = if (segments.none { it.earningResult?.sqd == null }) {
+                segments.mapNotNull { it.earningResult?.sqd }.sum()
             } else {
                 null
             }
@@ -53,20 +52,32 @@ class Itinerary(
                 null
             }
 
-            val totalAeroplan = if (segments.none { it.earningResult?.aeroplan == null }) {
-                segments.mapNotNull { it.earningResult?.aeroplan }.sum()
+            val totalAeroplanMiles = if (segments.none { it.earningResult?.aeroplanMiles == null }) {
+                segments.mapNotNull { it.earningResult?.aeroplanMiles }.sum()
             } else {
                 null
             }
 
-            val totalBonus = if (segments.none { it.earningResult?.bonus == null }) {
-                segments.mapNotNull { it.earningResult?.bonus }.sum()
+            val totalBonusMiles = if (segments.none { it.earningResult?.bonusMiles == null }) {
+                segments.mapNotNull { it.earningResult?.bonusMiles }.sum()
             } else {
                 null
             }
 
-            val total = if (segments.none { it.earningResult?.total == null }) {
-                segments.mapNotNull { it.earningResult?.total }.sum()
+            val totalMiles = if (segments.none { it.earningResult?.totalMiles == null }) {
+                segments.mapNotNull { it.earningResult?.totalMiles }.sum()
+            } else {
+                null
+            }
+
+            val totalSqm = if (segments.none { it.earningResult?.sqm == null }) {
+                segments.mapNotNull { it.earningResult?.sqm }.sum()
+            } else {
+                null
+            }
+
+            val totalPoints = if (segments.none { it.earningResult?.totalPoints == null }) {
+                segments.mapNotNull { it.earningResult?.totalPoints }.sum()
             } else {
                 null
             }
@@ -74,14 +85,19 @@ class Itinerary(
             val totalRow =
                 TotalRow(
                     distance = totalDistance,
+
                     aqm = totalAqm,
                     aqd = totalAqd,
-                    aeroplan = totalAeroplan,
-                    bonus = totalBonus,
-                    total = total
+                    aeroplanMiles = totalAeroplanMiles,
+                    bonusMiles = totalBonusMiles,
+                    totalMiles = totalMiles,
+
+                    sqm = totalSqm,
+                    sqd = totalAqd,
+                    totalPoints = totalPoints
                 )
 
-            return Itinerary(segments, segmentAqd, totalRow)
+            return Itinerary(segments, totalRow)
         }
     }
 }
@@ -94,7 +110,9 @@ class Segment(
     val fareBrand: String?,
     ticketNumber: String,
     hasAltitudeStatus: Boolean,
-    bonusMilesPercentage: Int
+    bonusMilesPercentage: Int,
+    statusRate: Int,
+    bonusRate: Int
 ) {
     val earningResult = getEarningResult(
         airline,
@@ -104,7 +122,9 @@ class Segment(
         fareBasis = fareBrand,
         ticketNumber = ticketNumber,
         hasAltitudeStatus = hasAltitudeStatus,
-        bonusMilesPercentage = bonusMilesPercentage
+        bonusMilesPercentage = bonusMilesPercentage,
+        statusRate = statusRate,
+        bonusRate = bonusRate
     )
 
     private val distanceResult = earningResult?.distanceResult ?: getDistanceResult(origin, destination)
@@ -114,9 +134,17 @@ class Segment(
     val distanceSourceString = distanceResult.source ?: "???"
 
     val aqmString = earningResult?.aqm?.toString() ?: "???"
-    val aeroplanString = earningResult?.aeroplan?.toString() ?: "???"
-    val bonusString = earningResult?.bonus?.toString() ?: "???"
-    val totalString = earningResult?.total?.toString() ?: "???"
+    val aeroplanMilesString = earningResult?.aeroplanMiles?.toString() ?: "???"
+    val bonusMilesString = earningResult?.bonusMiles?.toString() ?: "???"
+    val totalMilesString = earningResult?.totalMiles?.toString() ?: "???"
+
+    val sqmString = earningResult?.sqm?.toString() ?: "???"
+    val baseRateString = earningResult?.baseRate?.let { "${it}x" } ?: "???"
+    val statusRateString = earningResult?.statusRate?.let { "${it}x" } ?: "???"
+    val bonusRateString = earningResult?.bonusRate?.let { "${it}x" } ?: "???"
+    val totalRateString = earningResult?.totalRate?.let { "${it}x" } ?: "???"
+    val totalPointsString: String
+        get() = earningResult?.totalPoints?.toString() ?: "???"
 
     override fun toString(): String {
         return "$airline,$origin,$destination,$fareClass,$fareBrand"
@@ -164,6 +192,9 @@ class Segment(
             val hasAltitudeStatus = altitudeStatus.isNotBlank()
             val bonusMilesPercentage = (if (hasBonusMilesPrivilege) altitudeStatus.toIntOrNull() else null) ?: 0
 
+            val statusRate = convertBonusMilesPercentageToStatusEarnRate(altitudeStatus.toIntOrNull() ?: 0)
+            val bonusRate = if (hasBonusMilesPrivilege) statusRate else 0
+
             return Segment(
                 airline,
                 origin,
@@ -172,17 +203,32 @@ class Segment(
                 fareBrand,
                 ticketNumber,
                 hasAltitudeStatus,
-                bonusMilesPercentage
+                bonusMilesPercentage,
+                statusRate,
+                bonusRate
             )
         }
     }
 }
 
+private fun convertBonusMilesPercentageToStatusEarnRate(bonusMilesPercentage: Int) = when (bonusMilesPercentage) {
+    25, 35 -> 1
+    50 -> 2
+    75 -> 3
+    100 -> 4
+    else -> 0
+}
+
 class TotalRow(
     val distance: Int?,
+
     val aqm: Int?,
     val aqd: Double?,
-    val aeroplan: Int?,
-    val bonus: Int?,
-    val total: Int?
+    val aeroplanMiles: Int?,
+    val bonusMiles: Int?,
+    val totalMiles: Int?,
+
+    val sqm: Int?,
+    val sqd: Double?,
+    val totalPoints: Int?
 )
