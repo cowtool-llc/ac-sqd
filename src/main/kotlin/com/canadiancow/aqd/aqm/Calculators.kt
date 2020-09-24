@@ -282,9 +282,10 @@ private val acCalculator: EarningCalculator =
 
         val trueFareClass = if (fareClass == "R") {
             if (fareBasis.isNullOrBlank()) {
-                return@calc null
+                fareClass // Not really, but we want to continue
+            } else {
+                fareBasis.substring(0, 1)
             }
-            fareBasis.substring(0, 1)
         } else {
             fareClass
         }
