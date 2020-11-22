@@ -64,7 +64,7 @@ open class EarningResult(
 open class StarAllianceEarningResult(
     distanceResult: DistanceResult,
     sqmPercent: Int,
-    bonusMilesPercent: Int = 0,
+    bonusPointsPercent: Int = 0,
     hasAltitudeStatus: Boolean,
     baseRate: Int = 3, // TODO
     statusRate: Int,
@@ -73,7 +73,7 @@ open class StarAllianceEarningResult(
 ) : EarningResult(
     distanceResult = distanceResult,
     sqmPercent = sqmPercent,
-    bonusPointsPercent = bonusMilesPercent,
+    bonusPointsPercent = bonusPointsPercent,
     eligibleForMinimumPoints = hasAltitudeStatus,
     baseRate = baseRate,
     statusRate = statusRate,
@@ -168,8 +168,8 @@ private abstract class SimpleStarAllianceEarningCalculator(
 }
 
 private abstract class SimplePartnerEarningCalculator(
-    private val baseMinimumMiles: Int = 250,
-    private val alwaysEarnsMinimumMiles: Boolean = false
+    private val baseMinimumPoints: Int = 250,
+    private val alwaysEarnsMinimumPoints: Boolean = false
 ) : EarningCalculator {
     abstract fun getAeroplanMilesPercentage(fareClass: String): Int
 
@@ -187,8 +187,8 @@ private abstract class SimplePartnerEarningCalculator(
             sqmPercent = 0,
             aeroplanPointsPercent = aeroplanMilesPercent,
             bonusPointsPercent = 0,
-            eligibleForMinimumPoints = hasAltitudeStatus || alwaysEarnsMinimumMiles,
-            baseMinimumPoints = if (hasAltitudeStatus || alwaysEarnsMinimumMiles) baseMinimumMiles else 0,
+            eligibleForMinimumPoints = hasAltitudeStatus || alwaysEarnsMinimumPoints,
+            baseMinimumPoints = if (hasAltitudeStatus || alwaysEarnsMinimumPoints) baseMinimumPoints else 0,
             baseRate = null, // TODO
             statusRate = null, // TODO
             bonusRate = null, // TODO
@@ -594,7 +594,7 @@ private val lhCalculator: EarningCalculator =
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
-            bonusMilesPercent = if (bonusMilesPercentage > 0) 25 else 0,
+            bonusPointsPercent = if (bonusMilesPercentage > 0) 25 else 0,
             hasAltitudeStatus = hasAltitudeStatus,
             statusRate = statusRate,
             bonusRate = null, // TODO
@@ -648,7 +648,7 @@ private val lxCalculator: EarningCalculator =
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
-            bonusMilesPercent = if (bonusMilesPercentage > 0) 25 else 0,
+            bonusPointsPercent = if (bonusMilesPercentage > 0) 25 else 0,
             hasAltitudeStatus = hasAltitudeStatus,
             statusRate = statusRate,
             bonusRate = null,
@@ -790,7 +790,7 @@ private val osCalculator: EarningCalculator =
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
-            bonusMilesPercent = if (bonusMilesPercentage > 0) 25 else 0,
+            bonusPointsPercent = if (bonusMilesPercentage > 0) 25 else 0,
             hasAltitudeStatus = hasAltitudeStatus,
             statusRate = statusRate,
             bonusRate = null, // TODO
@@ -993,7 +993,7 @@ private val uaCalculator: EarningCalculator =
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
-            bonusMilesPercent = bonusMilesPercentage,
+            bonusPointsPercent = bonusMilesPercentage,
             hasAltitudeStatus = hasAltitudeStatus,
             statusRate = statusRate,
             bonusRate = null, // TODO
@@ -1022,8 +1022,8 @@ private val uaCalculator: EarningCalculator =
     }
 
 private val ynCalculator = object : SimplePartnerEarningCalculator(
-    baseMinimumMiles = 500,
-    alwaysEarnsMinimumMiles = true
+    baseMinimumPoints = 500,
+    alwaysEarnsMinimumPoints = true
 ) {
     // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirCreebec#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
@@ -1048,8 +1048,8 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val _5tCalculator = object : SimplePartnerEarningCalculator(
-    baseMinimumMiles = 500,
-    alwaysEarnsMinimumMiles = true
+    baseMinimumPoints = 500,
+    alwaysEarnsMinimumPoints = true
 ) {
     // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=CanadianNorth#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {

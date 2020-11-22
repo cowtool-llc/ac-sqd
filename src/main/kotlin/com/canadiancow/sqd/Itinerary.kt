@@ -52,7 +52,7 @@ class Itinerary(
                 null
             }
 
-            val totalBonusMiles = if (segments.none { it.earningResult?.bonusMiles == null }) {
+            val totalBonusPoints = if (segments.none { it.earningResult?.bonusMiles == null }) {
                 segments.mapNotNull { it.earningResult?.bonusMiles }.sum()
             } else {
                 null
@@ -81,7 +81,7 @@ class Itinerary(
                     distance = totalDistance,
 
                     aeroplanMiles = totalAeroplanMiles,
-                    bonusMiles = totalBonusMiles,
+                    bonusMiles = totalBonusPoints,
                     totalMiles = totalMiles,
 
                     sqm = totalSqm,

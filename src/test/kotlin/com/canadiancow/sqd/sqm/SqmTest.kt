@@ -475,8 +475,10 @@ internal class SqmTest {
             statusRate = 1,
             bonusRate = 0
         )!!.let {
+            it.sqd = 100.0
             assertEquals(63, it.minimumPoints)
             assertEquals(1177, it.aeroplanMiles)
+            assertEquals(300, it.totalPoints)
             assertEquals(1177, it.sqm)
         }
         getEarningResult(
@@ -489,10 +491,12 @@ internal class SqmTest {
             hasAltitudeStatus = true,
             bonusPointsPercentage = 0,
             statusRate = 1,
-            bonusRate = 0
+            bonusRate = 3
         )!!.let {
+            it.sqd = 100.0
             assertEquals(63, it.minimumPoints)
             assertEquals(200, it.aeroplanMiles)
+            assertEquals(600, it.totalPoints)
             assertEquals(0, it.sqm)
         }
         getEarningResult(
@@ -504,11 +508,13 @@ internal class SqmTest {
             ticketNumber = "014",
             hasAltitudeStatus = true,
             bonusPointsPercentage = 0,
-            statusRate = 1,
-            bonusRate = 0
+            statusRate = 2,
+            bonusRate = 2
         )!!.let {
+            it.sqd = 100.0
             assertEquals(25, it.minimumPoints)
             assertEquals(207, it.aeroplanMiles)
+            assertEquals(600, it.totalPoints)
             assertEquals(0, it.sqm)
         }
         assertEquals(
