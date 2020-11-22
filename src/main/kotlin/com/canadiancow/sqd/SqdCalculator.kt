@@ -139,6 +139,7 @@ class SqdCalculator(
     }
 
     private fun buildForm(): String {
+        val statuses = setOf("25", "35", "50", "75", "100")
         return """
             <div><form method="get">
             <table border="0">
@@ -149,9 +150,7 @@ class SqdCalculator(
             </select></td></tr>
             <tr><td style="text-align:right"><label for="aeroplan_status">Aeroplan Elite Status</label></td>
             <td><select name="aeroplan_status" id="aeroplan_status">
-              <option value=""${
-            if (aeroplanStatus !in setOf("25", "35", "50", "75", "100")) " selected=\"selected\"" else ""
-        }>None</option>
+              <option value=""${if (aeroplanStatus !in statuses) """ selected="selected"""" else ""}>None</option>
               <option value="25"${if (aeroplanStatus == "25") " selected=\"selected\"" else ""}>25K</option>
               <option value="35"${if (aeroplanStatus == "35") " selected=\"selected\"" else ""}>35K</option>
               <option value="50"${if (aeroplanStatus == "50") " selected=\"selected\"" else ""}>50K</option>
