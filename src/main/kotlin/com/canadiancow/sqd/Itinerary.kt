@@ -12,7 +12,7 @@ class Itinerary(
         @Throws(SqdCalculatorException::class)
         fun parse(
             ticket: String,
-            altitudeStatus: String,
+            aeroplanStatus: String,
             hasBonusPointsPrivilege: Boolean,
             segmentsCsv: String,
             baseFare: Double?,
@@ -26,7 +26,7 @@ class Itinerary(
             }
 
             val segments = segmentsCsv.trim().split(Regex("\\s+")).map {
-                Segment.parse(it, ticket, altitudeStatus, hasBonusPointsPrivilege)
+                Segment.parse(it, ticket, aeroplanStatus, hasBonusPointsPrivilege)
             }
             // If we're missing any distance, we can't calculate SQD
             val missingAnyDistance = segments.none { it.distance == null }
@@ -52,8 +52,8 @@ class Itinerary(
                 null
             }
 
-            val totalBonusPoints = if (segments.none { it.earningResult?.bonusMiles == null }) {
-                segments.mapNotNull { it.earningResult?.bonusMiles }.sum()
+            val totalBonusPoints = if (segments.none { it.earningResult?.bonusPoints == null }) {
+                segments.mapNotNull { it.earningResult?.bonusPoints }.sum()
             } else {
                 null
             }
@@ -81,7 +81,7 @@ class Itinerary(
                     distance = totalDistance,
 
                     aeroplanMiles = totalAeroplanMiles,
-                    bonusMiles = totalBonusPoints,
+                    bonusPoints = totalBonusPoints,
                     totalMiles = totalMiles,
 
                     sqm = totalSqm,
@@ -101,8 +101,8 @@ class Segment(
     val fareClass: String,
     val fareBrand: String?,
     ticketNumber: String,
-    hasAltitudeStatus: Boolean,
-    bonusMilesPercentage: Int,
+    hasAeroplanStatus: Boolean,
+    bonusPointsPercentage: Int,
     statusRate: Int,
     bonusRate: Int
 ) {
@@ -113,8 +113,8 @@ class Segment(
         fareClass,
         fareBasis = fareBrand,
         ticketNumber = ticketNumber,
-        hasAltitudeStatus = hasAltitudeStatus,
-        bonusPointsPercentage = bonusMilesPercentage,
+        hasAeroplanStatus = hasAeroplanStatus,
+        bonusPointsPercentage = bonusPointsPercentage,
         statusRate = statusRate,
         bonusRate = bonusRate
     )
@@ -126,7 +126,7 @@ class Segment(
     val distanceSourceString = distanceResult.source ?: "???"
 
     val aeroplanMilesString = earningResult?.aeroplanMiles?.toString() ?: "???"
-    val bonusMilesString = earningResult?.bonusMiles?.toString() ?: "???"
+    val bonusPointsString = earningResult?.bonusPoints?.toString() ?: "???"
     val totalMilesString = earningResult?.totalMiles?.toString() ?: "???"
 
     val sqmString = earningResult?.sqm?.toString() ?: "???"
@@ -143,7 +143,7 @@ class Segment(
 
     companion object {
         @Throws(SqdCalculatorException::class)
-        fun parse(csv: String, ticketNumber: String, altitudeStatus: String, hasBonusMilesPrivilege: Boolean): Segment {
+        fun parse(csv: String, ticketNumber: String, aeroplanStatus: String, hasBonusPointsPrivilege: Boolean): Segment {
             val csvValues = csv.split(",")
 
             if (csvValues.size < 4 || csvValues.size > 5) {
@@ -180,11 +180,11 @@ class Segment(
                 null
             }
 
-            val hasAltitudeStatus = altitudeStatus.isNotBlank()
-            val bonusMilesPercentage = (if (hasBonusMilesPrivilege) altitudeStatus.toIntOrNull() else null) ?: 0
+            val hasAeroplanStatus = aeroplanStatus.isNotBlank()
+            val bonusPointsPercentage = (if (hasBonusPointsPrivilege) aeroplanStatus.toIntOrNull() else null) ?: 0
 
-            val statusRate = convertBonusMilesPercentageToStatusEarnRate(altitudeStatus.toIntOrNull() ?: 0)
-            val bonusRate = if (hasBonusMilesPrivilege) statusRate else 0
+            val statusRate = convertBonusPointsPercentageToStatusEarnRate(aeroplanStatus.toIntOrNull() ?: 0)
+            val bonusRate = if (hasBonusPointsPrivilege) statusRate else 0
 
             return Segment(
                 airline,
@@ -193,8 +193,8 @@ class Segment(
                 fareClass,
                 fareBrand,
                 ticketNumber,
-                hasAltitudeStatus,
-                bonusMilesPercentage,
+                hasAeroplanStatus,
+                bonusPointsPercentage,
                 statusRate,
                 bonusRate
             )
@@ -202,7 +202,7 @@ class Segment(
     }
 }
 
-private fun convertBonusMilesPercentageToStatusEarnRate(bonusMilesPercentage: Int) = when (bonusMilesPercentage) {
+private fun convertBonusPointsPercentageToStatusEarnRate(bonusPointsPercentage: Int) = when (bonusPointsPercentage) {
     25, 35 -> 1
     50 -> 2
     75 -> 3
@@ -214,7 +214,7 @@ class TotalRow(
     val distance: Int?,
 
     val aeroplanMiles: Int?,
-    val bonusMiles: Int?,
+    val bonusPoints: Int?,
     val totalMiles: Int?,
 
     val sqm: Int?,

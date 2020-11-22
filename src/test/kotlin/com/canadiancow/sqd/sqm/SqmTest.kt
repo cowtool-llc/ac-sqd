@@ -15,7 +15,7 @@ internal class SqmTest {
                 null,
                 null,
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -30,7 +30,7 @@ internal class SqmTest {
                 "Y",
                 "YCONFPLT",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -45,7 +45,7 @@ internal class SqmTest {
                 "I",
                 "IJBP00",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -60,7 +60,7 @@ internal class SqmTest {
                 "J",
                 "J1234EF",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -75,7 +75,7 @@ internal class SqmTest {
                 "J",
                 "J1234EF",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -90,7 +90,7 @@ internal class SqmTest {
                 "Z",
                 "Z1234EL",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -105,7 +105,7 @@ internal class SqmTest {
                 "R",
                 "O1234PF",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -120,7 +120,7 @@ internal class SqmTest {
                 "E",
                 "E1234PL",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -135,7 +135,7 @@ internal class SqmTest {
                 "M",
                 "M1234FL",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -150,7 +150,7 @@ internal class SqmTest {
                 "K",
                 "K1234CO",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -165,7 +165,7 @@ internal class SqmTest {
                 "R",
                 "G1234FL",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -180,7 +180,7 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -195,7 +195,7 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -210,7 +210,7 @@ internal class SqmTest {
                 "G",
                 "DUNNO",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -225,7 +225,7 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -240,7 +240,7 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -255,7 +255,7 @@ internal class SqmTest {
                 "G",
                 "G1234BA",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -270,7 +270,7 @@ internal class SqmTest {
                 "G",
                 "G123LGT",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -285,7 +285,7 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -300,7 +300,7 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -315,7 +315,7 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -330,7 +330,7 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -345,7 +345,7 @@ internal class SqmTest {
                 "G",
                 "G123LFL",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
@@ -397,7 +397,7 @@ internal class SqmTest {
                 "Z",
                 "Z1234EL",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 4,
                 bonusRate = 0
@@ -412,7 +412,7 @@ internal class SqmTest {
                 "R",
                 "O1234PF",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 4,
                 bonusRate = 0
@@ -427,7 +427,7 @@ internal class SqmTest {
                 "K",
                 "K1234CO",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 4,
                 bonusRate = 0
@@ -442,7 +442,7 @@ internal class SqmTest {
                 "R",
                 "G1234FL",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -457,7 +457,7 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -470,7 +470,7 @@ internal class SqmTest {
             "G",
             "G123LBA",
             ticketNumber = "014",
-            hasAltitudeStatus = true,
+            hasAeroplanStatus = true,
             bonusPointsPercentage = 0,
             statusRate = 1,
             bonusRate = 0
@@ -488,7 +488,7 @@ internal class SqmTest {
             "G",
             "G123LBA",
             ticketNumber = "014",
-            hasAltitudeStatus = true,
+            hasAeroplanStatus = true,
             bonusPointsPercentage = 0,
             statusRate = 1,
             bonusRate = 3
@@ -506,7 +506,7 @@ internal class SqmTest {
             "G",
             "G123LBA",
             ticketNumber = "014",
-            hasAltitudeStatus = true,
+            hasAeroplanStatus = true,
             bonusPointsPercentage = 0,
             statusRate = 2,
             bonusRate = 2
@@ -526,7 +526,7 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -542,7 +542,7 @@ internal class SqmTest {
                 "W",
                 fareBasis = null,
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -557,7 +557,7 @@ internal class SqmTest {
                 "H",
                 fareBasis = null,
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -573,7 +573,7 @@ internal class SqmTest {
                 "Y",
                 fareBasis = null,
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -588,7 +588,7 @@ internal class SqmTest {
                 "Q",
                 fareBasis = null,
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -603,7 +603,7 @@ internal class SqmTest {
                 "H",
                 fareBasis = null,
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -618,7 +618,7 @@ internal class SqmTest {
                 "A",
                 fareBasis = null,
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
@@ -637,7 +637,7 @@ internal class SqmTest {
                 "J",
                 "J1234EF",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
@@ -652,7 +652,7 @@ internal class SqmTest {
                 "O",
                 "O1234PF",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
@@ -667,7 +667,7 @@ internal class SqmTest {
                 "N",
                 "N1234PL",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 75,
                 statusRate = 3,
                 bonusRate = 3
@@ -682,7 +682,7 @@ internal class SqmTest {
                 "Y",
                 "Y1234LT",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 50,
                 statusRate = 2,
                 bonusRate = 2
@@ -697,7 +697,7 @@ internal class SqmTest {
                 "M",
                 "M1234CO",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
@@ -712,7 +712,7 @@ internal class SqmTest {
                 "V",
                 "V1234FL",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 35,
                 statusRate = 1,
                 bonusRate = 0
@@ -727,7 +727,7 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAltitudeStatus = true,
+                hasAeroplanStatus = true,
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 0
@@ -742,7 +742,7 @@ internal class SqmTest {
                 "K",
                 "K1234BA",
                 ticketNumber = "014",
-                hasAltitudeStatus = false,
+                hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0

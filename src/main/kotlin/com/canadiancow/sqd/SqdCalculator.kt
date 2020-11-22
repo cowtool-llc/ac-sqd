@@ -32,7 +32,7 @@ class SqdCalculator(
     private fun calculateSqdBreakdown(): String {
         val itinerary = Itinerary.parse(
             ticket = ticket,
-            altitudeStatus = aeroplanStatus,
+            aeroplanStatus = aeroplanStatus,
             hasBonusPointsPrivilege = hasBonusPointsPrivilege,
             segmentsCsv = segments,
             baseFare = baseFare,
@@ -83,7 +83,7 @@ class SqdCalculator(
             builder.append("""<td style="text-align:right">${segment.earningResult?.aeroplanPointsPercent ?: "???"}</td>""")
             builder.append("""<td style="text-align:right">${segment.aeroplanMilesString}</td>""")
             builder.append("""<td style="text-align:right">${segment.earningResult?.bonusPointsPercent ?: "???"}</td>""")
-            builder.append("""<td style="text-align:right">${segment.bonusMilesString}</td>""")
+            builder.append("""<td style="text-align:right">${segment.bonusPointsString}</td>""")
             builder.append("""<td style="text-align:right">${segment.totalMilesString}</td>""")
             builder.append("""<td style="text-align:right">${segment.baseRateString}</td>""")
             builder.append("""<td style="text-align:right">${segment.statusRateString}</td>""")
@@ -107,7 +107,7 @@ class SqdCalculator(
         builder.append("""<th></th>""")
         builder.append("""<th style="text-align:right">${itinerary.totalRow.aeroplanMiles ?: "???"}</th>""")
         builder.append("""<th></th>""")
-        builder.append("""<th style="text-align:right">${itinerary.totalRow.bonusMiles ?: "???"}</th>""")
+        builder.append("""<th style="text-align:right">${itinerary.totalRow.bonusPoints ?: "???"}</th>""")
         builder.append("""<th style="text-align:right">${itinerary.totalRow.totalMiles ?: "???"}</th>""")
         builder.append("""<th></th>""")
         builder.append("""<th></th>""")
