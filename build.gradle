@@ -13,7 +13,7 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-mainClassName = 'com.canadiancow.aqd.AqdHandler'
+mainClassName = 'com.canadiancow.sqd.SqdHandler'
 
 repositories {
     mavenCentral()

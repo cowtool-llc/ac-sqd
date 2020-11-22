@@ -1,3 +1,3 @@
-# Air Canada AQD/AQM Calculator
+# Air Canada Aeroplan SQD/SQM Calculator
 
-Accessible via https://api.ft.canadiancow.com/aqd/calc
+Accessible via https://api.ft.canadiancow.com/sqd/calc

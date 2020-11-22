@@ -1,7 +1,7 @@
-package com.canadiancow.aqd.distance
+package com.canadiancow.sqd.distance
 
-import com.canadiancow.aqd.AqdCalculator
-import com.canadiancow.aqd.parseResourceToCsv
+import com.canadiancow.sqd.SqdCalculator
+import com.canadiancow.sqd.parseResourceToCsv
 
 class Airport(
     val iataCode: String,
@@ -26,5 +26,5 @@ val airports: Map<String, Airport> by lazy {
 }
 
 val airportsCsv: String by lazy {
-    "<pre>${::AqdCalculator.javaClass.getResource("/airports.csv").readText()}</pre>"
+    "<pre>${::SqdCalculator.javaClass.getResource("/airports.csv").readText()}</pre>"
 }

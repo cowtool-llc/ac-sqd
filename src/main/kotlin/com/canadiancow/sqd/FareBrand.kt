@@ -1,4 +1,4 @@
-package com.canadiancow.aqd
+package com.canadiancow.sqd
 
 enum class FareBrand(
     private val description: String
