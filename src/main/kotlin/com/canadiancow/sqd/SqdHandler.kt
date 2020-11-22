@@ -12,7 +12,7 @@ data class SqdInput @JvmOverloads constructor(
     var segments: String = "",
     var ticket: String = "",
     var aeroplanStatus: String = "",
-    var bonusMilesPrivilege: String = "",
+    var bonusPointsPrivilege: String = "",
     var fetch: String? = ""
 )
 
@@ -29,12 +29,12 @@ class SqdHandler : RequestHandler<SqdInput, String> {
         val segments = input.segments
         val ticket = if (input.ticket.isBlank()) "014" else input.ticket
         val altitudeStatus = input.aeroplanStatus
-        val hasBonusMilesPrivilege = input.bonusMilesPrivilege.toBoolean()
+        val hasBonusPointsPrivilege = input.bonusPointsPrivilege.toBoolean()
 
         return SqdCalculator(
             ticket,
             altitudeStatus,
-            hasBonusMilesPrivilege,
+            hasBonusPointsPrivilege,
             segments,
             baseFare,
             surcharges

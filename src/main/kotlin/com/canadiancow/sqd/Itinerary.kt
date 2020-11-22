@@ -13,7 +13,7 @@ class Itinerary(
         fun parse(
             ticket: String,
             altitudeStatus: String,
-            hasBonusMilesPrivilege: Boolean,
+            hasBonusPointsPrivilege: Boolean,
             segmentsCsv: String,
             baseFare: Double?,
             surcharges: Double?
@@ -26,7 +26,7 @@ class Itinerary(
             }
 
             val segments = segmentsCsv.trim().split(Regex("\\s+")).map {
-                Segment.parse(it, ticket, altitudeStatus, hasBonusMilesPrivilege)
+                Segment.parse(it, ticket, altitudeStatus, hasBonusPointsPrivilege)
             }
             // If we're missing any distance, we can't calculate SQD
             val missingAnyDistance = segments.none { it.distance == null }
@@ -114,7 +114,7 @@ class Segment(
         fareBasis = fareBrand,
         ticketNumber = ticketNumber,
         hasAltitudeStatus = hasAltitudeStatus,
-        bonusMilesPercentage = bonusMilesPercentage,
+        bonusPointsPercentage = bonusMilesPercentage,
         statusRate = statusRate,
         bonusRate = bonusRate
     )

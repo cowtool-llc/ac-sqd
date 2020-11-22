@@ -16,7 +16,7 @@ internal class SqmTest {
                 null,
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )
@@ -31,7 +31,7 @@ internal class SqmTest {
                 "YCONFPLT",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -46,7 +46,7 @@ internal class SqmTest {
                 "IJBP00",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -61,7 +61,7 @@ internal class SqmTest {
                 "J1234EF",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -76,7 +76,7 @@ internal class SqmTest {
                 "J1234EF",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -91,7 +91,7 @@ internal class SqmTest {
                 "Z1234EL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -106,7 +106,7 @@ internal class SqmTest {
                 "O1234PF",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -121,7 +121,7 @@ internal class SqmTest {
                 "E1234PL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -136,7 +136,7 @@ internal class SqmTest {
                 "M1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -151,7 +151,7 @@ internal class SqmTest {
                 "K1234CO",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -166,7 +166,7 @@ internal class SqmTest {
                 "G1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -181,13 +181,13 @@ internal class SqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            50,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -196,7 +196,7 @@ internal class SqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -211,7 +211,7 @@ internal class SqmTest {
                 "DUNNO",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -226,13 +226,13 @@ internal class SqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            50,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -241,7 +241,7 @@ internal class SqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -256,13 +256,13 @@ internal class SqmTest {
                 "G1234BA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            0,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -271,13 +271,13 @@ internal class SqmTest {
                 "G123LGT",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            0,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -286,13 +286,13 @@ internal class SqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            0,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -301,13 +301,13 @@ internal class SqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            0,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -316,13 +316,13 @@ internal class SqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
         )
         assertEquals(
-            0,
+            25,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -331,7 +331,7 @@ internal class SqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.sqmPercent
@@ -346,7 +346,7 @@ internal class SqmTest {
                 "G123LFL",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.distanceResult.distance
@@ -364,7 +364,7 @@ internal class SqmTest {
                 null,
                 "014",
                 true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 3,
                 bonusRate = 0
             )
@@ -379,7 +379,7 @@ internal class SqmTest {
                 null,
                 "014",
                 true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 3,
                 bonusRate = 0
             )!!.sqmPercent
@@ -398,10 +398,10 @@ internal class SqmTest {
                 "Z1234EL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 4,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             313,
@@ -413,10 +413,10 @@ internal class SqmTest {
                 "O1234PF",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 4,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             288,
@@ -428,10 +428,10 @@ internal class SqmTest {
                 "K1234CO",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 4,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             250,
@@ -443,10 +443,10 @@ internal class SqmTest {
                 "G1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             125,
@@ -458,28 +458,61 @@ internal class SqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
+        getEarningResult(
+            "AC",
+            "YVR",
+            "LHR",
+            "G",
+            "G123LBA",
+            ticketNumber = "014",
+            hasAltitudeStatus = true,
+            bonusPointsPercentage = 0,
+            statusRate = 1,
+            bonusRate = 0
+        )!!.let {
+            assertEquals(63, it.minimumPoints)
+            assertEquals(1177, it.aeroplanMiles)
+            assertEquals(1177, it.sqm)
+        }
+        getEarningResult(
+            "AC",
+            "YVR",
+            "SFO",
+            "G",
+            "G123LBA",
+            ticketNumber = "014",
+            hasAltitudeStatus = true,
+            bonusPointsPercentage = 0,
+            statusRate = 1,
+            bonusRate = 0
+        )!!.let {
+            assertEquals(63, it.minimumPoints)
+            assertEquals(200, it.aeroplanMiles)
+            assertEquals(0, it.sqm)
+        }
+        getEarningResult(
+            "AC",
+            "YVR",
+            "YYZ",
+            "G",
+            "G123LBA",
+            ticketNumber = "014",
+            hasAltitudeStatus = true,
+            bonusPointsPercentage = 0,
+            statusRate = 1,
+            bonusRate = 0
+        )!!.let {
+            assertEquals(25, it.minimumPoints)
+            assertEquals(207, it.aeroplanMiles)
+            assertEquals(0, it.sqm)
+        }
         assertEquals(
             63,
-            getEarningResult(
-                "AC",
-                "YVR",
-                "LHR",
-                "G",
-                "G123LBA",
-                ticketNumber = "014",
-                hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
-                statusRate = 1,
-                bonusRate = 0
-            )!!.minimumMiles
-        )
-        assertEquals(
-            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -488,10 +521,10 @@ internal class SqmTest {
                 "G123LBA",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
 
         assertEquals(
@@ -504,10 +537,10 @@ internal class SqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             188,
@@ -519,10 +552,10 @@ internal class SqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
 
         assertEquals(
@@ -535,10 +568,10 @@ internal class SqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             375,
@@ -550,10 +583,10 @@ internal class SqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             250,
@@ -565,10 +598,10 @@ internal class SqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
         assertEquals(
             0,
@@ -580,10 +613,10 @@ internal class SqmTest {
                 fareBasis = null,
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.minimumMiles
+            )!!.minimumPoints
         )
     }
 
@@ -599,7 +632,7 @@ internal class SqmTest {
                 "J1234EF",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
+                bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
             )!!.apply { sqd = 1000.00 }.totalPoints
@@ -614,7 +647,7 @@ internal class SqmTest {
                 "O1234PF",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
+                bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
             )!!.apply { sqd = 800.00 }.totalPoints
@@ -629,7 +662,7 @@ internal class SqmTest {
                 "N1234PL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 75,
+                bonusPointsPercentage = 75,
                 statusRate = 3,
                 bonusRate = 3
             )!!.apply { sqd = 750.00 }.totalPoints
@@ -644,7 +677,7 @@ internal class SqmTest {
                 "Y1234LT",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 50,
+                bonusPointsPercentage = 50,
                 statusRate = 2,
                 bonusRate = 2
             )!!.apply { sqd = 500.00 }.totalPoints
@@ -659,7 +692,7 @@ internal class SqmTest {
                 "M1234CO",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
+                bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
             )!!.apply { sqd = 400.00 }.totalPoints
@@ -674,7 +707,7 @@ internal class SqmTest {
                 "V1234FL",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 35,
+                bonusPointsPercentage = 35,
                 statusRate = 1,
                 bonusRate = 0
             )!!.apply { sqd = 300.00 }.totalPoints
@@ -689,7 +722,7 @@ internal class SqmTest {
                 "G1234TG",
                 ticketNumber = "014",
                 hasAltitudeStatus = true,
-                bonusMilesPercentage = 100,
+                bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 0
             )!!.apply { sqd = 600.00 }.totalPoints
@@ -704,7 +737,7 @@ internal class SqmTest {
                 "K1234BA",
                 ticketNumber = "014",
                 hasAltitudeStatus = false,
-                bonusMilesPercentage = 0,
+                bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
             )!!.apply { sqd = 100.00 }.totalPoints

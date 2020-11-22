@@ -13,8 +13,8 @@ internal class SqdCalculatorTest {
                 baseFare = 1000.0,
                 surcharges = 500.0,
                 ticket = "014",
-                altitudeStatus = "100",
-                hasBonusMilesPrivilege = true,
+                aeroplanStatus = "100",
+                hasBonusPointsPrivilege = true,
                 segments = defaultSegments
             ).calculate()
         )

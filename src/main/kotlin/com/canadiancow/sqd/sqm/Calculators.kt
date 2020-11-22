@@ -11,11 +11,11 @@ import kotlin.math.roundToInt
 open class EarningResult(
     val distanceResult: DistanceResult,
     val sqmPercent: Int,
-    val aeroplanMilesPercent: Int = sqmPercent,
-    val bonusMilesPercent: Int,
-    eligibleForMinimumMiles: Boolean,
-    baseMinimumMiles: Int = if (eligibleForMinimumMiles) 250 else 0,
-    val minimumMiles: Int = (aeroplanMilesPercent * baseMinimumMiles / 100.0).roundToInt(),
+    val aeroplanPointsPercent: Int = sqmPercent,
+    val bonusPointsPercent: Int,
+    eligibleForMinimumPoints: Boolean,
+    baseMinimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
+    val minimumPoints: Int = (aeroplanPointsPercent * baseMinimumPoints / 100.0).roundToInt(),
     val baseRate: Int?,
     val statusRate: Int?,
     val bonusRate: Int?,
@@ -27,19 +27,19 @@ open class EarningResult(
     val sqm = when {
         distance == null -> null
         sqmPercent == 0 -> 0
-        else -> max(distance * sqmPercent / 100, minimumMiles)
+        else -> max(distance * sqmPercent / 100, minimumPoints)
     }
 
     val aeroplanMiles = when {
         distance == null -> null
-        aeroplanMilesPercent == 0 -> 0
-        else -> max(distance * aeroplanMilesPercent / 100, minimumMiles)
+        aeroplanPointsPercent == 0 -> 0
+        else -> max(distance * aeroplanPointsPercent / 100, minimumPoints)
     }
 
     val bonusMiles = when {
         sqm == null || distance == null -> null
-        bonusMilesPercent == 0 -> 0
-        else -> min(sqm, distance) * bonusMilesPercent / 100
+        bonusPointsPercent == 0 -> 0
+        else -> min(sqm, distance) * bonusPointsPercent / 100
     }
 
     val totalMiles = if (aeroplanMiles == null || bonusMiles == null) null else aeroplanMiles + bonusMiles
@@ -73,8 +73,8 @@ open class StarAllianceEarningResult(
 ) : EarningResult(
     distanceResult = distanceResult,
     sqmPercent = sqmPercent,
-    bonusMilesPercent = bonusMilesPercent,
-    eligibleForMinimumMiles = hasAltitudeStatus,
+    bonusPointsPercent = bonusMilesPercent,
+    eligibleForMinimumPoints = hasAltitudeStatus,
     baseRate = baseRate,
     statusRate = statusRate,
     bonusRate = bonusRate,
@@ -132,8 +132,8 @@ private abstract class SimpleStarAllianceEarningCalculator(
         return EarningResult(
             distanceResult = distanceResult,
             sqmPercent = percentage,
-            bonusMilesPercent = bonusMilesPercent,
-            eligibleForMinimumMiles = hasAltitudeStatus,
+            bonusPointsPercent = bonusMilesPercent,
+            eligibleForMinimumPoints = hasAltitudeStatus,
             baseRate = 3, // TODO
             statusRate = statusRate,
             bonusRate = bonusRate,
@@ -185,10 +185,10 @@ private abstract class SimplePartnerEarningCalculator(
         return EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
-            aeroplanMilesPercent = aeroplanMilesPercent,
-            bonusMilesPercent = 0,
-            eligibleForMinimumMiles = hasAltitudeStatus || alwaysEarnsMinimumMiles,
-            baseMinimumMiles = if (hasAltitudeStatus || alwaysEarnsMinimumMiles) baseMinimumMiles else 0,
+            aeroplanPointsPercent = aeroplanMilesPercent,
+            bonusPointsPercent = 0,
+            eligibleForMinimumPoints = hasAltitudeStatus || alwaysEarnsMinimumMiles,
+            baseMinimumPoints = if (hasAltitudeStatus || alwaysEarnsMinimumMiles) baseMinimumMiles else 0,
             baseRate = null, // TODO
             statusRate = null, // TODO
             bonusRate = null, // TODO
@@ -219,12 +219,14 @@ private val acCalculator: EarningCalculator =
         // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirCanada#/
         class ACEarningResult(
             sqmPercent: Int,
+            aeroplanPointsPercent: Int = sqmPercent,
             baseRate: Int = 3
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
-            bonusMilesPercent = bonusMilesPercentage,
-            eligibleForMinimumMiles = hasAltitudeStatus,
+            aeroplanPointsPercent = aeroplanPointsPercent,
+            bonusPointsPercent = bonusMilesPercentage,
+            eligibleForMinimumPoints = hasAltitudeStatus,
             baseRate = baseRate,
             statusRate = statusRate,
             bonusRate = bonusRate,
@@ -244,12 +246,20 @@ private val acCalculator: EarningCalculator =
                 "BA", "GT" ->
                     return@calc if (originCountry == null || destinationCountry == null) {
                         null
+                    } else if (originCountry == "Canada" && destinationCountry == "Canada") {
+                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 10, baseRate = 2)
+                    } else if ((originCountry == "Canada" && destinationCountry == "United States") ||
+                        (originCountry == "United States" && destinationCountry == "Canada")
+                    ) {
+                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 25, baseRate = 2)
                     } else {
-                        ACEarningResult(sqmPercent = 0, baseRate = 2)
+                        ACEarningResult(sqmPercent = 25, baseRate = 2)
                     }
                 "TG" ->
                     return@calc if (originCountry == null || destinationCountry == null) {
                         null
+                    } else if (originCountry == "Canada" && destinationCountry == "Canada") {
+                        ACEarningResult(sqmPercent = 25)
                     } else {
                         ACEarningResult(sqmPercent = 50)
                     }
@@ -291,6 +301,8 @@ private val acCalculator: EarningCalculator =
             "S", "T", "L", "A", "K" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
+                } else if (originCountry == "Canada" && destinationCountry == "Canada") {
+                    ACEarningResult(sqmPercent = 25)
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
@@ -454,9 +466,9 @@ private val cxCalculator: EarningCalculator =
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
-            aeroplanMilesPercent = aeroplanMilesPercent,
-            bonusMilesPercent = 0,
-            eligibleForMinimumMiles = hasAltitudeStatus,
+            aeroplanPointsPercent = aeroplanMilesPercent,
+            bonusPointsPercent = 0,
+            eligibleForMinimumPoints = hasAltitudeStatus,
             baseRate = null, // TODO
             statusRate = null, // TODO
             bonusRate = null, // TODO
@@ -520,9 +532,9 @@ private val eyCalculator: EarningCalculator =
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
-            aeroplanMilesPercent = aeroplanMilesPercent,
-            bonusMilesPercent = 0,
-            eligibleForMinimumMiles = hasAltitudeStatus,
+            aeroplanPointsPercent = aeroplanMilesPercent,
+            bonusPointsPercent = 0,
+            eligibleForMinimumPoints = hasAltitudeStatus,
             baseRate = null, // TODO
             statusRate = null, // TODO
             bonusRate = null, // TODO
@@ -997,9 +1009,9 @@ private val uaCalculator: EarningCalculator =
             "N" -> EarningResult(
                 distanceResult = distanceResult,
                 sqmPercent = 0,
-                aeroplanMilesPercent = 50,
-                bonusMilesPercent = 0,
-                eligibleForMinimumMiles = hasAltitudeStatus,
+                aeroplanPointsPercent = 50,
+                bonusPointsPercent = 0,
+                eligibleForMinimumPoints = hasAltitudeStatus,
                 baseRate = null, // TODO
                 statusRate = null, // TODO
                 bonusRate = null, // TODO
@@ -1096,7 +1108,7 @@ fun getEarningResult(
     fareBasis: String?,
     ticketNumber: String,
     hasAltitudeStatus: Boolean,
-    bonusMilesPercentage: Int,
+    bonusPointsPercentage: Int,
     statusRate: Int,
     bonusRate: Int
 ): EarningResult? {
@@ -1121,7 +1133,7 @@ fun getEarningResult(
         fareBasis,
         ticketNumber,
         hasAltitudeStatus,
-        bonusMilesPercentage,
+        bonusPointsPercentage,
         statusRate,
         bonusRate
     )

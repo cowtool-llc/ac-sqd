@@ -33,7 +33,7 @@ class SqdCalculator(
         val itinerary = Itinerary.parse(
             ticket = ticket,
             altitudeStatus = aeroplanStatus,
-            hasBonusMilesPrivilege = hasBonusPointsPrivilege,
+            hasBonusPointsPrivilege = hasBonusPointsPrivilege,
             segmentsCsv = segments,
             baseFare = baseFare,
             surcharges = surcharges
@@ -80,9 +80,9 @@ class SqdCalculator(
             builder.append("""<td style="text-align:right">${segment.earningResult?.sqmPercent ?: "???"}</td>""")
             builder.append("""<td style="text-align:right">${segment.sqmString}</td>""")
             builder.append("""<td style="text-align:right">${segment.earningResult?.sqd?.toCurrencyString() ?: "???"}</td>""")
-            builder.append("""<td style="text-align:right">${segment.earningResult?.aeroplanMilesPercent ?: "???"}</td>""")
+            builder.append("""<td style="text-align:right">${segment.earningResult?.aeroplanPointsPercent ?: "???"}</td>""")
             builder.append("""<td style="text-align:right">${segment.aeroplanMilesString}</td>""")
-            builder.append("""<td style="text-align:right">${segment.earningResult?.bonusMilesPercent ?: "???"}</td>""")
+            builder.append("""<td style="text-align:right">${segment.earningResult?.bonusPointsPercent ?: "???"}</td>""")
             builder.append("""<td style="text-align:right">${segment.bonusMilesString}</td>""")
             builder.append("""<td style="text-align:right">${segment.totalMilesString}</td>""")
             builder.append("""<td style="text-align:right">${segment.baseRateString}</td>""")
@@ -158,8 +158,8 @@ class SqdCalculator(
               <option value="75"${if (aeroplanStatus == "75") " selected=\"selected\"" else ""}>75K</option>
               <option value="100"${if (aeroplanStatus == "100") " selected=\"selected\"" else ""}>SE</option>
             </select></td></tr>
-            <tr><td style="text-align:right"><label for="bonus_miles_privilege">Bonus Aeroplan Points Select Privilege</label></td>
-            <td><input type="checkbox" name="bonus_miles_privilege" id="bonus_miles_privilege" value="true"${if (hasBonusPointsPrivilege) """ checked="checked"""" else ""}"/></td></tr>
+            <tr><td style="text-align:right"><label for="bonus_points_privilege">Bonus Aeroplan Points Select Privilege</label></td>
+            <td><input type="checkbox" name="bonus_points_privilege" id="bonus_points_privilege" value="true"${if (hasBonusPointsPrivilege) """ checked="checked"""" else ""}"/></td></tr>
             <tr><td style="text-align:right"><label for="base_fare">Base Fare</label></td>
             <td><input type="number" min="0" step="0.01" name="base_fare" id="base_fare" required value="${baseFare?.toString() ?: "0"}"/></td></tr>
             <tr><td style="text-align:right"><label for="surcharges">SQD-eligible surcharges (YQ/YR)</label></td>
