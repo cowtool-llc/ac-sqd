@@ -1,23 +1,23 @@
-package com.canadiancow.aqd
+package com.canadiancow.sqd
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import com.canadiancow.aqd.aqm.countriesCsv
-import com.canadiancow.aqd.distance.aeroplanDistanceCsv
-import com.canadiancow.aqd.distance.airportsCsv
+import com.canadiancow.sqd.distance.aeroplanDistanceCsv
+import com.canadiancow.sqd.distance.airportsCsv
+import com.canadiancow.sqd.sqm.countriesCsv
 
-data class AqdInput @JvmOverloads constructor(
+data class SqdInput @JvmOverloads constructor(
     var baseFare: String = "",
     var surcharges: String = "",
     var segments: String = "",
     var ticket: String = "",
-    var altitudeStatus: String = "",
-    var bonusMilesPrivilege: String = "",
+    var aeroplanStatus: String = "",
+    var bonusPointsPrivilege: String = "",
     var fetch: String? = ""
 )
 
-class AqdHandler : RequestHandler<AqdInput, String> {
-    override fun handleRequest(input: AqdInput, context: Context): String {
+class SqdHandler : RequestHandler<SqdInput, String> {
+    override fun handleRequest(input: SqdInput, context: Context): String {
         when (input.fetch) {
             "airports" -> return airportsCsv
             "countries" -> return countriesCsv
@@ -28,13 +28,13 @@ class AqdHandler : RequestHandler<AqdInput, String> {
         val surcharges = input.surcharges.toDoubleOrNull()
         val segments = input.segments
         val ticket = if (input.ticket.isBlank()) "014" else input.ticket
-        val altitudeStatus = input.altitudeStatus
-        val hasBonusMilesPrivilege = input.bonusMilesPrivilege.toBoolean()
+        val aeroplanStatus = input.aeroplanStatus
+        val hasBonusPointsPrivilege = input.bonusPointsPrivilege.toBoolean()
 
-        return AqdCalculator(
+        return SqdCalculator(
             ticket,
-            altitudeStatus,
-            hasBonusMilesPrivilege,
+            aeroplanStatus,
+            hasBonusPointsPrivilege,
             segments,
             baseFare,
             surcharges

@@ -1,20 +1,20 @@
-package com.canadiancow.aqd
+package com.canadiancow.sqd
 
 import org.junit.jupiter.api.Test
 
-internal class AqdCalculatorTest {
+internal class SqdCalculatorTest {
     /**
      * Used to test that basic functionality doesn't throw exceptions before bothering to attempt a deployment.
      */
     @Test
     fun `test basic functionality`() {
         println(
-            AqdCalculator(
+            SqdCalculator(
                 baseFare = 1000.0,
                 surcharges = 500.0,
                 ticket = "014",
-                altitudeStatus = "100",
-                hasBonusMilesPrivilege = true,
+                aeroplanStatus = "100",
+                hasBonusPointsPrivilege = true,
                 segments = defaultSegments
             ).calculate()
         )
