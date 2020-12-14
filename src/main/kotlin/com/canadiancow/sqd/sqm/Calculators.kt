@@ -1080,7 +1080,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.toU
     "LO" -> loCalculator // LOT Polish Airlines
     "LX" -> lxCalculator // Swiss
     "MS" -> msCalculator // EgyptAir
-    "NH" -> nhCalculator // ANA
+    "NH", "NQ" -> nhCalculator // ANA
     "NZ" -> nzCalculator // Air New Zealand
     "OA" -> oaCalculator // Olympic Air
     "OS" -> osCalculator // Austrian
