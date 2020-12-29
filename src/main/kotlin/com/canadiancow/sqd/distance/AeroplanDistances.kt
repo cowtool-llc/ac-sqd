@@ -3,7 +3,7 @@ package com.canadiancow.sqd.distance
 import com.canadiancow.sqd.SqdCalculator
 import com.canadiancow.sqd.parseResourceToCsv
 
-val aeroplanDistances: Map<String, Int> by lazy {
+val aeroplanDistances: Map<String, Pair<Int, Boolean>> by lazy {
     parseResourceToCsv(
         "/aeroplan_distances.csv",
         keyParser = { "${it[0]}${it[1]}" }
@@ -15,7 +15,10 @@ val aeroplanDistances: Map<String, Int> by lazy {
         val newDistance = values[3]
         val oldDistance = values[2]
 
-        getNewAeroplanDistance(oldDistance, newDistance)
+        val distance = getNewAeroplanDistance(oldDistance, newDistance)
+        val isNew = newDistance.isNotBlank()
+
+        Pair(distance, isNew)
     }
 }
 
