@@ -8,14 +8,19 @@ val aeroplanDistances: Map<String, Int> by lazy {
         "/aeroplan_distances.csv",
         keyParser = { "${it[0]}${it[1]}" }
     ) { index, line, values ->
-        if (values.size != 3) {
+        if (values.size != 4) {
             throw IllegalStateException("Invalid line $index: $line")
         }
 
-        val distance = values[2].toInt()
+        val newDistance = values[3]
+        val oldDistance = values[2]
 
-        distance
+        getNewAeroplanDistance(oldDistance, newDistance)
     }
+}
+
+fun getNewAeroplanDistance(oldDistance: String, newDistance: String): Int {
+    return (if (newDistance.isNotBlank()) newDistance else oldDistance).toInt()
 }
 
 val aeroplanDistanceCsv: String by lazy {
