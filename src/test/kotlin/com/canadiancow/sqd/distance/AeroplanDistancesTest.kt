@@ -41,13 +41,13 @@ internal class AeroplanDistancesTest {
 
     private fun validateCityPairs(validator: (String, String, Int) -> Unit) {
         parseResourceToCsv("/aeroplan_distances.csv") { index, line, values ->
-            if (values.size != 3) {
+            if (values.size != 4) {
                 throw IllegalStateException("Invalid line $index: $line")
             }
 
             val city1 = values[0]
             val city2 = values[1]
-            val distance = values[2].toInt()
+            val distance = getNewAeroplanDistance(oldDistance = values[2], newDistance = values[3])
 
             validator(city1, city2, distance)
         }

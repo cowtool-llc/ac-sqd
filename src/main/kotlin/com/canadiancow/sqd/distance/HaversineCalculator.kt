@@ -10,7 +10,8 @@ fun getSegmentDistance(origin: String, destination: String): DistanceResult {
     val aeroplanDistance = aeroplanDistances["$origin$destination"] ?: aeroplanDistances["$destination$origin"]
 
     if (aeroplanDistance != null) {
-        return DistanceResult(aeroplanDistance, "Aeroplan", null)
+        val source = if (aeroplanDistance.second) "Aeroplan" else "Old Aeroplan"
+        return DistanceResult(aeroplanDistance.first, source, null)
     }
 
     val haversineResult = calculateHaversine(origin, destination)
