@@ -495,8 +495,8 @@ internal class SqmTest {
         )!!.let {
             it.sqd = 100.0
             assertEquals(63, it.minimumPoints)
-            assertEquals(200, it.aeroplanMiles)
-            assertEquals(600, it.totalPoints)
+            assertEquals(199, it.aeroplanMiles)
+            assertEquals(597, it.totalPoints)
             assertEquals(0, it.sqm)
         }
         getEarningResult(
