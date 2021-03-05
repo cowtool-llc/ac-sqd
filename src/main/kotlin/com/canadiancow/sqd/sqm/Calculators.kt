@@ -1076,7 +1076,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.toU
     "EY" -> eyCalculator // Etihad Airways
     "G3" -> g3Calculator // GOL
     "HO" -> hoCalculator // Juneyao Airlines
-    "LH" -> lhCalculator // Lufthansa
+    "LH", "CL" -> lhCalculator // Lufthansa
     "LO" -> loCalculator // LOT Polish Airlines
     "LX" -> lxCalculator // Swiss
     "MS" -> msCalculator // EgyptAir
