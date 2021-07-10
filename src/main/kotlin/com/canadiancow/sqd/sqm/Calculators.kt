@@ -248,18 +248,14 @@ private val acCalculator: EarningCalculator =
                         null
                     } else if (originCountry == "Canada" && destinationCountry == "Canada") {
                         ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 10, baseRate = 2)
-                    } else if ((originCountry == "Canada" && destinationCountry == "United States") ||
-                        (originCountry == "United States" && destinationCountry == "Canada")
-                    ) {
-                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 25, baseRate = 2)
                     } else {
-                        ACEarningResult(sqmPercent = 25, baseRate = 2)
+                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 25, baseRate = 2)
                     }
                 "TG" ->
                     return@calc if (originCountry == null || destinationCountry == null) {
                         null
                     } else if (originCountry == "Canada" && destinationCountry == "Canada") {
-                        ACEarningResult(sqmPercent = 25)
+                        ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
                     } else {
                         ACEarningResult(sqmPercent = 50)
                     }
