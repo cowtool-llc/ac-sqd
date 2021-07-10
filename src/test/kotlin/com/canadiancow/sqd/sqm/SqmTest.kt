@@ -232,7 +232,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            50,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -262,7 +262,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -277,7 +277,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -292,7 +292,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -307,7 +307,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -322,7 +322,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
