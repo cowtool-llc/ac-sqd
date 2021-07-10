@@ -187,7 +187,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            50,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -232,7 +232,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            50,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -262,7 +262,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -277,7 +277,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -292,7 +292,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -307,7 +307,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -322,7 +322,7 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
-            25,
+            0,
             getEarningResult(
                 "AC",
                 "YVR",
@@ -479,7 +479,7 @@ internal class SqmTest {
             assertEquals(63, it.minimumPoints)
             assertEquals(1177, it.aeroplanMiles)
             assertEquals(300, it.totalPoints)
-            assertEquals(1177, it.sqm)
+            assertEquals(0, it.sqm)
         }
         getEarningResult(
             "AC",
