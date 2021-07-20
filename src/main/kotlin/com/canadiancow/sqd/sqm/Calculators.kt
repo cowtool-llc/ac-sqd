@@ -6,6 +6,7 @@ import com.canadiancow.sqd.distance.airports
 import com.canadiancow.sqd.distance.getSegmentDistance
 import java.lang.Integer.max
 import java.lang.Integer.min
+import java.util.*
 import kotlin.math.roundToInt
 
 open class EarningResult(
@@ -1057,7 +1058,35 @@ private val _5tCalculator = object : SimplePartnerEarningCalculator(
     }
 }
 
-private fun getCalculator(operatingAirline: String) = when (operatingAirline.toUpperCase()) {
+private val nonStarCalculator = object : EarningCalculator {
+    override fun invoke(
+        distanceResult: DistanceResult,
+        origin: String,
+        originCountry: String?,
+        originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
+        destinationContinent: String?,
+        fareClass: String?,
+        fareBasis: String?,
+        ticketNumber: String,
+        hasAeroplanStatus: Boolean,
+        bonusPointsPercentage: Int,
+        statusRate: Int,
+        bonusRate: Int
+    ) = EarningResult(
+        distanceResult = distanceResult,
+        sqmPercent = 0,
+        bonusPointsPercent = 0,
+        eligibleForMinimumPoints = false,
+        baseRate = null,
+        statusRate = null,
+        bonusRate = null,
+        isSqdEligible = false,
+    )
+}
+
+private fun getCalculator(operatingAirline: String) = when (operatingAirline.uppercase(Locale.getDefault())) {
     "AC", "KV", "QK", "RV", "ZX" -> acCalculator // Air Canada
     "A3" -> a3Calculator // Aegean Airlines
     "AD" -> adCalculator // Azul Airlines
@@ -1093,7 +1122,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.toU
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
     "5T" -> _5tCalculator // Canadian North
-    else -> null
+    else -> nonStarCalculator // Everything else
 }
 
 fun getEarningResult(
