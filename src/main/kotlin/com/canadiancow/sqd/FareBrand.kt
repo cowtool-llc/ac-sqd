@@ -15,7 +15,7 @@ enum class FareBrand(
 
     companion object {
         fun generateHtmlList(): String {
-            return values() .joinToString("<br/>\n") { "${it.name} (${it.description})" }
+            return values().joinToString("<br/>\n") { "${it.name} (${it.description})" }
         }
     }
 }
