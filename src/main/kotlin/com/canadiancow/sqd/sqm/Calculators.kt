@@ -1024,7 +1024,7 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
         "C", "J", "D", "Z" -> 125
         "S", "T", "P", "R", "Y", "B", "M" -> 100
         "A", "H", "N", "Q", "V" -> 50
-        "E", "0" -> 20
+        "E", "O" -> 20
         else -> 0
     }
 }
