@@ -1022,8 +1022,8 @@ private val ukCalculator = object : SimplePartnerEarningCalculator(
 ) {
     // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Vistara#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
-        "C", “J”, “D”, “Z” -> 125
-        "S", “T”, “P”, “R”, “Y”, “B”, “M” -> 100
+        "C", "J", "D", "Z" -> 125
+        "S", "T", "P", "R", "Y", "B", "M" -> 100
         "A", "H", "N", "Q", "V" -> 50
         "E", "0" -> 20
         else -> 0
