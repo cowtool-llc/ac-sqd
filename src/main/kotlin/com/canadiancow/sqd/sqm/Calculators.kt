@@ -1018,6 +1018,18 @@ private val uaCalculator: EarningCalculator =
         }
     }
 
+private val ukCalculator = object : SimplePartnerEarningCalculator(
+) {
+    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Vistara#/
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "C", “J”, “D”, “Z” -> 125
+        "S", “T”, “P”, “R”, “Y”, “B”, “M” -> 100
+        "A", "H", "N", "Q", "V" -> 50
+        "E", "0" -> 20
+        else -> 0
+    }
+}
+
 private val ynCalculator = object : SimplePartnerEarningCalculator(
     baseMinimumPoints = 500,
     alwaysEarnsMinimumPoints = true
@@ -1119,6 +1131,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "TK" -> tkCalculator // Turkish Airlines
     "TP" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
+    "UK" -> ukCalculator // Vistara
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
     "5T" -> _5tCalculator // Canadian North
