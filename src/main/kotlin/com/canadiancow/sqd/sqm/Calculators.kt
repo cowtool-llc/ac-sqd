@@ -545,14 +545,15 @@ private val eyCalculator: EarningCalculator =
         }
 
         when (fareClass) {
-            "P" -> EYEarningResult(aeroplanMilesPercent = 250)
-            "F", "A", "R" -> EYEarningResult(aeroplanMilesPercent = 150)
-            "J", "C", "D", "W" -> EYEarningResult(aeroplanMilesPercent = 125)
-            "Z" -> EYEarningResult(aeroplanMilesPercent = 115)
-            "Y", "B", "H" -> EYEarningResult(aeroplanMilesPercent = 100)
-            "K", "M", "Q", "L" -> EYEarningResult(aeroplanMilesPercent = 75)
-            "V", "U", "G" -> EYEarningResult(aeroplanMilesPercent = 50)
-            "E", "T" -> EYEarningResult(aeroplanMilesPercent = 25)
+            "P" -> EYEarningResult(aeroplanMilesPercent = 400)
+            "F", "A" -> EYEarningResult(aeroplanMilesPercent = 250)
+            "J", "C", "D", "W" -> EYEarningResult(aeroplanMilesPercent = 150)
+            "W", "Z" -> EYEarningResult(aeroplanMilesPercent = 125)
+            "R" -> EYEarningResult(aeroplanMilesPercent = 110)
+            "Y", "B" -> EYEarningResult(aeroplanMilesPercent = 100)
+            "H", "K", "M", "Q" -> EYEarningResult(aeroplanMilesPercent = 75)
+            "L", "V", "U", "E", "G" -> EYEarningResult(aeroplanMilesPercent = 50)
+            "T" -> EYEarningResult(aeroplanMilesPercent = 25)
             else -> EYEarningResult(aeroplanMilesPercent = 0)
         }
     }
