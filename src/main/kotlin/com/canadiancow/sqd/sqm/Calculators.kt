@@ -1032,8 +1032,7 @@ private val vaCalculator: EarningCalculator =
             when (fareClass) {
                 "J" -> VAEarningResult(sqmPercent = 150)
                 "C", "D", "I" -> VAEarningResult(sqmPercent = 125)
-                "D" -> VAEarningResult(sqmPercent = 100)
-                "Y", "B", "M", "K" -> VAEarningResult(sqmPercent = 100)
+                "Y", "B", "H", "K", "L" -> VAEarningResult(sqmPercent = 100)
                 "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(sqmPercent = 50)
                 "M" -> VAEarningResult(sqmPercent = 25)
                 else -> VAEarningResult(sqmPercent = 0)
@@ -1043,8 +1042,7 @@ private val vaCalculator: EarningCalculator =
             when (fareClass) {
                 "J" -> VAEarningResult(aeroplanPointsPercent = 150)
                 "C", "D", "I" -> VAEarningResult(aeroplanPointsPercent = 125)
-                "D" -> VAEarningResult(aeroplanPointsPercent = 100)
-                "Y", "B", "M", "K" -> VAEarningResult(aeroplanPointsPercent = 100)
+                "Y", "B", "H", "K", "L" -> VAEarningResult(aeroplanPointsPercent = 100)
                 "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(aeroplanPointsPercent = 50)
                 "M" -> VAEarningResult(aeroplanPointsPercent = 25)
                 else -> VAEarningResult(aeroplanPointsPercent = 0)
