@@ -1008,6 +1008,50 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
     }
 }
 
+private val vaCalculator: EarningCalculator =
+    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
+        class VAEarningResult(
+            aeroplanMilesPercent: Int
+            sqmPercent: Int
+        ) : EarningResult(
+            distanceResult = distanceResult,
+            sqmPercent = 0,
+            aeroplanPointsPercent = aeroplanMilesPercent,
+            bonusPointsPercent = 0,
+            eligibleForMinimumPoints = hasAeroplanStatus,
+            baseRate = null, // TODO
+            statusRate = null, // TODO
+            bonusRate = null, // TODO
+            isSqdEligible = false
+        )
+
+        if (originCountry == null || destinationCountry == null) {
+            null
+        } else if (originCountry == "Australia" && destinationCountry == "Australia")
+        aeroplanPointsPercent = sqmPercent {
+            when (fareClass) {
+                "J" -> VAEarningResult(sqmPercent = 150)
+                "C", "D", "I" -> VAEarningResult(sqmPercent = 125)
+                "D" -> VAEarningResult(sqmPercent = 100)
+                "Y", "B", "M", "K" -> VAEarningResult(sqmPercent = 100)
+                "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(sqmPercent = 50)
+                "M" -> VAEarningResult(sqmPercent = 25)
+                else -> VAEarningResult(sqmPercent = 0)
+            }
+        } else
+        sqmPercent = 0 {
+            when (fareClass) {
+                "J" -> VAEarningResult(aeroplanPointsPercent = 150)
+                "C", "D", "I" -> VAEarningResult(aeroplanPointsPercent = 125)
+                "D" -> VAEarningResult(aeroplanPointsPercent = 100)
+                "Y", "B", "M", "K" -> VAEarningResult(aeroplanPointsPercent = 100)
+                "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(aeroplanPointsPercent = 50)
+                "M" -> VAEarningResult(aeroplanPointsPercent = 25)
+                else -> VAEarningResult(aeroplanPointsPercent = 0)
+            }
+        }
+    }
+
 private val ynCalculator = object : SimplePartnerEarningCalculator(
     baseMinimumPoints = 500,
     alwaysEarnsMinimumPoints = true
@@ -1144,6 +1188,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "TP" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
     "UK" -> ukCalculator // Vistara
+    "VA" -> ukCalculator // Virgin Australia
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
     "4Y" -> _4yCalculator // Eurowings Discover
