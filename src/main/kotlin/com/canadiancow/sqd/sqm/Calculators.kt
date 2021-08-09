@@ -1011,7 +1011,7 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
 private val vaCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class VAEarningResult(
-            aeroplanMilesPercent: Int
+            aeroplanMilesPercent: Int,
             sqmPercent: Int
         ) : EarningResult(
             distanceResult = distanceResult,
