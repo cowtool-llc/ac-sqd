@@ -1028,27 +1028,27 @@ private val vaCalculator: EarningCalculator =
         if (originCountry == null || destinationCountry == null) {
             null
         } else if (originCountry == "Australia" && destinationCountry == "Australia")
-        aeroplanPointsPercent = sqmPercent {
-            when (fareClass) {
-                "J" -> VAEarningResult(sqmPercent = 150)
-                "C", "D", "I" -> VAEarningResult(sqmPercent = 125)
-                "Y", "B", "H", "K", "L" -> VAEarningResult(sqmPercent = 100)
-                "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(sqmPercent = 50)
-                "M" -> VAEarningResult(sqmPercent = 25)
-                else -> VAEarningResult(sqmPercent = 0)
-            }
-        } else
-        sqmPercent = 0 {
-            when (fareClass) {
-                "J" -> VAEarningResult(aeroplanPointsPercent = 150)
-                "C", "D", "I" -> VAEarningResult(aeroplanPointsPercent = 125)
-                "Y", "B", "H", "K", "L" -> VAEarningResult(aeroplanPointsPercent = 100)
-                "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(aeroplanPointsPercent = 50)
-                "M" -> VAEarningResult(aeroplanPointsPercent = 25)
-                else -> VAEarningResult(aeroplanPointsPercent = 0)
+            aeroplanPointsPercent = sqmPercent {
+                when (fareClass) {
+                    "J" -> VAEarningResult(sqmPercent = 150)
+                    "C", "D", "I" -> VAEarningResult(sqmPercent = 125)
+                    "Y", "B", "H", "K", "L" -> VAEarningResult(sqmPercent = 100)
+                    "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(sqmPercent = 50)
+                    "M" -> VAEarningResult(sqmPercent = 25)
+                    else -> VAEarningResult(sqmPercent = 0)
+                }
+            } else
+            sqmPercent = 0 {
+                when (fareClass) {
+                    "J" -> VAEarningResult(aeroplanPointsPercent = 150)
+                    "C", "D", "I" -> VAEarningResult(aeroplanPointsPercent = 125)
+                    "Y", "B", "H", "K", "L" -> VAEarningResult(aeroplanPointsPercent = 100)
+                    "E", "N", "V", "Q", "T", "S", "G" -> VAEarningResult(aeroplanPointsPercent = 50)
+                    "M" -> VAEarningResult(aeroplanPointsPercent = 25)
+                    else -> VAEarningResult(aeroplanPointsPercent = 0)
+                }
             }
         }
-    }
 
 private val ynCalculator = object : SimplePartnerEarningCalculator(
     baseMinimumPoints = 500,
