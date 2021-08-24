@@ -569,6 +569,16 @@ private val g3Calculator = object : SimplePartnerEarningCalculator() {
     }
 }
 
+private val gfCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "J", "C", "D", "I" -> 125
+        "Y" -> 100
+        "L", "M", "B", "H" -> 50
+        "U", "V", "E", "O", "N", "S", "K", "X", "Q", "W" -> 25
+        else -> 0
+    }
+}
+
 private val hoCalculator = object : SimpleStarAllianceEarningCalculator() {
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "J", "C" -> 150
@@ -1124,6 +1134,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "EW" -> ewCalculator // Eurowings
     "EY" -> eyCalculator // Etihad Airways
     "G3" -> g3Calculator // GOL
+    "GF" -> gfCalculator // Gulf Air
     "HO" -> hoCalculator // Juneyao Airlines
     "LH", "CL" -> lhCalculator // Lufthansa
     "LO" -> loCalculator // LOT Polish Airlines
