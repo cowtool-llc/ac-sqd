@@ -354,6 +354,70 @@ internal class SqmTest {
     }
 
     @Test
+    fun `getEarningResult() handles Aeroplan SQM`() {
+        assertEquals(
+            0,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "I",
+                "IBP00EL/AE2",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.sqmPercent
+        )
+        assertEquals(
+            0,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "I",
+                "DTAEROEL/AE1",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.sqmPercent
+        )
+        assertEquals(
+            0,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "J",
+                "JAEROEF/AE1",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.sqmPercent
+        )
+        assertEquals(
+            0,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "M",
+                "MAEROFL/AE1",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.sqmPercent
+        )
+    }
+
+    @Test
     fun `getEarningResult() handles unknown fare classes`() {
         assertNull(
             getEarningResult(
