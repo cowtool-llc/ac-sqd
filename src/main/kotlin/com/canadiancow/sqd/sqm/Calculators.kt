@@ -239,7 +239,16 @@ private val acCalculator: EarningCalculator =
                 return@calc ACEarningResult(sqmPercent = 0, baseRate = 0)
             }
 
-            val trueBasis = fareBasis.split("/").first()
+            val split = fareBasis.split("/")
+
+            if (split.size > 1) {
+                val designator = split[1]
+                if (designator.startsWith("AE")) {
+                    return@calc ACEarningResult(sqmPercent = 0, baseRate = 0)
+                }
+            }
+
+            val trueBasis = split[0]
             val brand = trueBasis.substring(trueBasis.length - 2, trueBasis.length)
 
             when (brand) {
