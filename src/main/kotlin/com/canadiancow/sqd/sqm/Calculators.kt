@@ -556,7 +556,7 @@ private val eyCalculator: EarningCalculator =
         when (fareClass) {
             "P" -> EYEarningResult(aeroplanMilesPercent = 400)
             "F", "A" -> EYEarningResult(aeroplanMilesPercent = 250)
-            "J", "C", "D", "W" -> EYEarningResult(aeroplanMilesPercent = 150)
+            "J", "C", "D" -> EYEarningResult(aeroplanMilesPercent = 150)
             "W", "Z" -> EYEarningResult(aeroplanMilesPercent = 125)
             "R" -> EYEarningResult(aeroplanMilesPercent = 110)
             "Y", "B" -> EYEarningResult(aeroplanMilesPercent = 100)
