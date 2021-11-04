@@ -998,10 +998,13 @@ private val uaCalculator: EarningCalculator =
 
         when (fareClass) {
             "J", "C", "D", "Z", "P" -> UAEarningResult(sqmPercent = 150)
-            "O", "A", "R" -> UAEarningResult(sqmPercent = 125)
+            "O", "A" -> UAEarningResult(sqmPercent = 125)
+            "R" -> UAEarningResult(sqmPercent = 100)
             "Y", "B" -> UAEarningResult(sqmPercent = 125)
-            "M", "E", "U", "H", "Q", "V", "W" -> UAEarningResult(sqmPercent = 100)
-            "S", "T", "L", "K", "G" -> UAEarningResult(sqmPercent = 50)
+            "M", "E", "U", "H" -> UAEarningResult(sqmPercent = 100)
+            "Q", "V", "W" -> UAEarningResult(sqmPercent = 75)
+            "S", "T", "L" -> UAEarningResult(sqmPercent = 50)
+            "K", "G" -> UAEarningResult(sqmPercent = 25)
             "N" -> EarningResult(
                 distanceResult = distanceResult,
                 sqmPercent = 0,
