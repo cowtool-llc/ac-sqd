@@ -1055,7 +1055,7 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val _4yCalculator: EarningCalculator =
-    { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
+    { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class _4YEarningResult(
             sqmPercent: Int
         ) : StarAllianceEarningResult(
@@ -1186,7 +1186,7 @@ fun getEarningResult(
     statusRate: Int,
     bonusRate: Int
 ): EarningResult? {
-    val calculator = getCalculator(operatingAirline) ?: return null
+    val calculator = getCalculator(operatingAirline)
 
     val originCountry = airports[origin]?.country
     val originContinent = countriesToContinent[originCountry]
