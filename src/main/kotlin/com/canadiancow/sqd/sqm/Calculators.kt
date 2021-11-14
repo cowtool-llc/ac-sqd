@@ -234,8 +234,12 @@ private val acCalculator: EarningCalculator =
         )
 
         if (!fareBasis.isNullOrEmpty()) {
-            // TODO: Remove BP00 after 2022-11-06
-            if (fareBasis.endsWith("BP00") || fareBasis.contains("AERO")) {
+            if (
+                fareBasis.endsWith("BP00") || // TODO: Remove after 2022-11-06
+                fareBasis.contains("AERO") ||
+                fareBasis.startsWith("X") ||
+                fareBasis.startsWith("I")
+            ) {
                 return@calc ACEarningResult(sqmPercent = 0, baseRate = 0)
             }
 

@@ -52,6 +52,21 @@ internal class SqmTest {
             )!!.sqmPercent
         )
         assertEquals(
+            0,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "J",
+                "IBP00EL",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0
+            )!!.sqmPercent
+        )
+        assertEquals(
             150,
             getEarningResult(
                 "AC",
