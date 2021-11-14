@@ -21,7 +21,7 @@ open class EarningResult(
     val statusRate: Int?,
     val bonusRate: Int?,
     val isSqdEligible: Boolean,
-    var sqd: Double? = null
+    var sqd: Double? = null,
 ) {
     private val distance = distanceResult.distance
 
@@ -70,7 +70,7 @@ open class StarAllianceEarningResult(
     baseRate: Int = 3, // TODO
     statusRate: Int,
     bonusRate: Int?,
-    ticketNumber: String
+    ticketNumber: String,
 ) : EarningResult(
     distanceResult = distanceResult,
     sqmPercent = sqmPercent,
@@ -96,7 +96,7 @@ typealias EarningCalculator = (
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
     statusRate: Int,
-    bonusRate: Int
+    bonusRate: Int,
 ) -> EarningResult?
 
 private enum class BonusPercentage {
@@ -104,7 +104,7 @@ private enum class BonusPercentage {
 }
 
 private abstract class SimpleStarAllianceEarningCalculator(
-    private val bonusPercentage: BonusPercentage = BonusPercentage.NONE
+    private val bonusPercentage: BonusPercentage = BonusPercentage.NONE,
 ) : EarningCalculator {
     abstract fun getSqmPercentage(fareClass: String): Int
 
@@ -115,7 +115,7 @@ private abstract class SimpleStarAllianceEarningCalculator(
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ): EarningResult? {
         if (fareClass == null) {
             return null
@@ -156,7 +156,7 @@ private abstract class SimpleStarAllianceEarningCalculator(
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ) = calculate(
         distanceResult,
         fareClass,
@@ -170,14 +170,14 @@ private abstract class SimpleStarAllianceEarningCalculator(
 
 private abstract class SimplePartnerEarningCalculator(
     private val baseMinimumPoints: Int = 250,
-    private val alwaysEarnsMinimumPoints: Boolean = false
+    private val alwaysEarnsMinimumPoints: Boolean = false,
 ) : EarningCalculator {
     abstract fun getAeroplanMilesPercentage(fareClass: String): Int
 
     fun calculate(
         distanceResult: DistanceResult,
         fareClass: String?,
-        hasAeroplanStatus: Boolean
+        hasAeroplanStatus: Boolean,
     ): EarningResult? {
         if (fareClass == null) {
             return null
@@ -211,7 +211,7 @@ private abstract class SimplePartnerEarningCalculator(
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ) = calculate(distanceResult, fareClass, hasAeroplanStatus)
 }
 
@@ -220,7 +220,7 @@ private val acCalculator: EarningCalculator =
         class ACEarningResult(
             sqmPercent: Int,
             aeroplanPointsPercent: Int = sqmPercent,
-            baseRate: Int = 3
+            baseRate: Int = 3,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -344,7 +344,7 @@ private val adCalculator = object : SimplePartnerEarningCalculator() {
 private val aiCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class AIEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -379,7 +379,7 @@ private val aiCalculator: EarningCalculator =
 private val avCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class AVEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -463,7 +463,7 @@ private val cmCalculator = object : SimpleStarAllianceEarningCalculator(
 private val cxCalculator: EarningCalculator =
     calc@{ distanceResult, origin, _, _, destination, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, _, _ ->
         class CXEarningResult(
-            aeroplanMilesPercent: Int
+            aeroplanMilesPercent: Int,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
@@ -537,7 +537,7 @@ private val ewCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val eyCalculator: EarningCalculator =
     { distanceResult, _, _, _, _, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, _, _ ->
         class EYEarningResult(
-            aeroplanMilesPercent: Int
+            aeroplanMilesPercent: Int,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
@@ -607,7 +607,7 @@ private val hoCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val lhCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
         class LHEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -659,7 +659,7 @@ private val loCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val lxCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
         class LXEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -695,7 +695,7 @@ private val lxCalculator: EarningCalculator =
 private val msCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class MSEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -745,7 +745,7 @@ private val nhCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val nzCalculator: EarningCalculator =
     { distanceResult, _, originCountry, originContinent, _, destinationCountry, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class NZEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -796,7 +796,7 @@ private val oaCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val osCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
         class OSEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -855,7 +855,7 @@ private val ozCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val saCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class SAEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -954,7 +954,7 @@ private val tkCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val tpCalculator: EarningCalculator =
     { distanceResult, origin, _, _, destination, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class TPEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -989,7 +989,7 @@ private val tpCalculator: EarningCalculator =
 private val uaCalculator: EarningCalculator =
     { distanceResult, _, _, _, _, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
         class UAEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -1061,7 +1061,7 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val _4yCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class _4YEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -1122,7 +1122,7 @@ private val nonStarCalculator = object : EarningCalculator {
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ) = EarningResult(
         distanceResult = distanceResult,
         sqmPercent = 0,
@@ -1188,7 +1188,7 @@ fun getEarningResult(
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
     statusRate: Int,
-    bonusRate: Int
+    bonusRate: Int,
 ): EarningResult? {
     val calculator = getCalculator(operatingAirline)
 
