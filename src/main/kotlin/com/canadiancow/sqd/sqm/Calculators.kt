@@ -28,7 +28,7 @@ open class EarningResult(
     val sqm = when {
         distance == null -> null
         sqmPercent == 0 -> 0
-        else -> max(distance * sqmPercent / 100, minimumPoints)
+        else -> max(distance, minimumPoints) * sqmPercent / 100
     }
 
     val aeroplanMiles = when {
