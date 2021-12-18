@@ -554,7 +554,7 @@ internal class SqmTest {
             statusRate = 1,
             bonusRate = 0
         )!!.let {
-            it.sqd = 100.0
+            it.sqd = 100
             assertEquals(63, it.minimumPoints)
             assertEquals(1175, it.aeroplanMiles)
             assertEquals(300, it.totalPoints)
@@ -572,7 +572,7 @@ internal class SqmTest {
             statusRate = 1,
             bonusRate = 3
         )!!.let {
-            it.sqd = 100.0
+            it.sqd = 100
             assertEquals(63, it.minimumPoints)
             assertEquals(199, it.aeroplanMiles)
             assertEquals(600, it.totalPoints)
@@ -590,7 +590,7 @@ internal class SqmTest {
             statusRate = 2,
             bonusRate = 2
         )!!.let {
-            it.sqd = 100.0
+            it.sqd = 100
             assertEquals(25, it.minimumPoints)
             assertEquals(207, it.aeroplanMiles)
             assertEquals(600, it.totalPoints)
@@ -720,7 +720,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
-            )!!.apply { sqd = 1000.00 }.totalPoints
+            )!!.apply { sqd = 1000 }.totalPoints
         )
         assertEquals(
             8800,
@@ -735,7 +735,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
-            )!!.apply { sqd = 800.00 }.totalPoints
+            )!!.apply { sqd = 800 }.totalPoints
         )
         assertEquals(
             6750,
@@ -750,7 +750,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 75,
                 statusRate = 3,
                 bonusRate = 3
-            )!!.apply { sqd = 750.00 }.totalPoints
+            )!!.apply { sqd = 750 }.totalPoints
         )
         assertEquals(
             3500,
@@ -765,7 +765,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 50,
                 statusRate = 2,
                 bonusRate = 2
-            )!!.apply { sqd = 500.00 }.totalPoints
+            )!!.apply { sqd = 500 }.totalPoints
         )
         assertEquals(
             4400,
@@ -780,7 +780,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 4
-            )!!.apply { sqd = 400.00 }.totalPoints
+            )!!.apply { sqd = 400 }.totalPoints
         )
         assertEquals(
             1200,
@@ -795,7 +795,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 35,
                 statusRate = 1,
                 bonusRate = 0
-            )!!.apply { sqd = 300.00 }.totalPoints
+            )!!.apply { sqd = 300 }.totalPoints
         )
         assertEquals(
             4200,
@@ -810,7 +810,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 100,
                 statusRate = 4,
                 bonusRate = 0
-            )!!.apply { sqd = 600.00 }.totalPoints
+            )!!.apply { sqd = 600 }.totalPoints
         )
         assertEquals(
             200,
@@ -825,7 +825,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0
-            )!!.apply { sqd = 100.00 }.totalPoints
+            )!!.apply { sqd = 100 }.totalPoints
         )
     }
 }
