@@ -34,13 +34,13 @@ open class EarningResult(
     val aeroplanMiles = when {
         distance == null -> null
         aeroplanPointsPercent == 0 -> 0
-        else -> max(distance * aeroplanPointsPercent / 100, minimumPoints)
+        else -> max(distance, minimumPoints) * aeroplanPointsPercent / 100
     }
 
     val bonusPoints = when {
         sqm == null || distance == null -> null
         bonusPointsPercent == 0 -> 0
-        else -> min(sqm, distance) * bonusPointsPercent / 100
+        else -> min(sqm, max(distance, minimumPoints)) * bonusPointsPercent / 100
     }
 
     val totalMiles = if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
