@@ -21,7 +21,7 @@ open class EarningResult(
     val statusRate: Int?,
     val bonusRate: Int?,
     val isSqdEligible: Boolean,
-    var sqd: Double? = null,
+    var sqd: Int? = null,
 ) {
     private val distance = distanceResult.distance
 

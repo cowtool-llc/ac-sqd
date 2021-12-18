@@ -174,7 +174,7 @@ class SqdCalculator(
 }
 
 private val currencyFormat = DecimalFormat("#,##0")
-private fun Double.toCurrencyString() = currencyFormat.format(this)
+private fun Int.toCurrencyString() = currencyFormat.format(this)
 
 internal val defaultSegments =
     """

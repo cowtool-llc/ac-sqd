@@ -3,6 +3,7 @@ package com.canadiancow.sqd
 import com.canadiancow.sqd.distance.airports
 import com.canadiancow.sqd.sqm.getDistanceResult
 import com.canadiancow.sqd.sqm.getEarningResult
+import kotlin.math.roundToInt
 
 class Itinerary(
     val segments: List<Segment>,
@@ -35,8 +36,8 @@ class Itinerary(
             segments.forEach {
                 it.earningResult?.sqd = when {
                     !missingAnyDistance || it.earningResult == null || it.distance == null -> null
-                    it.earningResult.isSqdEligible -> it.distance.toLong() * totalFare / totalDistance
-                    else -> 0.0
+                    it.earningResult.isSqdEligible -> (it.distance.toLong() * totalFare / totalDistance).roundToInt()
+                    else -> 0
                 }
             }
 
@@ -218,6 +219,6 @@ class TotalRow(
     val totalMiles: Int?,
 
     val sqm: Int?,
-    val sqd: Double?,
+    val sqd: Int?,
     val totalPoints: Int?
 )
