@@ -16,7 +16,6 @@ open class EarningResult(
     val bonusPointsPercent: Int,
     eligibleForMinimumPoints: Boolean,
     baseMinimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
-    val minimumPoints: Int = (aeroplanPointsPercent * baseMinimumPoints / 100.0).roundToInt(),
     val baseRate: Int?,
     val statusRate: Int?,
     val bonusRate: Int?,
@@ -28,19 +27,19 @@ open class EarningResult(
     val sqm = when {
         distance == null -> null
         sqmPercent == 0 -> 0
-        else -> max(distance, minimumPoints) * sqmPercent / 100
+        else -> max(distance, baseMinimumPoints) * sqmPercent / 100
     }
 
     val aeroplanMiles = when {
         distance == null -> null
         aeroplanPointsPercent == 0 -> 0
-        else -> max(distance, minimumPoints) * aeroplanPointsPercent / 100
+        else -> max(distance, baseMinimumPoints) * aeroplanPointsPercent / 100
     }
 
     val bonusPoints = when {
         sqm == null || distance == null -> null
         bonusPointsPercent == 0 -> 0
-        else -> min(sqm, max(distance, minimumPoints)) * bonusPointsPercent / 100
+        else -> min(sqm, max(distance, baseMinimumPoints)) * bonusPointsPercent / 100
     }
 
     val totalMiles = if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
