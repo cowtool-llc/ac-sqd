@@ -676,7 +676,7 @@ private val lxCalculator: EarningCalculator =
             when (fareClass) {
                 "J", "C", "D", "Z" -> LXEarningResult(sqmPercent = 150)
                 "P" -> LXEarningResult(sqmPercent = 50)
-                "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L", "G" -> LXEarningResult(sqmPercent = 50)
+                "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L" -> LXEarningResult(sqmPercent = 50)
                 else -> LXEarningResult(sqmPercent = 0)
             }
         } else {
@@ -684,9 +684,11 @@ private val lxCalculator: EarningCalculator =
                 "F", "A" -> LXEarningResult(sqmPercent = 150)
                 "J", "C", "D", "Z" -> LXEarningResult(sqmPercent = 150)
                 "P" -> LXEarningResult(sqmPercent = 100)
+                "G", "E" -> LXEarningResult(sqmPercent = 125)
+                "N" -> LXEarningResult(sqmPercent = 100)
                 "Y", "B" -> LXEarningResult(sqmPercent = 125)
                 "M", "U", "H", "Q", "V" -> LXEarningResult(sqmPercent = 100)
-                "W", "S", "T", "L", "G" -> LXEarningResult(sqmPercent = 50)
+                "W", "S", "T", "L" -> LXEarningResult(sqmPercent = 50)
                 else -> LXEarningResult(sqmPercent = 0)
             }
         }
