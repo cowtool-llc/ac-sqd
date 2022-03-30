@@ -311,7 +311,7 @@ private val acCalculator: EarningCalculator =
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if (originCountry == "Canada" && destinationCountry == "Canada") {
-                    ACEarningResult(sqmPercent = 25)
+                    ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
