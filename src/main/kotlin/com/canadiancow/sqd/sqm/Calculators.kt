@@ -281,7 +281,8 @@ private val acCalculator: EarningCalculator =
             }
         }
 
-        val trueFareClass = if (fareClass == "R") {
+        // If it's an eUpgrade, use the first letter of the fare basis
+        val trueFareClass = if (fareClass in setOf("R", "N")) {
             if (fareBasis.isNullOrBlank()) {
                 fareClass // Not really, but we want to continue
             } else {
@@ -293,10 +294,10 @@ private val acCalculator: EarningCalculator =
 
         when (trueFareClass) {
             "J", "C", "D", "Z", "P" -> ACEarningResult(sqmPercent = 150)
-            "O", "E", "N" -> ACEarningResult(sqmPercent = 125)
+            "O", "E", "A" -> ACEarningResult(sqmPercent = 125)
             "Y", "B" -> ACEarningResult(sqmPercent = 125)
             "M", "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
-            "W", "G" ->
+            "W" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if ((originCountry == "Canada" || originCountry == "United States") &&
@@ -306,7 +307,7 @@ private val acCalculator: EarningCalculator =
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
-            "S", "T", "L", "A", "K" ->
+            "S", "T", "L", "K", "G" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if (originCountry == "Canada" && destinationCountry == "Canada") {
