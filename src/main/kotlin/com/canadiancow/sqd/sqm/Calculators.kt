@@ -214,6 +214,12 @@ private abstract class SimplePartnerEarningCalculator(
     ) = calculate(distanceResult, fareClass, hasAeroplanStatus)
 }
 
+fun isAeroplanFareBasis(fareBasis: String) =
+    fareBasis.endsWith("BP00") || // TODO: Remove after 2022-11-06
+            fareBasis.contains("AERO") ||
+            fareBasis.startsWith("X") ||
+            fareBasis.startsWith("I")
+
 private val acCalculator: EarningCalculator =
     calc@{ distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, fareBasis, _, hasAeroplanStatus, bonusPointsPercentage, statusRate, bonusRate ->
         class ACEarningResult(
@@ -233,12 +239,7 @@ private val acCalculator: EarningCalculator =
         )
 
         if (!fareBasis.isNullOrEmpty()) {
-            if (
-                fareBasis.endsWith("BP00") || // TODO: Remove after 2022-11-06
-                fareBasis.contains("AERO") ||
-                fareBasis.startsWith("X") ||
-                fareBasis.startsWith("I")
-            ) {
+            if (isAeroplanFareBasis(fareBasis)) {
                 return@calc ACEarningResult(sqmPercent = 0, baseRate = 0)
             }
 
