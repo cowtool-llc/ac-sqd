@@ -844,16 +844,39 @@ private val ouCalculator = object : SimpleStarAllianceEarningCalculator() {
     }
 }
 
-private val ozCalculator = object : SimpleStarAllianceEarningCalculator() {
-    override fun getSqmPercentage(fareClass: String) = when (fareClass) {
-        "C", "D", "J", "Z" -> 125
-        "U" -> 100
-        "Y", "B", "M" -> 100
-        "H", "E", "Q", "K", "S" -> 50
-        "V", "W", "G", "T" -> 25
-        else -> 0
+private val ozCalculator: EarningCalculator =
+    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
+        class OZEarningResult(
+            sqmPercent: Int,
+        ) : StarAllianceEarningResult(
+            distanceResult = distanceResult,
+            sqmPercent = sqmPercent,
+            hasAeroplanStatus = hasAeroplanStatus,
+            statusRate = statusRate,
+            bonusRate = null, // TODO
+            ticketNumber = ticketNumber
+        )
+
+        if (originCountry == null || destinationCountry == null) {
+            null
+        } else if (originCountry == "South Korea" && destinationCountry == "South Korea") {
+            when (fareClass) {
+                "C" -> OZEarningResult(sqmPercent = 125)
+                "U", "Y", "B", "A" -> OZEarningResult(sqmPercent = 100)
+                "M", "H", "E", "Q", "K", "S" -> OZEarningResult(sqmPercent = 50)
+                "V" -> OZEarningResult(sqmPercent = 25)
+                else -> OZEarningResult(sqmPercent = 0)
+            }
+        } else {
+            when (fareClass) {
+                "C", "D", "J", "Z" -> OZEarningResult(sqmPercent = 125)
+                "U", "Y", "B", "M" -> OZEarningResult(sqmPercent = 100)
+                "H", "E", "Q", "K", "S" -> OZEarningResult(sqmPercent = 50)
+                "V", "W", "G", "T" -> OZEarningResult(sqmPercent = 25)
+                else -> OZEarningResult(sqmPercent = 0)
+            }
+        }
     }
-}
 
 private val saCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
