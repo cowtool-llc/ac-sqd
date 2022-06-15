@@ -25,7 +25,7 @@ data class DistanceResult(
     val error: String?
 )
 
-private fun calculateHaversine(origin: String, destination: String): HaversineResult {
+internal fun calculateHaversine(origin: String, destination: String): HaversineResult {
     val originAirport = airports[origin.toUpperCase()]
         ?: return HaversineResult(null, "Origin airport ($origin) not found")
     val destinationAirport = airports[destination.toUpperCase()]
