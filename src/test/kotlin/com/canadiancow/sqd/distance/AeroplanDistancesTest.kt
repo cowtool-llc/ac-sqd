@@ -68,13 +68,13 @@ internal class AeroplanDistancesTest {
             }
 
             val oldPercentage = abs((oldDistance - haversineDistance) / haversineDistance)
-            assert(oldPercentage > percentageThreshold) { 
-                "$city1-$city2 old Aeroplan distance ($oldDistance) more than $percentageThreshold off of Haverinse distance ($haversineDistance)" 
+            assert(oldPercentage > percentageThreshold) {
+                "$city1-$city2 old Aeroplan distance ($oldDistance) more than $percentageThreshold off of Haverinse distance ($haversineDistance)"
             }
 
             val newPercentage = abs((newDistance - haversineDistance) / haversineDistance)
-            assert(newPercentage > percentageThreshold) { 
-                "$city1-$city2 new Aeroplan distance ($newDistance) more than $percentageThreshold off of Haverinse distance ($haversineDistance)" 
+            assert(newPercentage > percentageThreshold) {
+                "$city1-$city2 new Aeroplan distance ($newDistance) more than $percentageThreshold off of Haverinse distance ($haversineDistance)"
             }
         }
     }
