@@ -56,7 +56,7 @@ internal class AeroplanDistancesTest {
     @Test
     fun `Aeroplan distances match Haversine distances`() {
         val percentageThreshold = 0.02
-        parseResourceToCsv("/aeroplan_distances.csv") { index, line, values ->
+        parseResourceToCsv("/aeroplan_distances.csv") { _, _, values ->
             val city1 = values[0]
             val city2 = values[1]
             val oldDistance = values[2].toIntOrNull()
