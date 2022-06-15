@@ -52,4 +52,17 @@ internal class AeroplanDistancesTest {
             validator(city1, city2, distance)
         }
     }
+
+    @Test
+    fun `Aeroplan distances match Haversine distances`() {
+        parseResourceToCsv("/aeroplan_distances.csv") { index, line, values ->
+            val city1 = values[0]
+            val city2 = values[1]
+            val oldDistance = values[2].toIntOrNull()
+            val newDistance = values[3].toIntOrNull()
+            val haversineDistance = 
+
+            validator(city1, city2, distance)
+        }
+    }
 }
