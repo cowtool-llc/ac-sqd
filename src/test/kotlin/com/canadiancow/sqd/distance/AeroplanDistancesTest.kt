@@ -55,14 +55,27 @@ internal class AeroplanDistancesTest {
 
     @Test
     fun `Aeroplan distances match Haversine distances`() {
+        val percentageThreshold = 0.02
         parseResourceToCsv("/aeroplan_distances.csv") { index, line, values ->
             val city1 = values[0]
             val city2 = values[1]
             val oldDistance = values[2].toIntOrNull()
             val newDistance = values[3].toIntOrNull()
-            val haversineDistance = 
+            val haversineDistance = calculateHaversine(city1, city2).distance!!
 
-            validator(city1, city2, distance)
+            if (oldDistance == null && newDistance == null) {
+                throw IllegalArgumentException("Each line in the csv needs at least one of an old distance or new distance")
+            }
+
+            val oldPercentage = abs((oldDistance - haversineDistance) / haversineDistance)
+            assert(oldPercentage > percentageThreshold) { 
+                "$city1-$city2 old Aeroplan distance ($oldDistance) more than $percentageThreshold off of Haverinse distance ($haversineDistance)" 
+            }
+
+            val newPercentage = abs((newDistance - haversineDistance) / haversineDistance)
+            assert(newPercentage > percentageThreshold) { 
+                "$city1-$city2 new Aeroplan distance ($newDistance) more than $percentageThreshold off of Haverinse distance ($haversineDistance)" 
+            }
         }
     }
 }
