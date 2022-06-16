@@ -79,7 +79,7 @@ internal class AeroplanDistancesTest {
                 if (oldPercentage > percentageThreshold) {
                     println(
                         "$city1-$city2 old Aeroplan distance ($oldDistance) off of " +
-                                "Haversine distance ($haversineDistance) by ${percentFormatter.format(oldPercentage)}"
+                            "Haversine distance ($haversineDistance) by ${percentFormatter.format(oldPercentage)}"
                     )
                 }
 //                assert(oldPercentage <= percentageThreshold) {
@@ -93,7 +93,7 @@ internal class AeroplanDistancesTest {
                 if (newPercentage > percentageThreshold) {
                     println(
                         "$city1-$city2 new Aeroplan distance ($newDistance) off of " +
-                                "Haversine distance ($haversineDistance) by ${percentFormatter.format(newPercentage)}"
+                            "Haversine distance ($haversineDistance) by ${percentFormatter.format(newPercentage)}"
                     )
                 }
 //                assert(newPercentage <= percentageThreshold) {
