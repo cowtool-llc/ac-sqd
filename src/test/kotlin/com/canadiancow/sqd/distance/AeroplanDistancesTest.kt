@@ -2,6 +2,7 @@ package com.canadiancow.sqd.distance
 
 import com.canadiancow.sqd.parseResourceToCsv
 import org.junit.jupiter.api.Test
+import java.text.DecimalFormat
 import kotlin.math.abs
 
 internal class AeroplanDistancesTest {
@@ -71,12 +72,14 @@ internal class AeroplanDistancesTest {
                 )
             }
 
+            val percentFormatter = DecimalFormat("##.#%")
+
             oldDistance?.let { _ ->
                 val oldPercentage = abs((oldDistance - haversineDistance) / haversineDistance.toDouble())
                 if (oldPercentage > percentageThreshold) {
                     println(
-                        "$city1-$city2 old Aeroplan distance ($oldDistance) more than $percentageThreshold off of " +
-                            "Haversine distance ($haversineDistance)"
+                        "$city1-$city2 old Aeroplan distance ($oldDistance) off of " +
+                                "Haversine distance ($haversineDistance) by ${percentFormatter.format(oldPercentage)}"
                     )
                 }
 //                assert(oldPercentage <= percentageThreshold) {
@@ -89,8 +92,8 @@ internal class AeroplanDistancesTest {
                 val newPercentage = abs((newDistance - haversineDistance) / haversineDistance.toDouble())
                 if (newPercentage > percentageThreshold) {
                     println(
-                        "$city1-$city2 new Aeroplan distance ($newDistance) more than $percentageThreshold off of " +
-                            "Haversine distance ($haversineDistance)"
+                        "$city1-$city2 new Aeroplan distance ($newDistance) off of " +
+                                "Haversine distance ($haversineDistance) by ${percentFormatter.format(newPercentage)}"
                     )
                 }
 //                assert(newPercentage <= percentageThreshold) {
