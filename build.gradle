@@ -1,30 +1,41 @@
 buildscript {
-    ext.kotlin_version = '1.5.20'
+    ext.kotlin_version = '1.7.10'
 
     repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        gradlePluginPortal()
     }
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'application'
-
-mainClassName = 'com.canadiancow.sqd.SqdHandler'
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id "com.github.ben-manes.versions" version '0.42.0'
+}
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation('com.amazonaws:aws-lambda-java-core:1.2.1')
-    implementation('com.amazonaws:aws-lambda-java-events:3.9.0')
+    implementation('com.amazonaws:aws-lambda-java-events:3.11.0')
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
     test.useJUnitPlatform()
+}
+
+dependencyUpdates.gradleReleaseChannel = "current"
+
+def isNonStable = { String version ->
+    def hasUnstableKeyword = ['ALPHA', 'BETA'].any { it -> version.toUpperCase().contains(it) }
+    return hasUnstableKeyword
+}
+
+tasks.named("dependencyUpdates").configure {
+    checkForGradleUpdate = true
+    rejectVersionIf {
+        isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
+    }
 }

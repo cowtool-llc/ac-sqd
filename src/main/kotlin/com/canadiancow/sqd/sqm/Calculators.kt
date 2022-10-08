@@ -15,32 +15,31 @@ open class EarningResult(
     val aeroplanPointsPercent: Int = sqmPercent,
     val bonusPointsPercent: Int,
     eligibleForMinimumPoints: Boolean,
-    baseMinimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
-    val minimumPoints: Int = (aeroplanPointsPercent * baseMinimumPoints / 100.0).roundToInt(),
+    minimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
     val baseRate: Int?,
     val statusRate: Int?,
     val bonusRate: Int?,
     val isSqdEligible: Boolean,
-    var sqd: Double? = null
+    var sqd: Int? = null,
 ) {
     private val distance = distanceResult.distance
 
     val sqm = when {
         distance == null -> null
         sqmPercent == 0 -> 0
-        else -> max(distance * sqmPercent / 100, minimumPoints)
+        else -> (max(distance, minimumPoints) * sqmPercent / 100.0).roundToInt()
     }
 
     val aeroplanMiles = when {
         distance == null -> null
         aeroplanPointsPercent == 0 -> 0
-        else -> max(distance * aeroplanPointsPercent / 100, minimumPoints)
+        else -> (max(distance, minimumPoints) * aeroplanPointsPercent / 100.0).roundToInt()
     }
 
     val bonusPoints = when {
         sqm == null || distance == null -> null
         bonusPointsPercent == 0 -> 0
-        else -> min(sqm, distance) * bonusPointsPercent / 100
+        else -> (min(sqm, max(distance, minimumPoints)) * bonusPointsPercent / 100.0).roundToInt()
     }
 
     val totalMiles = if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
@@ -70,7 +69,7 @@ open class StarAllianceEarningResult(
     baseRate: Int = 3, // TODO
     statusRate: Int,
     bonusRate: Int?,
-    ticketNumber: String
+    ticketNumber: String,
 ) : EarningResult(
     distanceResult = distanceResult,
     sqmPercent = sqmPercent,
@@ -96,7 +95,7 @@ typealias EarningCalculator = (
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
     statusRate: Int,
-    bonusRate: Int
+    bonusRate: Int,
 ) -> EarningResult?
 
 private enum class BonusPercentage {
@@ -104,7 +103,7 @@ private enum class BonusPercentage {
 }
 
 private abstract class SimpleStarAllianceEarningCalculator(
-    private val bonusPercentage: BonusPercentage = BonusPercentage.NONE
+    private val bonusPercentage: BonusPercentage = BonusPercentage.NONE,
 ) : EarningCalculator {
     abstract fun getSqmPercentage(fareClass: String): Int
 
@@ -115,7 +114,7 @@ private abstract class SimpleStarAllianceEarningCalculator(
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ): EarningResult? {
         if (fareClass == null) {
             return null
@@ -156,7 +155,7 @@ private abstract class SimpleStarAllianceEarningCalculator(
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ) = calculate(
         distanceResult,
         fareClass,
@@ -170,14 +169,14 @@ private abstract class SimpleStarAllianceEarningCalculator(
 
 private abstract class SimplePartnerEarningCalculator(
     private val baseMinimumPoints: Int = 250,
-    private val alwaysEarnsMinimumPoints: Boolean = false
+    private val alwaysEarnsMinimumPoints: Boolean = false,
 ) : EarningCalculator {
     abstract fun getAeroplanMilesPercentage(fareClass: String): Int
 
     fun calculate(
         distanceResult: DistanceResult,
         fareClass: String?,
-        hasAeroplanStatus: Boolean
+        hasAeroplanStatus: Boolean,
     ): EarningResult? {
         if (fareClass == null) {
             return null
@@ -189,7 +188,7 @@ private abstract class SimplePartnerEarningCalculator(
             aeroplanPointsPercent = aeroplanMilesPercent,
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus || alwaysEarnsMinimumPoints,
-            baseMinimumPoints = if (hasAeroplanStatus || alwaysEarnsMinimumPoints) baseMinimumPoints else 0,
+            minimumPoints = if (hasAeroplanStatus || alwaysEarnsMinimumPoints) baseMinimumPoints else 0,
             baseRate = null, // TODO
             statusRate = null, // TODO
             bonusRate = null, // TODO
@@ -211,17 +210,22 @@ private abstract class SimplePartnerEarningCalculator(
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ) = calculate(distanceResult, fareClass, hasAeroplanStatus)
 }
 
+fun isAeroplanFareBasis(fareBasis: String) =
+    fareBasis.endsWith("BP00") || // TODO: Remove after 2022-11-06
+            fareBasis.contains("AERO") ||
+            fareBasis.startsWith("X") ||
+            fareBasis.startsWith("I")
+
 private val acCalculator: EarningCalculator =
     calc@{ distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, fareBasis, _, hasAeroplanStatus, bonusPointsPercentage, statusRate, bonusRate ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirCanada#/
         class ACEarningResult(
             sqmPercent: Int,
             aeroplanPointsPercent: Int = sqmPercent,
-            baseRate: Int = 3
+            baseRate: Int = 3,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -235,12 +239,20 @@ private val acCalculator: EarningCalculator =
         )
 
         if (!fareBasis.isNullOrEmpty()) {
-            // TODO: Remove BP00 after 2022-11-06
-            if (fareBasis.endsWith("BP00") || fareBasis.contains("AERO")) {
+            if (isAeroplanFareBasis(fareBasis)) {
                 return@calc ACEarningResult(sqmPercent = 0, baseRate = 0)
             }
 
-            val trueBasis = fareBasis.split("/").first()
+            val split = fareBasis.split("/")
+
+            if (split.size > 1) {
+                val designator = split[1]
+                if (designator.startsWith("AE")) {
+                    return@calc ACEarningResult(sqmPercent = 0, baseRate = 0)
+                }
+            }
+
+            val trueBasis = split[0]
             val brand = trueBasis.substring(trueBasis.length - 2, trueBasis.length)
 
             when (brand) {
@@ -270,7 +282,8 @@ private val acCalculator: EarningCalculator =
             }
         }
 
-        val trueFareClass = if (fareClass == "R") {
+        // If it's an eUpgrade, use the first letter of the fare basis
+        val trueFareClass = if (fareClass in setOf("R", "N")) {
             if (fareBasis.isNullOrBlank()) {
                 fareClass // Not really, but we want to continue
             } else {
@@ -282,10 +295,10 @@ private val acCalculator: EarningCalculator =
 
         when (trueFareClass) {
             "J", "C", "D", "Z", "P" -> ACEarningResult(sqmPercent = 150)
-            "O", "E", "N" -> ACEarningResult(sqmPercent = 125)
+            "O", "E", "A" -> ACEarningResult(sqmPercent = 125)
             "Y", "B" -> ACEarningResult(sqmPercent = 125)
             "M", "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
-            "W", "G" ->
+            "W" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if ((originCountry == "Canada" || originCountry == "United States") &&
@@ -295,11 +308,11 @@ private val acCalculator: EarningCalculator =
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
-            "S", "T", "L", "A", "K" ->
+            "S", "T", "L", "K", "G" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if (originCountry == "Canada" && destinationCountry == "Canada") {
-                    ACEarningResult(sqmPercent = 25)
+                    ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
@@ -309,7 +322,6 @@ private val acCalculator: EarningCalculator =
     }
 
 private val a3Calculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Aegean#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "A", "C", "D", "Z" -> 125
         "Y", "B", "G", "W", "H", "L", "M", "V", "Q" -> 100
@@ -320,7 +332,6 @@ private val a3Calculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val adCalculator = object : SimplePartnerEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AzulAirlines#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "J", "C", "D", "I" -> 150
         "Y", " B", " A", " E", " F", " G", " H", " K", " L", " M", " N", " O" -> 100
@@ -333,9 +344,8 @@ private val adCalculator = object : SimplePartnerEarningCalculator() {
 
 private val aiCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirIndia#/
         class AIEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -369,9 +379,8 @@ private val aiCalculator: EarningCalculator =
 
 private val avCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AviancaTaca#/
         class AVEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -415,7 +424,6 @@ private val avCalculator: EarningCalculator =
     }
 
 private val brCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=EvaAir#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "J", "D" -> 125
         "K", "L", "T", "P" -> 100
@@ -427,7 +435,6 @@ private val brCalculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val caCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirChina#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "F", "A" -> 150
         "J", "C", "D" -> 150
@@ -446,7 +453,6 @@ private val caCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val cmCalculator = object : SimpleStarAllianceEarningCalculator(
     bonusPercentage = BonusPercentage.FULL
 ) {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Copa#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "J", "D", "R" -> 125
         "Y", "B", "M", "H", "Q", "K", "V", "U", "S", "W", "E", "L", "T" -> 100
@@ -457,9 +463,8 @@ private val cmCalculator = object : SimpleStarAllianceEarningCalculator(
 
 private val cxCalculator: EarningCalculator =
     calc@{ distanceResult, origin, _, _, destination, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, _, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=CathayPacific#/
         class CXEarningResult(
-            aeroplanMilesPercent: Int
+            aeroplanMilesPercent: Int,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
@@ -499,8 +504,18 @@ private val cxCalculator: EarningCalculator =
         }
     }
 
+private val enCalculator = object : SimpleStarAllianceEarningCalculator() {
+    override fun getSqmPercentage(fareClass: String) = when (fareClass) {
+        "J", "C" -> 150
+        "D", "Z", "P" -> 125
+        "Y", "B", "M" -> 100
+        "U", "H", "Q", "V" -> 75
+        "W", "S", "T", "L", "K" -> 50
+        else -> 0
+    }
+}
+
 private val etCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=EthiopianAirlines#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "J", "D" -> 125
         "Y", "G", "S", "B" -> 100
@@ -512,7 +527,6 @@ private val etCalculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val ewCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Eurowings#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "J", "D" -> 150
         "E", "N" -> 125
@@ -523,9 +537,8 @@ private val ewCalculator = object : SimpleStarAllianceEarningCalculator() {
 
 private val eyCalculator: EarningCalculator =
     { distanceResult, _, _, _, _, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, _, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=EtihadAirways#/
         class EYEarningResult(
-            aeroplanMilesPercent: Int
+            aeroplanMilesPercent: Int,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
@@ -546,20 +559,20 @@ private val eyCalculator: EarningCalculator =
         }
 
         when (fareClass) {
-            "P" -> EYEarningResult(aeroplanMilesPercent = 250)
-            "F", "A", "R" -> EYEarningResult(aeroplanMilesPercent = 150)
-            "J", "C", "D", "W" -> EYEarningResult(aeroplanMilesPercent = 125)
-            "Z" -> EYEarningResult(aeroplanMilesPercent = 115)
-            "Y", "B", "H" -> EYEarningResult(aeroplanMilesPercent = 100)
-            "K", "M", "Q", "L" -> EYEarningResult(aeroplanMilesPercent = 75)
-            "V", "U", "G" -> EYEarningResult(aeroplanMilesPercent = 50)
-            "E", "T" -> EYEarningResult(aeroplanMilesPercent = 25)
+            "P" -> EYEarningResult(aeroplanMilesPercent = 400)
+            "F", "A" -> EYEarningResult(aeroplanMilesPercent = 250)
+            "J", "C", "D" -> EYEarningResult(aeroplanMilesPercent = 150)
+            "W", "Z" -> EYEarningResult(aeroplanMilesPercent = 125)
+            "R" -> EYEarningResult(aeroplanMilesPercent = 110)
+            "Y", "B" -> EYEarningResult(aeroplanMilesPercent = 100)
+            "H", "K", "M", "Q" -> EYEarningResult(aeroplanMilesPercent = 75)
+            "L", "V", "U", "E", "G" -> EYEarningResult(aeroplanMilesPercent = 50)
+            "T" -> EYEarningResult(aeroplanMilesPercent = 25)
             else -> EYEarningResult(aeroplanMilesPercent = 0)
         }
     }
 
 private val g3Calculator = object : SimplePartnerEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=GOL#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "C", "L" -> 150
         "F", "D" -> 125
@@ -570,8 +583,17 @@ private val g3Calculator = object : SimplePartnerEarningCalculator() {
     }
 }
 
+private val gfCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "J", "C", "D", "I" -> 125
+        "Y" -> 100
+        "L", "M", "B", "H" -> 50
+        "U", "V", "E", "O", "N", "S", "K", "X", "Q", "W" -> 25
+        else -> 0
+    }
+}
+
 private val hoCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Juneyao#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "J", "C" -> 150
         "D", "A" -> 125
@@ -585,9 +607,8 @@ private val hoCalculator = object : SimpleStarAllianceEarningCalculator() {
 
 private val lhCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=LufthansaAirways#/
         class LHEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -623,7 +644,6 @@ private val lhCalculator: EarningCalculator =
     }
 
 private val loCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=LotAirlines#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "D" -> 125
         "Z", "F" -> 100
@@ -639,9 +659,8 @@ private val loCalculator = object : SimpleStarAllianceEarningCalculator() {
 
 private val lxCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=SwissAir#/
         class LXEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -658,7 +677,7 @@ private val lxCalculator: EarningCalculator =
             when (fareClass) {
                 "J", "C", "D", "Z" -> LXEarningResult(sqmPercent = 150)
                 "P" -> LXEarningResult(sqmPercent = 50)
-                "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L", "G" -> LXEarningResult(sqmPercent = 50)
+                "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L" -> LXEarningResult(sqmPercent = 50)
                 else -> LXEarningResult(sqmPercent = 0)
             }
         } else {
@@ -666,9 +685,11 @@ private val lxCalculator: EarningCalculator =
                 "F", "A" -> LXEarningResult(sqmPercent = 150)
                 "J", "C", "D", "Z" -> LXEarningResult(sqmPercent = 150)
                 "P" -> LXEarningResult(sqmPercent = 100)
+                "G", "E" -> LXEarningResult(sqmPercent = 125)
+                "N" -> LXEarningResult(sqmPercent = 100)
                 "Y", "B" -> LXEarningResult(sqmPercent = 125)
                 "M", "U", "H", "Q", "V" -> LXEarningResult(sqmPercent = 100)
-                "W", "S", "T", "L", "G" -> LXEarningResult(sqmPercent = 50)
+                "W", "S", "T", "L" -> LXEarningResult(sqmPercent = 50)
                 else -> LXEarningResult(sqmPercent = 0)
             }
         }
@@ -676,9 +697,8 @@ private val lxCalculator: EarningCalculator =
 
 private val msCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=EgyptAir#/
         class MSEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -710,7 +730,6 @@ private val msCalculator: EarningCalculator =
     }
 
 private val nhCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=ANA#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "F", "A" -> 150
         "J" -> 150
@@ -728,9 +747,8 @@ private val nhCalculator = object : SimpleStarAllianceEarningCalculator() {
 
 private val nzCalculator: EarningCalculator =
     { distanceResult, _, originCountry, originContinent, _, destinationCountry, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirNewZealand#/
         class NZEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -769,7 +787,6 @@ private val nzCalculator: EarningCalculator =
     }
 
 private val oaCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=OlympicAir#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "A", "C", "D", "Z" -> 125
         "Y", "B", "G", "W", "H", "L", "M", "V", "Q" -> 100
@@ -781,9 +798,8 @@ private val oaCalculator = object : SimpleStarAllianceEarningCalculator() {
 
 private val osCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AustrianAirlines#/
         class OSEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -818,7 +834,6 @@ private val osCalculator: EarningCalculator =
     }
 
 private val ouCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=CroatiaAirlines#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "D", "Z" -> 125
         "Y", "B" -> 100
@@ -829,23 +844,44 @@ private val ouCalculator = object : SimpleStarAllianceEarningCalculator() {
     }
 }
 
-private val ozCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Asiana#/
-    override fun getSqmPercentage(fareClass: String) = when (fareClass) {
-        "C", "D", "J", "Z" -> 125
-        "U" -> 100
-        "Y", "B", "M" -> 100
-        "H", "E", "Q", "K", "S" -> 50
-        "V", "W", "G", "T" -> 25
-        else -> 0
+private val ozCalculator: EarningCalculator =
+    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
+        class OZEarningResult(
+            sqmPercent: Int,
+        ) : StarAllianceEarningResult(
+            distanceResult = distanceResult,
+            sqmPercent = sqmPercent,
+            hasAeroplanStatus = hasAeroplanStatus,
+            statusRate = statusRate,
+            bonusRate = null, // TODO
+            ticketNumber = ticketNumber
+        )
+
+        if (originCountry == null || destinationCountry == null) {
+            null
+        } else if (originCountry == "South Korea" && destinationCountry == "South Korea") {
+            when (fareClass) {
+                "C" -> OZEarningResult(sqmPercent = 125)
+                "U", "Y", "B", "A" -> OZEarningResult(sqmPercent = 100)
+                "M", "H", "E", "Q", "K", "S" -> OZEarningResult(sqmPercent = 50)
+                "V" -> OZEarningResult(sqmPercent = 25)
+                else -> OZEarningResult(sqmPercent = 0)
+            }
+        } else {
+            when (fareClass) {
+                "C", "D", "J", "Z" -> OZEarningResult(sqmPercent = 125)
+                "U", "Y", "B", "M" -> OZEarningResult(sqmPercent = 100)
+                "H", "E", "Q", "K", "S" -> OZEarningResult(sqmPercent = 50)
+                "V", "W", "G", "T" -> OZEarningResult(sqmPercent = 25)
+                else -> OZEarningResult(sqmPercent = 0)
+            }
+        }
     }
-}
 
 private val saCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=SouthAfricanAirways#/
         class SAEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -882,7 +918,6 @@ private val saCalculator: EarningCalculator =
     }
 
 private val skCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=SASScandinavian#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "D", "Z" -> 125
         "A", "J" -> 125
@@ -897,7 +932,6 @@ private val skCalculator = object : SimpleStarAllianceEarningCalculator() {
 private val snCalculator = object : SimpleStarAllianceEarningCalculator(
     bonusPercentage = BonusPercentage.FIXED_25
 ) {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=BrusselsAirlines#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "J", "C", "D", "Z" -> 150
         "P" -> 100
@@ -911,7 +945,6 @@ private val snCalculator = object : SimpleStarAllianceEarningCalculator(
 }
 
 private val sqCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=SingaporeAirlines#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "A", "F" -> 150
         "Z", "C", "J", "D", "U" -> 125
@@ -923,7 +956,6 @@ private val sqCalculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val tgCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Thai#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "F", "A", "P" -> 150
         "C", "D", "J", "Z" -> 125
@@ -935,7 +967,6 @@ private val tgCalculator = object : SimpleStarAllianceEarningCalculator() {
 }
 
 private val tkCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=TurkishAirlines#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "D", "Z", "K" -> 125
         "J" -> 110
@@ -948,9 +979,8 @@ private val tkCalculator = object : SimpleStarAllianceEarningCalculator() {
 
 private val tpCalculator: EarningCalculator =
     { distanceResult, origin, _, _, destination, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=TapPortugal#/
         class TPEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -984,9 +1014,8 @@ private val tpCalculator: EarningCalculator =
 
 private val uaCalculator: EarningCalculator =
     { distanceResult, _, _, _, _, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage, statusRate, _ ->
-        // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=United#/
         class UAEarningResult(
-            sqmPercent: Int
+            sqmPercent: Int,
         ) : StarAllianceEarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
@@ -999,10 +1028,13 @@ private val uaCalculator: EarningCalculator =
 
         when (fareClass) {
             "J", "C", "D", "Z", "P" -> UAEarningResult(sqmPercent = 150)
-            "O", "A", "R" -> UAEarningResult(sqmPercent = 125)
+            "O", "A" -> UAEarningResult(sqmPercent = 125)
+            "R" -> UAEarningResult(sqmPercent = 100)
             "Y", "B" -> UAEarningResult(sqmPercent = 125)
-            "M", "E", "U", "H", "Q", "V", "W" -> UAEarningResult(sqmPercent = 100)
-            "S", "T", "L", "K", "G" -> UAEarningResult(sqmPercent = 50)
+            "M", "E", "U", "H" -> UAEarningResult(sqmPercent = 100)
+            "Q", "V", "W" -> UAEarningResult(sqmPercent = 75)
+            "S", "T", "L" -> UAEarningResult(sqmPercent = 50)
+            "K", "G" -> UAEarningResult(sqmPercent = 25)
             "N" -> EarningResult(
                 distanceResult = distanceResult,
                 sqmPercent = 0,
@@ -1018,11 +1050,20 @@ private val uaCalculator: EarningCalculator =
         }
     }
 
+private val ukCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "C", "J", "D", "Z" -> 125
+        "S", "T", "P", "R", "Y", "B", "M" -> 100
+        "A", "H", "N", "Q", "V" -> 50
+        "E", "O" -> 20
+        else -> 0
+    }
+}
+
 private val ynCalculator = object : SimplePartnerEarningCalculator(
     baseMinimumPoints = 500,
     alwaysEarnsMinimumPoints = true
 ) {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=AirCreebec#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "Y" -> 100
         "V", "Q", "B" -> 75
@@ -1032,7 +1073,6 @@ private val ynCalculator = object : SimplePartnerEarningCalculator(
 }
 
 private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=Shenzhen#/
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "J", "C" -> 150
         "D", "Z", "R" -> 125
@@ -1044,14 +1084,49 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
     }
 }
 
+private val _4yCalculator: EarningCalculator =
+    { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
+        class _4YEarningResult(
+            sqmPercent: Int,
+        ) : StarAllianceEarningResult(
+            distanceResult = distanceResult,
+            sqmPercent = sqmPercent,
+            hasAeroplanStatus = hasAeroplanStatus,
+            statusRate = statusRate,
+            bonusRate = null, // TODO
+            ticketNumber = ticketNumber
+        )
+
+        if (originContinent == null || destinationContinent == null) {
+            null
+        } else if (originContinent == "Europe" && destinationContinent == "Europe") {
+            when (fareClass) {
+                "J", "C", "D", "Z" -> _4YEarningResult(sqmPercent = 150)
+                "P" -> _4YEarningResult(sqmPercent = 50)
+                "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L" -> _4YEarningResult(sqmPercent = 50)
+                else -> _4YEarningResult(sqmPercent = 0)
+            }
+        } else {
+            when (fareClass) {
+                "J", "C", "D", "Z" -> _4YEarningResult(sqmPercent = 150)
+                "P" -> _4YEarningResult(sqmPercent = 100)
+                "G", "E" -> _4YEarningResult(sqmPercent = 125)
+                "N" -> _4YEarningResult(sqmPercent = 100)
+                "Y", "B" -> _4YEarningResult(sqmPercent = 125)
+                "M", "U", "H", "Q", "V" -> _4YEarningResult(sqmPercent = 100)
+                "W", "S", "T", "L" -> _4YEarningResult(sqmPercent = 50)
+                else -> _4YEarningResult(sqmPercent = 0)
+            }
+        }
+    }
+
 private val _5tCalculator = object : SimplePartnerEarningCalculator(
     baseMinimumPoints = 500,
     alwaysEarnsMinimumPoints = true
 ) {
-    // https://www.aeroplan.com/earn_miles/our_partners/partner_details.do?Partner=CanadianNorth#/
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "Y" -> 100
-        "C", "H", "V", "P" -> 75
+        "C", "H", "P" -> 75
         "M", "O" -> 50
         "B", "A", "T" -> 25
         else -> 0
@@ -1073,7 +1148,7 @@ private val nonStarCalculator = object : EarningCalculator {
         hasAeroplanStatus: Boolean,
         bonusPointsPercentage: Int,
         statusRate: Int,
-        bonusRate: Int
+        bonusRate: Int,
     ) = EarningResult(
         distanceResult = distanceResult,
         sqmPercent = 0,
@@ -1096,10 +1171,12 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "CA" -> caCalculator // Air China
     "CM" -> cmCalculator // COPA Airlines
     "CX", "KA" -> cxCalculator // Cathay Pacific
+    "EN" -> enCalculator // Air Dolomiti
     "ET" -> etCalculator // Ethiopian Airlines
     "EW" -> ewCalculator // Eurowings
     "EY" -> eyCalculator // Etihad Airways
     "G3" -> g3Calculator // GOL
+    "GF" -> gfCalculator // Gulf Air
     "HO" -> hoCalculator // Juneyao Airlines
     "LH", "CL" -> lhCalculator // Lufthansa
     "LO" -> loCalculator // LOT Polish Airlines
@@ -1119,8 +1196,10 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "TK" -> tkCalculator // Turkish Airlines
     "TP" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
+    "UK" -> ukCalculator // Vistara
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
+    "4Y" -> _4yCalculator // Eurowings Discover
     "5T" -> _5tCalculator // Canadian North
     else -> nonStarCalculator // Everything else
 }
@@ -1135,9 +1214,9 @@ fun getEarningResult(
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
     statusRate: Int,
-    bonusRate: Int
+    bonusRate: Int,
 ): EarningResult? {
-    val calculator = getCalculator(operatingAirline) ?: return null
+    val calculator = getCalculator(operatingAirline)
 
     val originCountry = airports[origin]?.country
     val originContinent = countriesToContinent[originCountry]

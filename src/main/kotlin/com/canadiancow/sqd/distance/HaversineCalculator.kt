@@ -19,7 +19,7 @@ fun getSegmentDistance(origin: String, destination: String): DistanceResult {
     return DistanceResult(haversineResult.distance, "Haversine", haversineResult.error)
 }
 
-class DistanceResult(
+data class DistanceResult(
     val distance: Int?,
     val source: String?,
     val error: String?
