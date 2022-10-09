@@ -84,7 +84,7 @@ var SqdCalculator = window.SqdCalculator || {};
         let queryParams = "?ticket=" + ticket +
             "&aeroplanStatus=" + aeroplanStatus +
             "&hasBonusPointsPrivilege=" + hasBonusPointsPrivilege +
-            "&segments=" + segments +
+            "&segments=" + encodeURIComponent(segments) +
             "&baseFare=" + baseFare +
             "&surcharges=" + surcharges;
         window.history.pushState({"queryParams":queryParams}, "", queryParams);
