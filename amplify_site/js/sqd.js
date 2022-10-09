@@ -122,12 +122,12 @@ var SqdCalculator = window.SqdCalculator || {};
     }
 
     function performCalculateSqd() {
-        const ticket = $('#ticket').val()
-        const aeroplanStatus = $('#aeroplanStatus').val()
-        const hasBonusPointsPrivilege = $('#hasBonusPointsPrivilege').val()
-        const segments = $('#segments').val()
-        const baseFare = $('#baseFare').val()
-        const surcharges = $('#surcharges').val()
+        const ticket = $('#ticket').val();
+        const aeroplanStatus = $('#aeroplanStatus').val();
+        const hasBonusPointsPrivilege = $('#hasBonusPointsPrivilege').is(':checked');
+        const segments = $('#segments').val();
+        const baseFare = $('#baseFare').val();
+        const surcharges = $('#surcharges').val();
         callLambda(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
     }
 
@@ -145,18 +145,16 @@ var SqdCalculator = window.SqdCalculator || {};
 
         const ticket = urlParams.get('ticket');
         if (ticket) {
-            $('#ticket').val(ticket);
+            $('#ticket').val(ticket).change();
         }
 
         const aeroplanStatus = urlParams.get('aeroplanStatus');
         if (aeroplanStatus) {
-            $('#aeroplanStatus').val(aeroplanStatus);
+            $('#aeroplanStatus').val(aeroplanStatus).change();
         }
 
         const hasBonusPointsPrivilege = urlParams.get('hasBonusPointsPrivilege');
-        if (hasBonusPointsPrivilege) {
-            $('#hasBonusPointsPrivilege').val(hasBonusPointsPrivilege);
-        }
+        $('#hasBonusPointsPrivilege').prop( 'checked', hasBonusPointsPrivilege === 'true' );
 
         const segments = urlParams.get('segments');
         if (segments) {
