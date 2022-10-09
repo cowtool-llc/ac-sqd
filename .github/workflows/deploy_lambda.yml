@@ -2,7 +2,7 @@ name: Deploy Lambda
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 concurrency: 
   group: ${{ github.workflow }}
