@@ -1,8 +1,8 @@
-package com.canadiancow.sqd
+package com.cowtool.acsqd
 
-import com.canadiancow.sqd.distance.airports
-import com.canadiancow.sqd.sqm.getDistanceResult
-import com.canadiancow.sqd.sqm.getEarningResult
+import com.cowtool.acsqd.distance.airports
+import com.cowtool.acsqd.sqm.getDistanceResult
+import com.cowtool.acsqd.sqm.getEarningResult
 import kotlin.math.roundToInt
 
 class Itinerary(

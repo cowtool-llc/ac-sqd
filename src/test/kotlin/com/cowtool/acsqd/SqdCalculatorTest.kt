@@ -1,4 +1,4 @@
-package com.canadiancow.sqd
+package com.cowtool.acsqd
 
 import org.junit.jupiter.api.Test
 

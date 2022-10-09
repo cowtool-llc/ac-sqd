@@ -1,6 +1,6 @@
-package com.canadiancow.sqd.distance
+package com.cowtool.acsqd.distance
 
-import com.canadiancow.sqd.parseResourceToCsv
+import com.cowtool.acsqd.parseResourceToCsv
 import org.junit.jupiter.api.Test
 
 internal class AirportsTest {

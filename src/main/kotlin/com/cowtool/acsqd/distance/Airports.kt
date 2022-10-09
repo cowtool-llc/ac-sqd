@@ -1,7 +1,7 @@
-package com.canadiancow.sqd.distance
+package com.cowtool.acsqd.distance
 
-import com.canadiancow.sqd.SqdCalculator
-import com.canadiancow.sqd.parseResourceToCsv
+import com.cowtool.acsqd.SqdCalculator
+import com.cowtool.acsqd.parseResourceToCsv
 
 class Airport(
     val iataCode: String,

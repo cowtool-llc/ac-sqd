@@ -1,4 +1,4 @@
-package com.canadiancow.sqd
+package com.cowtool.acsqd
 
 import java.text.DecimalFormat
 

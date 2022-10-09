@@ -1,10 +1,10 @@
-package com.canadiancow.sqd
+package com.cowtool.acsqd
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import com.canadiancow.sqd.distance.aeroplanDistanceCsv
-import com.canadiancow.sqd.distance.airportsCsv
-import com.canadiancow.sqd.sqm.countriesCsv
+import com.cowtool.acsqd.distance.aeroplanDistanceCsv
+import com.cowtool.acsqd.distance.airportsCsv
+import com.cowtool.acsqd.sqm.countriesCsv
 
 data class SqdInput @JvmOverloads constructor(
     var baseFare: String = "",

@@ -1,4 +1,4 @@
-package com.canadiancow.sqd.distance
+package com.cowtool.acsqd.distance
 
 import kotlin.math.asin
 import kotlin.math.cos

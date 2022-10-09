@@ -1,4 +1,4 @@
-package com.canadiancow.sqd
+package com.cowtool.acsqd
 
 enum class FareBrand(
     private val description: String

@@ -1,7 +1,7 @@
-package com.canadiancow.sqd.sqm
+package com.cowtool.acsqd.sqm
 
-import com.canadiancow.sqd.SqdCalculator
-import com.canadiancow.sqd.parseResourceToCsv
+import com.cowtool.acsqd.SqdCalculator
+import com.cowtool.acsqd.parseResourceToCsv
 
 val countriesToContinent: Map<String, String> by lazy {
     parseResourceToCsv("/country_continents.csv") { _, _, values ->

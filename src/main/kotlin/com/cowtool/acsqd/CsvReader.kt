@@ -1,4 +1,4 @@
-package com.canadiancow.sqd
+package com.cowtool.acsqd
 
 fun <T> parseResourceToCsv(
     resourcePath: String,

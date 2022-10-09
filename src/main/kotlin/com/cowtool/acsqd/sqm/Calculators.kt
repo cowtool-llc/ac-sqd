@@ -1,9 +1,9 @@
-package com.canadiancow.sqd.sqm
+package com.cowtool.acsqd.sqm
 
-import com.canadiancow.sqd.SqdCalculatorException
-import com.canadiancow.sqd.distance.DistanceResult
-import com.canadiancow.sqd.distance.airports
-import com.canadiancow.sqd.distance.getSegmentDistance
+import com.cowtool.acsqd.SqdCalculatorException
+import com.cowtool.acsqd.distance.DistanceResult
+import com.cowtool.acsqd.distance.airports
+import com.cowtool.acsqd.distance.getSegmentDistance
 import java.lang.Integer.max
 import java.lang.Integer.min
 import java.util.*

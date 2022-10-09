@@ -1,4 +1,4 @@
-package com.canadiancow.sqd.sqm
+package com.cowtool.acsqd.sqm
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
