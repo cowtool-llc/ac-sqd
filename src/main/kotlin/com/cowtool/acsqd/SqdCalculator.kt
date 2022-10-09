@@ -8,22 +8,27 @@ class SqdCalculator(
     private val hasBonusPointsPrivilege: Boolean,
     private val segments: String,
     private val baseFare: Double?,
-    private val surcharges: Double?
+    private val surcharges: Double?,
 ) {
 
     fun calculate(): SqdResult {
-        val builder = StringBuilder()
-
         if (segments.isNotBlank() && baseFare != null || surcharges != null) {
-            try {
-                builder.append(calculateSqdBreakdown())
+            return try {
+                SqdResult(
+                    results = calculateSqdBreakdown(),
+                    errorMessage = null,
+                )
             } catch (e: SqdCalculatorException) {
-                builder.append("<div>Error:<br/>${e.message}</div><br/>\n")
+                SqdResult(
+                    results = "",
+                    errorMessage = e.message,
+                )
             }
         }
 
         return SqdResult(
-            results = builder.toString(),
+            results = "",
+            errorMessage = "You must specify all required values",
         )
     }
 

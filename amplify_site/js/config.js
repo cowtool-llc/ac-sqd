@@ -6,6 +6,6 @@ window._config = {
         region: 'us-east-1'
     },
     lambda: {
-        functionName: 'ac-flightstatus',
+        functionName: 'ac-sqd',
     }
 };

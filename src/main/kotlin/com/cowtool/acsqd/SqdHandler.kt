@@ -14,6 +14,7 @@ data class SqdInput @JvmOverloads constructor(
 
 data class SqdResult(
     val results: String,
+    val errorMessage: String?,
 )
 
 class SqdHandler : RequestHandler<SqdInput, SqdResult> {
