@@ -1,6 +1,6 @@
-/*global FlightStatus _config AmazonCognitoIdentity AWSCognito*/
+/*global SqdCalculator _config AmazonCognitoIdentity AWSCognito*/
 
-var FlightStatus = window.FlightStatus || {};
+var SqdCalculator = window.SqdCalculator || {};
 
 (function scopeWrapper($) {
     var signinUrl = 'https://www.cowtool.com/';
@@ -17,11 +17,11 @@ var FlightStatus = window.FlightStatus || {};
         AWSCognito.config.region = _config.cognito.region;
     }
 
-    FlightStatus.signOut = function signOut() {
+    SqdCalculator.signOut = function signOut() {
         userPool.getCurrentUser().signOut();
     };
 
-    FlightStatus.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
+    SqdCalculator.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
         var cognitoUser = userPool.getCurrentUser();
 
         if (cognitoUser) {
