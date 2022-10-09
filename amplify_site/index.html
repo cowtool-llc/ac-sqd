@@ -1,0 +1,158 @@
+<html>
+<head>
+    <title>AC SQD Calculator</title>
+    <script type="text/javascript" language="javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1069.0.min.js"></script>
+    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="js/vendor/amazon-cognito-identity.min.js"></script> <!-- TODO: What is this? Do I need it? -->
+    <script src="js/config.js"></script>
+    <script src="js/cognito-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
+    <script src="js/flightstatus.js"></script>
+    <script src="js/jquery.buttonLoader.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .spinner {
+            display: inline-block;
+            opacity: 0;
+            width: 0;
+            -webkit-transition: opacity 0.25s, width 0.25s;
+            -moz-transition: opacity 0.25s, width 0.25s;
+            -o-transition: opacity 0.25s, width 0.25s;
+            transition: opacity 0.25s, width 0.25s;
+        }
+
+        .has-spinner.active {
+            cursor: progress;
+        }
+
+        .has-spinner.active .spinner {
+            opacity: 1;
+            width: auto;
+        }
+
+        .has-spinner.btn.active .spinner {
+            min-width: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <a href="https://www.flyertalk.com/forum/air-canada-aeroplan/1744575-new-improved-calculator-aqm-aeroplan-miles-aqd.html">FlyerTalk
+        Thread</a><br/>
+    <a href="https://github.com/scottkennedy/ac-aqd">GitHub Repository</a>
+</div>
+<br/>
+
+<div id="signedInContainer" style="display: none;">
+    You are signed in as <span id="username"></span>
+</div>
+<div id="notSignedInContainer" style="display: none;">
+    You are not signed in. You can sign in at <a href="https://www.cowtool.com">cowtool.com</a>.
+</div>
+<br/>
+
+<div id="resultsContainer"></div>
+
+<div>
+    <form id="sqdForm" onsubmit="return false;">
+        <table border="0">
+            <tr>
+                <td style="text-align:right"><label for="ticket">Ticket</label>
+                </td>
+                <td>
+                    <select name="ticket" id="ticket">
+                        <option value="014" selected="selected">Air Canada (014)</option>
+                        <option value="000">Other</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right">
+                    <label for="aeroplan_status">Aeroplan Elite Status</label>
+                </td>
+                <td>
+                    <select name="aeroplan_status" id="aeroplan_status">
+                        <option value="" selected="selected">None</option>
+                        <option value="25">25K</option>
+                        <option value="35">35K</option>
+                        <option value="50">50K</option>
+                        <option value="75">75K</option>
+                        <option value="100">SE</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right">
+                    <label for="bonus_points_privilege">Bonus Aeroplan Points Select Privilege</label>
+                </td>
+                <td>
+                    <input type="checkbox" name="bonus_points_privilege" id="bonus_points_privilege" value="true"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right">
+                    <label for="base_fare">Base Fare</label>
+                </td>
+                <td>
+                    <input type="number" min="0" step="0.01" name="base_fare" id="base_fare" required value="0"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right">
+                    <label for="surcharges">SQD-eligible surcharges (YQ/YR)</label>
+                </td>
+                <td>
+                    <input type="number" min="0" step="0.01" name="surcharges" id="surcharges" required value="0"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label for="segments">Segments:<br/>Operating airline,Origin,Destination,Fare Class,Brand Code<br/>You
+                        can leave off fare brand for non-AC</label>
+                </td>
+            <tr>
+                <td colspan="2">
+                    <textarea rows="16" cols="50" name="segments" id="segments" required>AC,SFO,YVR,K,CO
+AC,YVR,LHR,P,EL
+LH,LHR,MUC,P,
+TG,MUC,BKK,M
+CX,BKK,HKG,C</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" id="calculateSqd" class="btn has-spinner">Calculate SQM/SQD</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div>
+    <b>Brand Codes:</b><br/>
+    BA (Basic)<br/>
+    TG (Standard)<br/>
+    FL (Flex)<br/>
+    CO (Comfort)<br/>
+    LT (Latitude)<br/>
+    PL (Premium Economy (Lowest))<br/>
+    PF (Premium Economy (Flexible))<br/>
+    EL (Business Class (Lowest))<br/>
+    EF (Business Class (Flexible))
+</div>
+<br/>
+
+<div>Download <a href="?fetch=countries">country data</a>, <a href="?fetch=airports">airport data</a>, <a
+        href="?fetch=distances">Aeroplan distance data</a></div>
+
+</body>
+</html>
