@@ -1,6 +1,5 @@
 package com.cowtool.acsqd.distance
 
-import com.cowtool.acsqd.SqdCalculator
 import com.cowtool.acsqd.parseResourceToCsv
 
 val aeroplanDistances: Map<String, Pair<Int, Boolean>> by lazy {
@@ -24,8 +23,4 @@ val aeroplanDistances: Map<String, Pair<Int, Boolean>> by lazy {
 
 fun getNewAeroplanDistance(oldDistance: String, newDistance: String): Int {
     return (if (newDistance.isNotBlank()) newDistance else oldDistance).toInt()
-}
-
-val aeroplanDistanceCsv: String by lazy {
-    "<pre>${::SqdCalculator.javaClass.getResource("/aeroplan_distances.csv").readText()}</pre>"
 }

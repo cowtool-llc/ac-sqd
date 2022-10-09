@@ -11,9 +11,8 @@ class SqdCalculator(
     private val surcharges: Double?
 ) {
 
-    fun calculate(): String {
+    fun calculate(): SqdResult {
         val builder = StringBuilder()
-        builder.append(getHeader())
 
         if (segments.isNotBlank() && baseFare != null || surcharges != null) {
             try {
@@ -23,9 +22,9 @@ class SqdCalculator(
             }
         }
 
-        builder.append(buildForm())
-        builder.append(getFooter())
-        return builder.toString()
+        return SqdResult(
+            results = builder.toString(),
+        )
     }
 
     @Throws(SqdCalculatorException::class)
@@ -121,55 +120,6 @@ class SqdCalculator(
         builder.append("</div><br/>\n")
 
         return builder.toString()
-    }
-
-    private fun getHeader(): String {
-        val builder = StringBuilder()
-        builder.append("<html>\n<head><title>SQD Calculator</title></head>\n<body>\n")
-        builder.append("""<div><a href="https://www.flyertalk.com/forum/air-canada-aeroplan/1744575-new-improved-calculator-aqm-aeroplan-miles-aqd.html">FlyerTalk Thread</a><br/>""")
-        builder.append("""<a href="https://github.com/scottkennedy/ac-aqd">GitHub Repository</a></div><br/>""")
-        return builder.toString()
-    }
-
-    private fun getFooter(): String {
-        val builder = StringBuilder()
-        builder.append("<div>Download <a href=\"?fetch=countries\">country data</a>, <a href=\"?fetch=airports\">airport data</a>, <a href=\"?fetch=distances\">Aeroplan distance data</a></div>\n")
-        builder.append("</body>\n</html>")
-        return builder.toString()
-    }
-
-    private fun buildForm(): String {
-        val statuses = setOf("25", "35", "50", "75", "100")
-        return """
-            <div><form method="get">
-            <table border="0">
-            <tr><td style="text-align:right"><label for="ticket">Ticket</label></td>
-            <td><select name="ticket" id="ticket">
-              <option value="014"${if (ticket.startsWith("014")) " selected=\"selected\"" else ""}>Air Canada (014)</option>
-              <option value="000"${if (!ticket.startsWith("014")) " selected=\"selected\"" else ""}>Other</option>
-            </select></td></tr>
-            <tr><td style="text-align:right"><label for="aeroplan_status">Aeroplan Elite Status</label></td>
-            <td><select name="aeroplan_status" id="aeroplan_status">
-              <option value=""${if (aeroplanStatus !in statuses) """ selected="selected"""" else ""}>None</option>
-              <option value="25"${if (aeroplanStatus == "25") " selected=\"selected\"" else ""}>25K</option>
-              <option value="35"${if (aeroplanStatus == "35") " selected=\"selected\"" else ""}>35K</option>
-              <option value="50"${if (aeroplanStatus == "50") " selected=\"selected\"" else ""}>50K</option>
-              <option value="75"${if (aeroplanStatus == "75") " selected=\"selected\"" else ""}>75K</option>
-              <option value="100"${if (aeroplanStatus == "100") " selected=\"selected\"" else ""}>SE</option>
-            </select></td></tr>
-            <tr><td style="text-align:right"><label for="bonus_points_privilege">Bonus Aeroplan Points Select Privilege</label></td>
-            <td><input type="checkbox" name="bonus_points_privilege" id="bonus_points_privilege" value="true"${if (hasBonusPointsPrivilege) """ checked="checked"""" else ""}"/></td></tr>
-            <tr><td style="text-align:right"><label for="base_fare">Base Fare</label></td>
-            <td><input type="number" min="0" step="0.01" name="base_fare" id="base_fare" required value="${baseFare?.toString() ?: "0"}"/></td></tr>
-            <tr><td style="text-align:right"><label for="surcharges">SQD-eligible surcharges (YQ/YR)</label></td>
-            <td><input type="number" min="0" step="0.01" name="surcharges" id="surcharges" required value="${surcharges?.toString() ?: "0"}"/></td></tr>
-            <tr><td colspan="2"><label for="segments">Segments:<br/>Operating airline,Origin,Destination,Fare Class,Brand Code<br/>You can leave off fare brand for non-AC</label></td>
-            <tr><td colspan="2"><textarea rows="16" cols="50" name="segments" required>${if (segments.isBlank()) defaultSegments else segments}</textarea></td></tr>
-            <tr><td colspan="2"><button type="submit">Calculate SQM/SQD</button></td></tr>
-            </table>
-            </form></div>
-            <div><b>Brand Codes:</b><br/>${FareBrand.generateHtmlList()}</div><br/>
-        """.trimIndent()
     }
 }
 

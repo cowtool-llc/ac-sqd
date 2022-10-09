@@ -2,9 +2,6 @@ package com.cowtool.acsqd
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import com.cowtool.acsqd.distance.aeroplanDistanceCsv
-import com.cowtool.acsqd.distance.airportsCsv
-import com.cowtool.acsqd.sqm.countriesCsv
 
 data class SqdInput @JvmOverloads constructor(
     var baseFare: String = "",
@@ -13,17 +10,14 @@ data class SqdInput @JvmOverloads constructor(
     var ticket: String = "",
     var aeroplanStatus: String = "",
     var bonusPointsPrivilege: String = "",
-    var fetch: String? = ""
 )
 
-class SqdHandler : RequestHandler<SqdInput, String> {
-    override fun handleRequest(input: SqdInput, context: Context): String {
-        when (input.fetch) {
-            "airports" -> return airportsCsv
-            "countries" -> return countriesCsv
-            "distances" -> return aeroplanDistanceCsv
-        }
+data class SqdResult(
+    val results: String,
+)
 
+class SqdHandler : RequestHandler<SqdInput, SqdResult> {
+    override fun handleRequest(input: SqdInput, context: Context): SqdResult {
         val baseFare = input.baseFare.toDoubleOrNull()
         val surcharges = input.surcharges.toDoubleOrNull()
         val segments = input.segments
@@ -37,7 +31,7 @@ class SqdHandler : RequestHandler<SqdInput, String> {
             hasBonusPointsPrivilege,
             segments,
             baseFare,
-            surcharges
+            surcharges,
         ).calculate()
     }
 }

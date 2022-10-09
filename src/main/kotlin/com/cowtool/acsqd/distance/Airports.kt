@@ -1,6 +1,5 @@
 package com.cowtool.acsqd.distance
 
-import com.cowtool.acsqd.SqdCalculator
 import com.cowtool.acsqd.parseResourceToCsv
 
 class Airport(
@@ -23,8 +22,4 @@ val airports: Map<String, Airport> by lazy {
 
         Airport(iataCode, country, latitude, longitude)
     }
-}
-
-val airportsCsv: String by lazy {
-    "<pre>${::SqdCalculator.javaClass.getResource("/airports.csv").readText()}</pre>"
 }
