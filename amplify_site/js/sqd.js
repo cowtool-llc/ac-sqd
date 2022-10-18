@@ -79,6 +79,12 @@ var SqdCalculator = window.SqdCalculator || {};
         $("#resultsTable > tbody").empty();
 
         itinerary.segments.forEach(segment => {
+            const baseRate = (segment.earningResult.baseRate) ? segment.earningResult.baseRate + 'x' : '???';
+            const statusRate = (segment.earningResult.statusRate) ? segment.earningResult.statusRate + 'x' : '???';
+            const bonusRate = (segment.earningResult.bonusRate) ? segment.earningResult.bonusRate + 'x' : '???';
+            const totalRate = (segment.earningResult.totalRate) ? segment.earningResult.totalRate + 'x' : '???';
+            const totalPoints = (segment.earningResult.totalPoints) ? segment.earningResult.totalPoints + 'x' : '???';
+
             $("#resultsTable").find('tbody')
                 .append($('<tr>')
                     .append($('<td>')
@@ -132,23 +138,23 @@ var SqdCalculator = window.SqdCalculator || {};
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.baseRate || '???')
+                        .text(baseRate)
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.statusRate || '???')
+                        .text(statusRate)
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.bonusRate || '???')
+                        .text(bonusRate)
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.totalRate || '???')
+                        .text(totalRate)
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.totalPoints || '???')
+                        .text(totalPoints)
                         .attr('align', 'right')
                     )
                 )
