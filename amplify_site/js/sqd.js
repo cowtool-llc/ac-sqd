@@ -76,7 +76,7 @@ var SqdCalculator = window.SqdCalculator || {};
 
     function populateResults(itinerary) {
         $('#resultsContainer').show();
-        $("#resultsTable").find("tr:gt(1)").remove();
+        $("#resultsTable > tbody").empty();
 
         itinerary.segments.forEach(segment => {
             $("#resultsTable").find('tbody')
