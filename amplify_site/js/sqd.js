@@ -60,7 +60,8 @@ var SqdCalculator = window.SqdCalculator || {};
                     alert(response.errorMessage);
                 } else {
                     const results = response.results;
-                    populateResults(results);
+                    populateResultsOld(results);
+                    populateResults(response.itinerary);
                     populateUrl(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
                 }
             }
@@ -69,8 +70,13 @@ var SqdCalculator = window.SqdCalculator || {};
         });
     }
 
-    function populateResults(results) {
-        $('#resultsContainer').html(results);
+    function populateResultsOld(results) {
+        $('#resultsContainerOld').html(results);
+    }
+
+    function populateResults(itinerary) {
+        $('#resultsContainer').show();
+        $("#resultsTable").find("tr:gt(1)").remove();
     }
 
     function populateUrl(
