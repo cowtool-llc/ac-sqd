@@ -77,6 +77,15 @@ var SqdCalculator = window.SqdCalculator || {};
     function populateResults(itinerary) {
         $('#resultsContainer').show();
         $("#resultsTable").find("tr:gt(1)").remove();
+
+        itinerary.segments.forEach(segment => {
+            $("#resultsTable").find('tbody')
+                .append($('<tr>')
+                    .append($('<td>')
+                        .text(segment.airline)
+                    )
+                )
+        });
     }
 
     function populateUrl(
