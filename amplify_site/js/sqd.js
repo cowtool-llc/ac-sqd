@@ -77,6 +77,7 @@ var SqdCalculator = window.SqdCalculator || {};
     function populateResults(itinerary) {
         $('#resultsContainer').show();
         $("#resultsTable > tbody").empty();
+        $("#resultsTable > tfoot").empty();
 
         itinerary.segments.forEach(segment => {
             const baseRate = (segment.earningResult.baseRate) ? segment.earningResult.baseRate + 'x' : '???';
@@ -159,6 +160,37 @@ var SqdCalculator = window.SqdCalculator || {};
                     )
                 )
         });
+
+        $("#resultsTable")
+            .append('<tfoot>')
+                .append($('<tr>')
+                    .css('font-weight', 'bold')
+                    .append($('<td>')
+                        .text("Total")
+                        .attr('align', 'center')
+                        .attr('colspan', 2)
+                    .append($('<td>')
+                    .append($('<td>')
+                        .text(totalRow.distance)
+                        .attr('align', 'right')
+                    .append($('<td>')
+                        .attr('colspan', 2)
+                    .append($('<td>')
+                        .text(totalRow.sqm)
+                        .attr('align', 'right')
+                    .append($('<td>')
+                        .text(totalRow.sqd)
+                        .attr('align', 'right')
+                    .append($('<td>')
+                        .attr('colspan', 2)
+                    .append($('<td>')
+                        .text(totalRow.totalMiles)
+                        .attr('align', 'right')
+                    .append($('<td>')
+                        .attr('colspan', 4)
+                    .append($('<td>')
+                        .text(totalRow.totalPoints)
+                        .attr('align', 'right')
     }
 
     function populateUrl(
