@@ -95,7 +95,7 @@ var SqdCalculator = window.SqdCalculator || {};
                         .text(segment.origin + '-' + segment.destination)
                     )
                     .append($('<td>')
-                        .text(segment.fareClass + ('fareBrand' in segment ? '(' + segment.fareBrand + ')' : ''))
+                        .text(segment.fareClass + ('fareBrand' in segment ? ' (' + segment.fareBrand + ')' : ''))
                         .attr('align', 'center')
                     )
                     .append($('<td>')
