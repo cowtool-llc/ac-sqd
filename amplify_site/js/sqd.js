@@ -25,7 +25,7 @@ var SqdCalculator = window.SqdCalculator || {};
         surcharges
     ) {
         $('#calculateSqd').buttonLoader('start');
-        populateResults("");
+        populateResultsOld("");
 
         AWS.config.region = _config.cognito.region;
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
