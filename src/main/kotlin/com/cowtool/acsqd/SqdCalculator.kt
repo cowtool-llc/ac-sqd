@@ -14,12 +14,16 @@ class SqdCalculator(
     fun calculate(): SqdResult {
         if (segments.isNotBlank() && baseFare != null || surcharges != null) {
             return try {
+                val itinerary = calculateSqdBreakdown()
+
                 SqdResult(
-                    results = calculateSqdBreakdown(),
+                    itinerary = itinerary,
+                    results = generateTableHtml(itinerary),
                     errorMessage = null,
                 )
             } catch (e: SqdCalculatorException) {
                 SqdResult(
+                    itinerary = null,
                     results = "",
                     errorMessage = e.message,
                 )
@@ -27,14 +31,15 @@ class SqdCalculator(
         }
 
         return SqdResult(
+            itinerary = null,
             results = "",
             errorMessage = "You must specify all required values",
         )
     }
 
     @Throws(SqdCalculatorException::class)
-    private fun calculateSqdBreakdown(): String {
-        val itinerary = Itinerary.parse(
+    private fun calculateSqdBreakdown(): Itinerary {
+        return Itinerary.parse(
             ticket = ticket,
             aeroplanStatus = aeroplanStatus,
             hasBonusPointsPrivilege = hasBonusPointsPrivilege,
@@ -42,7 +47,9 @@ class SqdCalculator(
             baseFare = baseFare,
             surcharges = surcharges
         )
+    }
 
+    private fun generateTableHtml(itinerary: Itinerary): String {
         val builder = StringBuilder()
         builder.append("<div>")
 
