@@ -10,7 +10,7 @@ plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.7.20'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id "com.github.ben-manes.versions" version '0.42.0'
+    id "com.github.ben-manes.versions" version '0.43.0'
 }
 
 repositories {
@@ -22,7 +22,7 @@ dependencies {
     implementation('com.amazonaws:aws-lambda-java-core:1.2.1')
     implementation('com.amazonaws:aws-lambda-java-events:3.11.0')
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
     test.useJUnitPlatform()
 }
 
