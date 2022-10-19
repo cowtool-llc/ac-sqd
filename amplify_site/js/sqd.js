@@ -25,7 +25,6 @@ var SqdCalculator = window.SqdCalculator || {};
         surcharges
     ) {
         $('#calculateSqd').buttonLoader('start');
-        populateResultsOld("");
 
         AWS.config.region = _config.cognito.region;
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -60,7 +59,6 @@ var SqdCalculator = window.SqdCalculator || {};
                     alert(response.errorMessage);
                 } else {
                     const results = response.results;
-                    populateResultsOld(results);
                     populateResults(response.itinerary);
                     populateUrl(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
                 }
@@ -68,10 +66,6 @@ var SqdCalculator = window.SqdCalculator || {};
 
             $('#calculateSqd').buttonLoader('stop');
         });
-    }
-
-    function populateResultsOld(results) {
-        $('#resultsContainerOld').html(results);
     }
 
     function populateResults(itinerary) {
