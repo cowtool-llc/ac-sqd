@@ -14,7 +14,6 @@ data class SqdInput @JvmOverloads constructor(
 
 data class SqdResult(
     val itinerary: Itinerary?,
-    val results: String,
     val errorMessage: String?,
 )
 
