@@ -22,7 +22,7 @@ class SqdHandler : RequestHandler<SqdInput, SqdResult> {
         val baseFare = input.baseFare.toDoubleOrNull()
         val surcharges = input.surcharges.toDoubleOrNull()
         val segments = input.segments
-        val ticket = if (input.ticket.isBlank()) "014" else input.ticket
+        val ticket = input.ticket.ifBlank { "014" }
         val aeroplanStatus = input.aeroplanStatus
         val hasBonusPointsPrivilege = input.bonusPointsPrivilege.toBoolean()
 

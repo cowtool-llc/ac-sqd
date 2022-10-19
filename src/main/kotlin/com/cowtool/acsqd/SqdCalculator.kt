@@ -1,7 +1,5 @@
 package com.cowtool.acsqd
 
-import java.text.DecimalFormat
-
 class SqdCalculator(
     private val ticket: String,
     private val aeroplanStatus: String,
@@ -46,9 +44,6 @@ class SqdCalculator(
         )
     }
 }
-
-private val currencyFormat = DecimalFormat("#,##0")
-private fun Int.toCurrencyString() = currencyFormat.format(this)
 
 internal val defaultSegments =
     """
