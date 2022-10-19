@@ -80,11 +80,11 @@ var SqdCalculator = window.SqdCalculator || {};
         $("#resultsTable > tfoot").empty();
 
         itinerary.segments.forEach(segment => {
-            const baseRate = (segment.earningResult.baseRate) ? segment.earningResult.baseRate + 'x' : '???';
-            const statusRate = (segment.earningResult.statusRate) ? segment.earningResult.statusRate + 'x' : '???';
-            const bonusRate = (segment.earningResult.bonusRate) ? segment.earningResult.bonusRate + 'x' : '???';
-            const totalRate = (segment.earningResult.totalRate) ? segment.earningResult.totalRate + 'x' : '???';
-            const totalPoints = (segment.earningResult.totalPoints) ? segment.earningResult.totalPoints.toLocaleString('en-US') : '???';
+            const baseRate = (segment.earningResult.baseRate != null) ? segment.earningResult.baseRate + 'x' : '???';
+            const statusRate = (segment.earningResult.statusRate != null) ? segment.earningResult.statusRate + 'x' : '???';
+            const bonusRate = (segment.earningResult.bonusRate != null) ? segment.earningResult.bonusRate + 'x' : '???';
+            const totalRate = (segment.earningResult.totalRate != null) ? segment.earningResult.totalRate + 'x' : '???';
+            const totalPoints = (segment.earningResult.totalPoints != null) ? segment.earningResult.totalPoints.toLocaleString('en-US') : '???';
 
             $("#resultsTable").find('tbody')
                 .append($('<tr>')
