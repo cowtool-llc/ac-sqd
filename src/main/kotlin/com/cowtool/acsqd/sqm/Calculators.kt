@@ -695,6 +695,17 @@ private val lxCalculator: EarningCalculator =
         }
     }
 
+private val mkCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "J", "D", "C", "R", "I" -> 125
+        "Y", "K" -> 100
+        "H", "T" -> 75
+        "U", "V", "S", "L" -> 50
+        "Q", "M", "O", "X", "G", "B", "E", "N" -> 25
+        else -> 0
+    }
+}
+
 private val msCalculator: EarningCalculator =
     { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _, statusRate, _ ->
         class MSEarningResult(
@@ -1071,6 +1082,18 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
     }
 }
 
+private val wyCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "P", "F" -> 150
+        "J", "C", "D", "R" -> 125
+        "Y", "H", "M", "B" -> 100
+        "K", "I", "Q", "T" -> 50
+        "N", "L", "U", "O", "G" -> 25
+        "E" -> 10
+        else -> 0
+    }
+}
+
 private val ynCalculator = object : SimplePartnerEarningCalculator(
     baseMinimumPoints = 500,
     alwaysEarnsMinimumPoints = true
@@ -1192,6 +1215,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "LH", "CL" -> lhCalculator // Lufthansa
     "LO" -> loCalculator // LOT Polish Airlines
     "LX" -> lxCalculator // Swiss
+    "MK" -> mkCalculator // Air Mauritius
     "MS" -> msCalculator // EgyptAir
     "NH", "NQ" -> nhCalculator // ANA
     "NZ" -> nzCalculator // Air New Zealand
@@ -1209,6 +1233,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "TP" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
     "UK" -> ukCalculator // Vistara
+    "WY" -> wyCalculator // Omar Air
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
     "4Y" -> _4yCalculator // Eurowings Discover
