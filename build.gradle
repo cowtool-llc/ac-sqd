@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.7.20'
+    ext.kotlin_version = '1.7.22'
 
     repositories {
         gradlePluginPortal()
@@ -8,9 +8,9 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.22'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id "com.github.ben-manes.versions" version '0.43.0'
+    id "com.github.ben-manes.versions" version '0.44.0'
 }
 
 repositories {
@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    implementation('com.amazonaws:aws-lambda-java-core:1.2.1')
+    implementation('com.amazonaws:aws-lambda-java-core:1.2.2')
     implementation('com.amazonaws:aws-lambda-java-events:3.11.0')
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
@@ -29,7 +29,7 @@ dependencies {
 dependencyUpdates.gradleReleaseChannel = "current"
 
 def isNonStable = { String version ->
-    def hasUnstableKeyword = ['ALPHA', 'BETA'].any { it -> version.toUpperCase().contains(it) }
+    def hasUnstableKeyword = ['ALPHA', 'BETA', 'RC'].any { it -> version.toUpperCase().contains(it) }
     return hasUnstableKeyword
 }
 
