@@ -334,7 +334,7 @@ private val a3Calculator = object : SimpleStarAllianceEarningCalculator() {
 private val adCalculator = object : SimplePartnerEarningCalculator() {
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "J", "C", "D", "I" -> 150
-        "Y", " B", " A", " E", " F", " G", " H", " K", " L", " M", " N", " O" -> 100
+        "Y", "B", "A", "E", "F", "G", "H", "K", "L", "M", "N", "O" -> 100
         "P", "Q" -> 75
         "S", "T", "U" -> 50
         "X", "Z" -> 25
@@ -503,6 +503,18 @@ private val cxCalculator: EarningCalculator =
             else -> CXEarningResult(aeroplanMilesPercent = 0)
         }
     }
+
+private val ekCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "F", "A" -> 150
+        "J", "C", "I", "O" -> 125
+        "H", "W", "E" -> 110
+        "R", "Y", "P" -> 100
+        "U", "B", "M", "K" -> 50
+        "G", "T", "L", "Q" -> 15
+        else -> 0
+    }
+}
 
 private val enCalculator = object : SimpleStarAllianceEarningCalculator() {
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
@@ -1205,6 +1217,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "CA" -> caCalculator // Air China
     "CM" -> cmCalculator // COPA Airlines
     "CX", "KA" -> cxCalculator // Cathay Pacific
+    "EK" -> ekCalculator // Emirates
     "EN" -> enCalculator // Air Dolomiti
     "ET" -> etCalculator // Ethiopian Airlines
     "EW" -> ewCalculator // Eurowings
