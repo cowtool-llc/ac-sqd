@@ -5,7 +5,7 @@ import com.cowtool.acsqd.sqm.getDistanceResult
 import com.cowtool.acsqd.sqm.getEarningResult
 import kotlin.math.roundToInt
 
-class Itinerary(
+data class Itinerary(
     val segments: List<Segment>,
     val totalRow: TotalRow
 ) {
@@ -211,7 +211,7 @@ private fun convertBonusPointsPercentageToStatusEarnRate(bonusPointsPercentage: 
     else -> 0
 }
 
-class TotalRow(
+data class TotalRow(
     val distance: Int?,
 
     val aeroplanMiles: Int?,
