@@ -9,52 +9,81 @@ import java.lang.Integer.min
 import java.util.*
 import kotlin.math.roundToInt
 
+interface EarningResultCore {
+    val distanceResult: DistanceResult
+    val sqmPercent: Int
+    val aeroplanPointsPercent: Int
+    val bonusPointsPercent: Int
+    val baseRate: Int?
+    val statusRate: Int?
+    val bonusRate: Int?
+    val isSqdEligible: Boolean
+    var sqd: Int?
+
+    val sqm: Int?
+    val aeroplanMiles: Int?
+    val bonusPoints: Int?
+    val totalMiles: Int?
+    val totalRate: Int?
+    val totalPoints: Int?
+}
+
 open class EarningResult(
-    val distanceResult: DistanceResult,
-    val sqmPercent: Int,
-    val aeroplanPointsPercent: Int = sqmPercent,
-    val bonusPointsPercent: Int,
+    override val distanceResult: DistanceResult,
+    override val sqmPercent: Int,
+    override val aeroplanPointsPercent: Int = sqmPercent,
+    override val bonusPointsPercent: Int,
     eligibleForMinimumPoints: Boolean,
     minimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
-    val baseRate: Int?,
-    val statusRate: Int?,
-    val bonusRate: Int?,
-    val isSqdEligible: Boolean,
-    var sqd: Int? = null,
-) {
+    override val baseRate: Int?,
+    override val statusRate: Int?,
+    override val bonusRate: Int?,
+    override val isSqdEligible: Boolean,
+    override var sqd: Int? = null,
+) : EarningResultCore {
     private val distance = distanceResult.distance
 
-    val sqm = when {
+    override val sqm = when {
         distance == null -> null
         sqmPercent == 0 -> 0
         else -> (max(distance, minimumPoints) * sqmPercent / 100.0).roundToInt()
     }
 
-    val aeroplanMiles = when {
+    override val aeroplanMiles = when {
         distance == null -> null
         aeroplanPointsPercent == 0 -> 0
         else -> (max(distance, minimumPoints) * aeroplanPointsPercent / 100.0).roundToInt()
     }
 
-    val bonusPoints = when {
-        sqm == null || distance == null -> null
-        bonusPointsPercent == 0 -> 0
-        else -> (min(sqm, max(distance, minimumPoints)) * bonusPointsPercent / 100.0).roundToInt()
+    override val bonusPoints: Int?
+    init {
+        val sqm = sqm
+        val distance = distance
+        bonusPoints = when {
+            sqm == null || distance == null -> null
+            bonusPointsPercent == 0 -> 0
+            else -> (min(sqm, max(distance, minimumPoints)) * bonusPointsPercent / 100.0).roundToInt()
+        }
     }
 
-    val totalMiles = if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
+    override val totalMiles: Int?
+    init {
+        val aeroplanMiles = aeroplanMiles
+        val bonusPoints = bonusPoints
+        totalMiles = if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
+    }
 
-    val totalRate = if (baseRate != null || statusRate != null || bonusRate != null) {
+    override val totalRate = if (baseRate != null || statusRate != null || bonusRate != null) {
         listOfNotNull(baseRate, statusRate, bonusRate).sum()
     } else {
         null
     }
 
-    val totalPoints: Int?
+    override val totalPoints: Int?
         get() {
-            sqd?.let {
-                if (totalRate != null) {
-                    return (it * totalRate).toInt()
+            sqd?.let { sqd ->
+                totalRate?.let { totalRate ->
+                    return (sqd * totalRate)
                 }
             }
             return null

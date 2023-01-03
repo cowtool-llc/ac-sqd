@@ -19,10 +19,10 @@ fun getSegmentDistance(origin: String, destination: String): DistanceResult {
     return DistanceResult(haversineResult.distance, "Haversine", haversineResult.error)
 }
 
-data class DistanceResult(
-    val distance: Int?,
-    val source: String?,
-    val error: String?
+data class DistanceResult @JvmOverloads constructor(
+    val distance: Int? = null,
+    val source: String? = null,
+    val error: String? = null,
 )
 
 private fun calculateHaversine(origin: String, destination: String): HaversineResult {
