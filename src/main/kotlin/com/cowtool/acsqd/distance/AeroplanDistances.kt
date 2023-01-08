@@ -22,5 +22,5 @@ val aeroplanDistances: Map<String, Pair<Int, Boolean>> by lazy {
 }
 
 fun getNewAeroplanDistance(oldDistance: String, newDistance: String): Int {
-    return (if (newDistance.isNotBlank()) newDistance else oldDistance).toInt()
+    return newDistance.ifBlank { oldDistance }.toInt()
 }
