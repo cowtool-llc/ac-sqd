@@ -41,7 +41,7 @@ internal class AeroplanDistancesTest {
     }
 
     @Test
-    fun `saved distance is within 10 percent of haversine`() {
+    fun `saved distance is within 3 percent of haversine`() {
         validateCityPairs { city1, city2, newDistance, _ ->
             newDistance?.let { _ ->
                 val haversineDistance = calculateHaversine(city1, city2).distance!!
