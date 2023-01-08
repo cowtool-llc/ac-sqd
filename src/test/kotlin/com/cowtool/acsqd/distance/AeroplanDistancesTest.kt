@@ -49,7 +49,7 @@ internal class AeroplanDistancesTest {
                 val difference = abs(newDistance.toDouble() / haversineDistance.toDouble())
 
                 assert(
-                    difference in 0.97..1.03
+                    difference in 0.97..1.03,
                 ) { "$city1-$city2 Haversine is $haversineDistance, but Aeroplan is $newDistance" }
             }
         }
