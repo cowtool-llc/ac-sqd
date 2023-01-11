@@ -305,6 +305,7 @@ private val acCalculator: EarningCalculator =
                     } else {
                         ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 25, baseRate = 2)
                     }
+
                 "TG" ->
                     return@calc if (originCountry == null || destinationCountry == null) {
                         null
@@ -313,6 +314,7 @@ private val acCalculator: EarningCalculator =
                     } else {
                         ACEarningResult(sqmPercent = 50)
                     }
+
                 "FL" -> return@calc ACEarningResult(sqmPercent = 100)
                 "CO" -> return@calc ACEarningResult(sqmPercent = 115)
                 "LT" -> return@calc ACEarningResult(sqmPercent = 125)
@@ -349,6 +351,7 @@ private val acCalculator: EarningCalculator =
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
+
             "S", "T", "L", "K", "G" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
@@ -357,6 +360,7 @@ private val acCalculator: EarningCalculator =
                 } else {
                     ACEarningResult(sqmPercent = 50)
                 }
+
             null -> null
             else -> ACEarningResult(sqmPercent = 0)
         }
@@ -1121,6 +1125,7 @@ private val uaCalculator: EarningCalculator =
                 bonusRate = null, // TODO
                 isSqdEligible = false
             )
+
             else -> UAEarningResult(sqmPercent = 0)
         }
     }
