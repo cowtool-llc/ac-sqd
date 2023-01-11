@@ -34,50 +34,62 @@ open class EarningResult(
     override val aeroplanPointsPercent: Int = sqmPercent,
     override val bonusPointsPercent: Int,
     eligibleForMinimumPoints: Boolean,
-    minimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
+    private val minimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
     override val baseRate: Int?,
     override val statusRate: Int?,
     override val bonusRate: Int?,
     override val isSqdEligible: Boolean,
     override var sqd: Int? = null,
 ) : EarningResultCore {
-    private val distance = distanceResult.distance
+    private val distance
+        get() = distanceResult.distance
 
-    override val sqm = when {
-        distance == null -> null
-        sqmPercent == 0 -> 0
-        else -> (max(distance, minimumPoints) * sqmPercent / 100.0).roundToInt()
-    }
+    override val sqm
+        get() = distance?.let { distance ->
+            if (sqmPercent == 0) {
+                0
+            } else {
+                (max(distance, minimumPoints) * sqmPercent / 100.0).roundToInt()
+            }
+        }
 
-    override val aeroplanMiles = when {
-        distance == null -> null
-        aeroplanPointsPercent == 0 -> 0
-        else -> (max(distance, minimumPoints) * aeroplanPointsPercent / 100.0).roundToInt()
-    }
+    override val aeroplanMiles
+        get() = distance?.let { distance ->
+            if (aeroplanPointsPercent == 0) {
+                0
+            } else {
+                (max(distance, minimumPoints) * aeroplanPointsPercent / 100.0).roundToInt()
+            }
+        }
 
     override val bonusPoints: Int?
-    init {
+        get() = calculateBonusPoints()
+
+    private fun calculateBonusPoints(): Int? {
         val sqm = sqm
         val distance = distance
-        bonusPoints = when {
+        return when {
             sqm == null || distance == null -> null
             bonusPointsPercent == 0 -> 0
             else -> (min(sqm, max(distance, minimumPoints)) * bonusPointsPercent / 100.0).roundToInt()
         }
     }
 
-    override val totalMiles: Int?
-    init {
+    override val totalMiles
+        get() = calculateTotalMiles()
+
+    private fun calculateTotalMiles(): Int? {
         val aeroplanMiles = aeroplanMiles
         val bonusPoints = bonusPoints
-        totalMiles = if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
+        return if (aeroplanMiles == null || bonusPoints == null) null else aeroplanMiles + bonusPoints
     }
 
-    override val totalRate = if (baseRate != null || statusRate != null || bonusRate != null) {
-        listOfNotNull(baseRate, statusRate, bonusRate).sum()
-    } else {
-        null
-    }
+    override val totalRate
+        get() = if (baseRate != null || statusRate != null || bonusRate != null) {
+            listOfNotNull(baseRate, statusRate, bonusRate).sum()
+        } else {
+            null
+        }
 
     override val totalPoints: Int?
         get() {
