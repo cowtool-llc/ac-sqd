@@ -155,6 +155,7 @@ var SqdCalculator = window.SqdCalculator || {};
                 )
         });
 
+        const totalPoints = (itinerary.totalRow.totalPoints != null) ? itinerary.totalRow.totalPoints.toLocaleString('en-US') : '???';
         $("#resultsTable").find('tfoot')
             .append($('<tr>')
                 .css('font-weight', 'bold')
@@ -200,7 +201,7 @@ var SqdCalculator = window.SqdCalculator || {};
                     .attr('colspan', 4)
                 )
                 .append($('<td>')
-                    .text(itinerary.totalRow.totalPoints.toLocaleString('en-US'))
+                    .text(totalPoints.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
             )
