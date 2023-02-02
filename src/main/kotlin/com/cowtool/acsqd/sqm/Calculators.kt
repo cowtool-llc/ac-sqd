@@ -294,7 +294,7 @@ private val acCalculator: EarningCalculator =
             }
 
             val trueBasis = split[0]
-            val brand = trueBasis.substring(trueBasis.length - 2, trueBasis.length)
+            val brand = trueBasis.takeLast(2)
 
             when (brand) {
                 "BA", "GT" ->

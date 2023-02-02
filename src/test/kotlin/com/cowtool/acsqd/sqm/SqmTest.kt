@@ -829,4 +829,38 @@ internal class SqmTest {
             )!!.sqm
         )
     }
+
+    @Test
+    fun `getEarningResult() handles AC single character fare bases`() {
+        assertEquals(
+            125,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "Y",
+                "Y",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0,
+            )!!.sqmPercent,
+        )
+        assertEquals(
+            150,
+            getEarningResult(
+                "AC",
+                "SFO",
+                "YYZ",
+                "J",
+                "J",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0,
+            )!!.sqmPercent,
+        )
+    }
 }
