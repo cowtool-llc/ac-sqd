@@ -845,7 +845,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0,
-            )!!.sqmPercent
+            )!!.sqmPercent,
         )
         assertEquals(
             150,
@@ -860,7 +860,7 @@ internal class SqmTest {
                 bonusPointsPercentage = 0,
                 statusRate = 0,
                 bonusRate = 0,
-            )!!.sqmPercent
+            )!!.sqmPercent,
         )
     }
 }
