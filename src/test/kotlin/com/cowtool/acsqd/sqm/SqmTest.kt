@@ -844,7 +844,7 @@ internal class SqmTest {
                 hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
-                bonusRate = 0
+                bonusRate = 0,
             )!!.sqmPercent
         )
         assertEquals(
@@ -859,7 +859,7 @@ internal class SqmTest {
                 hasAeroplanStatus = false,
                 bonusPointsPercentage = 0,
                 statusRate = 0,
-                bonusRate = 0
+                bonusRate = 0,
             )!!.sqmPercent
         )
     }
