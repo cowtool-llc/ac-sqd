@@ -946,6 +946,15 @@ private val ozCalculator: EarningCalculator =
         }
     }
 
+private val pbCalculator = object : SimplePartnerEarningCalculator() {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "Y", "R" -> 125
+        "V", "L", "H" -> 75
+        "T", "K", "D" -> 25
+        else -> 0
+    }
+}
+
 private val qhCalculator = object : SimplePartnerEarningCalculator() {
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "J", "C", "I" -> 125
@@ -1282,6 +1291,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "OS" -> osCalculator // Austrian
     "OU" -> ouCalculator // Croatia Airlines
     "OZ" -> ozCalculator // Asiana Airlines
+    "PB" -> pbCalculator // PAL Airlines
     "QH" -> qhCalculator // Bamboo Airways
     "SA" -> saCalculator // South African Airways
     "SK" -> skCalculator // Scandinavian Airlines
