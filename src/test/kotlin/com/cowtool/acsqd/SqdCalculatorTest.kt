@@ -35,7 +35,7 @@ internal class SqdCalculatorTest {
             segments = """
                     AC,SFO,YVR,J,EF
                     AC,YVR,YYZ,J,EF
-                """.trimIndent()
+                """.trimIndent(),
         ).calculate()
 
         assertEquals(230, result.itinerary!!.segments[0].earningResult!!.sqd)
