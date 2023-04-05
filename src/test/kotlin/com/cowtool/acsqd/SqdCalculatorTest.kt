@@ -1,5 +1,6 @@
 package com.cowtool.acsqd
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class SqdCalculatorTest {
@@ -18,5 +19,26 @@ internal class SqdCalculatorTest {
                 segments = defaultSegments
             ).calculate()
         )
+    }
+
+    /**
+     * This is a test of SQD rounding to try to match how AC credits.
+     */
+    @Test
+    fun `SQD rounding should match AC`() {
+        val result = SqdCalculator(
+            baseFare = 829.0,
+            surcharges = 0.0,
+            ticket = "014",
+            aeroplanStatus = "100",
+            hasBonusPointsPrivilege = true,
+            segments = """
+                    AC,SFO,YVR,J,EF
+                    AC,YVR,YYZ,J,EF
+                """.trimIndent()
+        ).calculate()
+
+        assertEquals(230, result.itinerary!!.segments[0].earningResult!!.sqd)
+        assertEquals(599, result.itinerary!!.segments[1].earningResult!!.sqd)
     }
 }
