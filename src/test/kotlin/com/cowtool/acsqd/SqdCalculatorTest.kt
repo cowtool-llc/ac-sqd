@@ -34,10 +34,10 @@ internal class SqdCalculatorTest {
                 aeroplanStatus = "100",
                 hasBonusPointsPrivilege = true,
                 segments = """
-                AC,SFO,YVR,Y,LT
-                AC,YVR,YYZ,Y,LT
-            """.trimIndent(),
-            ).calculate()
+                    AC,SFO,YVR,Y,LT
+                    AC,YVR,YYZ,Y,LT
+                """.trimIndent(),
+            ).calculate(),
         ) {
             assertEquals(231, itinerary!!.segments[0].earningResult!!.sqd)
             assertEquals(599, itinerary!!.segments[1].earningResult!!.sqd)
@@ -51,10 +51,10 @@ internal class SqdCalculatorTest {
                 aeroplanStatus = "100",
                 hasBonusPointsPrivilege = true,
                 segments = """
-                AC,YYC,EWR,Y,LT
-                AC,EWR,YYC,Y,LT
-            """.trimIndent(),
-            ).calculate()
+                    AC,YYC,EWR,Y,LT
+                    AC,EWR,YYC,Y,LT
+                """.trimIndent(),
+            ).calculate(),
         ) {
             assertEquals(609, itinerary!!.segments[0].earningResult!!.sqd)
             assertEquals(609, itinerary!!.segments[1].earningResult!!.sqd)
@@ -68,14 +68,14 @@ internal class SqdCalculatorTest {
                 aeroplanStatus = "100",
                 hasBonusPointsPrivilege = true,
                 segments = """
-                AC,YYC,YUL,Y,LT
-                AC,YUL,GRU,Y,LT
-                AC,GRU,EZE,Y,LT
-                AC,EZE,GRU,Y,LT
-                AC,GRU,YUL,Y,LT
-                AC,YUL,YYC,Y,LT
-            """.trimIndent(),
-            ).calculate()
+                    AC,YYC,YUL,Y,LT
+                    AC,YUL,GRU,Y,LT
+                    AC,GRU,EZE,Y,LT
+                    AC,EZE,GRU,Y,LT
+                    AC,GRU,YUL,Y,LT
+                    AC,YUL,YYC,Y,LT
+                """.trimIndent(),
+            ).calculate(),
         ) {
             assertEquals(422, itinerary!!.segments[0].earningResult!!.sqd)
             assertEquals(1142, itinerary!!.segments[1].earningResult!!.sqd)
@@ -93,13 +93,13 @@ internal class SqdCalculatorTest {
                 aeroplanStatus = "100",
                 hasBonusPointsPrivilege = true,
                 segments = """
-                AC,YYC,YYZ,Y,LT
-                AC,YYZ,YUL,Y,LT
-                AC,YUL,BOG,Y,LT
-                AC,BOG,YUL,Y,LT
-                AC,YUL,YYC,Y,LT
-            """.trimIndent(),
-            ).calculate()
+                    AC,YYC,YYZ,Y,LT
+                    AC,YYZ,YUL,Y,LT
+                    AC,YUL,BOG,Y,LT
+                    AC,BOG,YUL,Y,LT
+                    AC,YUL,YYC,Y,LT
+                """.trimIndent(),
+            ).calculate(),
         ) {
             assertEquals(492, itinerary!!.segments[0].earningResult!!.sqd)
             assertEquals(93, itinerary!!.segments[1].earningResult!!.sqd)
