@@ -3,6 +3,7 @@ package com.cowtool.acsqd
 import com.cowtool.acsqd.distance.airports
 import com.cowtool.acsqd.sqm.getDistanceResult
 import com.cowtool.acsqd.sqm.getEarningResult
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 data class Itinerary(
@@ -36,7 +37,7 @@ data class Itinerary(
             segments.forEach {
                 it.earningResult?.sqd = when {
                     !missingAnyDistance || it.earningResult == null || it.distance == null -> null
-                    it.earningResult.isSqdEligible -> (it.distance.toLong() * totalFare / totalDistance).roundToInt()
+                    it.earningResult.isSqdEligible -> ceil(it.distance.toLong() * totalFare / totalDistance).roundToInt()
                     else -> 0
                 }
             }
