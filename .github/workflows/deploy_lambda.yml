@@ -3,6 +3,9 @@ name: Deploy Lambda
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '*gradle*'
+      - 'src/**'
 
 concurrency: 
   group: ${{ github.workflow }}
