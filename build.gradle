@@ -20,7 +20,7 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation('com.amazonaws:aws-lambda-java-core:1.2.2')
-    implementation('com.amazonaws:aws-lambda-java-events:3.11.1')
+    implementation('com.amazonaws:aws-lambda-java-events:3.11.2')
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
     test.useJUnitPlatform()
