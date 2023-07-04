@@ -554,7 +554,7 @@ private val ekCalculator = object : SimplePartnerEarningCalculator() {
         "F", "A" -> 150
         "J", "C", "I", "O" -> 125
         "H", "W", "E" -> 110
-        "R", "Y", "P" -> 100
+        "R", "Y", "P", "X" -> 100
         "U", "B", "M", "K" -> 50
         "G", "T", "L", "Q" -> 15
         else -> 0
@@ -939,7 +939,7 @@ private val ozCalculator: EarningCalculator =
             when (fareClass) {
                 "C", "D", "J", "Z" -> OZEarningResult(sqmPercent = 125)
                 "U", "Y", "B", "M" -> OZEarningResult(sqmPercent = 100)
-                "H", "E", "Q", "K", "S" -> OZEarningResult(sqmPercent = 50)
+                "A", "H", "E", "Q", "K", "S" -> OZEarningResult(sqmPercent = 50)
                 "V", "W", "G", "T" -> OZEarningResult(sqmPercent = 25)
                 else -> OZEarningResult(sqmPercent = 0)
             }
@@ -1008,10 +1008,9 @@ private val saCalculator: EarningCalculator =
 private val skCalculator = object : SimpleStarAllianceEarningCalculator() {
     override fun getSqmPercentage(fareClass: String) = when (fareClass) {
         "C", "D", "Z" -> 125
-        "A", "J" -> 125
-        "Y", "S", "B", "P" -> 125
-        "M", "H", "Q", "V", "E", "W" -> 100
-        "U", "K", "L", "G" -> 50
+        "A", "J", "P", "Y", "S", "B" -> 125
+        "E", "M", "H", "Q", "V", "W" -> 100
+        "U", "R", "K", "L", "N", "G" -> 50
         // TODO SAS Go Light Fares are 0
         else -> 0
     }
