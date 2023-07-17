@@ -152,19 +152,19 @@ class Segment(
                 throw SqdCalculatorException("Each line must contain airline, origin, destination, fare class, and optionally fare brand.  Error parsing: $csv")
             }
 
-            val airline = csvValues[0].toUpperCase()
+            val airline = csvValues[0].uppercase()
 
-            val origin = csvValues[1].toUpperCase()
+            val origin = csvValues[1].uppercase()
             if (origin !in airports) {
                 throw SqdCalculatorException("Invalid origin: $origin")
             }
 
-            val destination = csvValues[2].toUpperCase()
+            val destination = csvValues[2].uppercase()
             if (destination !in airports) {
                 throw SqdCalculatorException("Invalid destination: $destination")
             }
 
-            val fareClass = csvValues[3].toUpperCase()
+            val fareClass = csvValues[3].uppercase()
             if (fareClass.length != 1 || !fareClass.toCharArray().first().isLetter()) {
                 throw SqdCalculatorException("Invalid fare class: $fareClass")
             }
@@ -172,8 +172,8 @@ class Segment(
             val fareBrand = if (csvValues.size > 4) {
                 when {
                     csvValues[4].isBlank() -> null
-                    FareBrand.values().map { it.name.toUpperCase() }
-                        .contains(csvValues[4].toUpperCase()) -> csvValues[4]
+                    FareBrand.values().map { it.name.uppercase() }
+                        .contains(csvValues[4].uppercase()) -> csvValues[4]
                     else -> {
                         throw SqdCalculatorException("Invalid fare brand: ${csvValues[4]}. For non-AC, leave brand blank.")
                     }
