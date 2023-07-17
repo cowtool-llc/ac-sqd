@@ -26,9 +26,9 @@ data class DistanceResult @JvmOverloads constructor(
 )
 
 internal fun calculateHaversine(origin: String, destination: String): HaversineResult {
-    val originAirport = airports[origin.toUpperCase()]
+    val originAirport = airports[origin.uppercase()]
         ?: return HaversineResult(null, "Origin airport ($origin) not found")
-    val destinationAirport = airports[destination.toUpperCase()]
+    val destinationAirport = airports[destination.uppercase()]
         ?: return HaversineResult(null, "Destination airport ($destination) not found")
 
     return HaversineResult(calculateHaversineDistance(originAirport, destinationAirport).toInt())
