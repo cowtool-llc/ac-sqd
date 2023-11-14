@@ -1326,6 +1326,7 @@ fun getEarningResult(
         marketingAirline == "LX" && operatingAirline == "WK" -> "LX"
         else -> operatingAirline
     }
+
     val calculator = getCalculator(effectiveOperator)
 
     val originCountry = airports[origin]?.country
