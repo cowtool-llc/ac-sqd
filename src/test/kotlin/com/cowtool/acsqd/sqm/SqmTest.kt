@@ -10,6 +10,7 @@ internal class SqmTest {
         assertNull(
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 null,
@@ -25,6 +26,7 @@ internal class SqmTest {
             125,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "Y",
@@ -40,6 +42,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "I",
@@ -55,6 +58,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "J",
@@ -70,6 +74,7 @@ internal class SqmTest {
             150,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "J",
@@ -85,6 +90,7 @@ internal class SqmTest {
             150,
             getEarningResult(
                 "RV",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "J",
@@ -100,6 +106,7 @@ internal class SqmTest {
             150,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "Z",
@@ -115,6 +122,7 @@ internal class SqmTest {
             125,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "R",
@@ -130,6 +138,7 @@ internal class SqmTest {
             125,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "E",
@@ -145,6 +154,7 @@ internal class SqmTest {
             100,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "M",
@@ -160,6 +170,7 @@ internal class SqmTest {
             115,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "K",
@@ -175,6 +186,7 @@ internal class SqmTest {
             100,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "R",
@@ -190,6 +202,7 @@ internal class SqmTest {
             50,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "G",
@@ -205,6 +218,7 @@ internal class SqmTest {
             50,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "YYZ",
                 "G",
@@ -220,6 +234,7 @@ internal class SqmTest {
             50,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "LHR",
                 "G",
@@ -235,6 +250,7 @@ internal class SqmTest {
             50,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "G",
@@ -250,6 +266,7 @@ internal class SqmTest {
             50,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "YYZ",
                 "G",
@@ -265,6 +282,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "G",
@@ -280,6 +298,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "TPE",
                 "G",
@@ -295,6 +314,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "TPE",
                 "G",
@@ -310,6 +330,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "LHR",
                 "G",
@@ -325,6 +346,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "BOG",
                 "G",
@@ -340,6 +362,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YVR",
                 "ALG",
                 "G",
@@ -355,6 +378,7 @@ internal class SqmTest {
             225,
             getEarningResult(
                 "KV",
+                marketingAirline = null,
                 "YYZ",
                 "YOW",
                 "G",
@@ -368,6 +392,7 @@ internal class SqmTest {
         )
         getEarningResult(
             "AC",
+            marketingAirline = null,
             "YVR",
             "LHR",
             "G",
@@ -385,6 +410,7 @@ internal class SqmTest {
         }
         getEarningResult(
             "AC",
+            marketingAirline = null,
             "YVR",
             "SFO",
             "G",
@@ -402,6 +428,7 @@ internal class SqmTest {
         }
         getEarningResult(
             "AC",
+            marketingAirline = null,
             "YVR",
             "YYZ",
             "G",
@@ -425,6 +452,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "I",
@@ -440,6 +468,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "I",
@@ -455,6 +484,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "J",
@@ -470,6 +500,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "M",
@@ -488,6 +519,7 @@ internal class SqmTest {
         assertNull(
             getEarningResult(
                 "A3",
+                marketingAirline = null,
                 "YYZ",
                 "YUL",
                 null,
@@ -503,6 +535,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "A3",
+                marketingAirline = null,
                 "YYZ",
                 "YUL",
                 "F",
@@ -522,6 +555,7 @@ internal class SqmTest {
             375,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YOW",
                 "YYZ",
                 "Z",
@@ -537,6 +571,7 @@ internal class SqmTest {
             313,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YOW",
                 "YYZ",
                 "R",
@@ -552,6 +587,7 @@ internal class SqmTest {
             288,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YOW",
                 "YYZ",
                 "K",
@@ -567,6 +603,7 @@ internal class SqmTest {
             250,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YOW",
                 "YYZ",
                 "R",
@@ -582,6 +619,7 @@ internal class SqmTest {
             125,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YOW",
                 "YYZ",
                 "G",
@@ -597,6 +635,7 @@ internal class SqmTest {
             63,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "CFK",
                 "ALG",
                 "G",
@@ -613,6 +652,7 @@ internal class SqmTest {
             188,
             getEarningResult(
                 "HO",
+                marketingAirline = null,
                 "HKG",
                 "SZX",
                 "H",
@@ -629,6 +669,7 @@ internal class SqmTest {
             500,
             getEarningResult(
                 "YN",
+                marketingAirline = null,
                 "YOW",
                 "YUL",
                 "Y",
@@ -644,6 +685,7 @@ internal class SqmTest {
             375,
             getEarningResult(
                 "YN",
+                marketingAirline = null,
                 "YOW",
                 "YUL",
                 "Q",
@@ -659,6 +701,7 @@ internal class SqmTest {
             250,
             getEarningResult(
                 "YN",
+                marketingAirline = null,
                 "YOW",
                 "YUL",
                 "H",
@@ -674,6 +717,7 @@ internal class SqmTest {
             0,
             getEarningResult(
                 "YN",
+                marketingAirline = null,
                 "YOW",
                 "YUL",
                 "A",
@@ -693,6 +737,7 @@ internal class SqmTest {
             11_000,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "J",
@@ -708,6 +753,7 @@ internal class SqmTest {
             8800,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "O",
@@ -723,6 +769,7 @@ internal class SqmTest {
             6750,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "N",
@@ -738,6 +785,7 @@ internal class SqmTest {
             3500,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "Y",
@@ -753,6 +801,7 @@ internal class SqmTest {
             4400,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "M",
@@ -768,6 +817,7 @@ internal class SqmTest {
             1200,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "V",
@@ -783,6 +833,7 @@ internal class SqmTest {
             4200,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "G",
@@ -798,6 +849,7 @@ internal class SqmTest {
             200,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "K",
@@ -817,6 +869,7 @@ internal class SqmTest {
             288,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "YTZ",
                 "YOW",
                 "K",
@@ -836,6 +889,7 @@ internal class SqmTest {
             125,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "Y",
@@ -851,6 +905,7 @@ internal class SqmTest {
             150,
             getEarningResult(
                 "AC",
+                marketingAirline = null,
                 "SFO",
                 "YYZ",
                 "J",
@@ -861,6 +916,26 @@ internal class SqmTest {
                 statusRate = 0,
                 bonusRate = 0,
             )!!.sqmPercent,
+        )
+    }
+
+    @Test
+    fun `getEarningResult() handles LX marketed, WK operated segments`() {
+        assertEquals(
+            5661,
+            getEarningResult(
+                "WK",
+                marketingAirline = "LX",
+                "CPT",
+                "ZRH",
+                "M",
+                "M",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0,
+            )!!.sqm,
         )
     }
 }

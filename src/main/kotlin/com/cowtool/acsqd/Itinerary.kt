@@ -98,6 +98,7 @@ data class Itinerary(
 
 class Segment(
     val airline: String,
+    marketingAirline: String?,
     val origin: String,
     val destination: String,
     val fareClass: String,
@@ -110,6 +111,7 @@ class Segment(
 ) {
     val earningResult = getEarningResult(
         airline,
+        marketingAirline = marketingAirline,
         origin,
         destination,
         fareClass,
@@ -190,6 +192,7 @@ class Segment(
 
             return Segment(
                 airline,
+                marketingAirline = null,
                 origin,
                 destination,
                 fareClass,

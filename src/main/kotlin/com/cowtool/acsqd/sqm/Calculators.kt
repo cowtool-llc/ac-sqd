@@ -1311,6 +1311,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
 
 fun getEarningResult(
     operatingAirline: String,
+    marketingAirline: String?,
     origin: String,
     destination: String,
     fareClass: String?,
@@ -1321,7 +1322,12 @@ fun getEarningResult(
     statusRate: Int,
     bonusRate: Int,
 ): EarningResult? {
-    val calculator = getCalculator(operatingAirline)
+    val effectiveOperator = when {
+        marketingAirline == "LX" && operatingAirline == "WK" -> "LX"
+        else -> operatingAirline
+    }
+
+    val calculator = getCalculator(effectiveOperator)
 
     val originCountry = airports[origin]?.country
     val originContinent = countriesToContinent[originCountry]
