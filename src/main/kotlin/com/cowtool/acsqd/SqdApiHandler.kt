@@ -7,7 +7,7 @@ import com.cowtool.acsqd.sqm.getEarningResult
 
 data class SqdApiInput @JvmOverloads constructor(
     var operatingAirline: String = "",
-    var marketingAirline: String = "",
+    var marketingAirline: String? = null,
     var origin: String = "",
     var destination: String = "",
     var fareClass: String? = null,
@@ -23,7 +23,7 @@ class SqdApiHandler : RequestHandler<SqdApiInput, EarningResult?> {
     override fun handleRequest(input: SqdApiInput, context: Context): EarningResult? {
         return getEarningResult(
             operatingAirline = input.operatingAirline,
-            marketingAirline = input.marketingAirline.takeIf { it.isNotBlank() },
+            marketingAirline = input.marketingAirline.takeIf { !it.isNullOrBlank() },
             origin = input.origin,
             destination = input.destination,
             fareClass = input.fareClass,
