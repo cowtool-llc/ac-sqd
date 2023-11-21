@@ -938,4 +938,24 @@ internal class SqmTest {
             )!!.sqm,
         )
     }
+
+    @Test
+    fun `getEarningResult() handles AC Express (PAL) segments`() {
+        assertEquals(
+            415,
+            getEarningResult(
+                "PB",
+                marketingAirline = "AC",
+                "YDF",
+                "YHZ",
+                "M",
+                "M",
+                ticketNumber = "014",
+                hasAeroplanStatus = false,
+                bonusPointsPercentage = 0,
+                statusRate = 0,
+                bonusRate = 0,
+            )!!.sqm,
+        )
+    }
 }
