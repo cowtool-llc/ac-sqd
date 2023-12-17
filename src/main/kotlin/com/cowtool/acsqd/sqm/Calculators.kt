@@ -352,7 +352,8 @@ private val acCalculator: EarningCalculator =
                     ACEarningResult(sqmPercent = 50)
                 }
 
-            "S", "T", "L", "K", "G" ->
+            // TODO: F may not be accurate here.  This needs more ACV data.
+            "S", "T", "L", "K", "G", "F" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if (originCountry == "Canada" && destinationCountry == "Canada") {
