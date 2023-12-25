@@ -159,11 +159,7 @@ class Segment(
             val fareBrand = if (csvValues.size > 4) {
                 when {
                     csvValues[4].isBlank() -> null
-                    FareBrand.values().map { it.name.uppercase() }
-                        .contains(csvValues[4].uppercase()) -> csvValues[4]
-                    else -> {
-                        throw SqdCalculatorException("Invalid fare brand: ${csvValues[4]}. For non-AC, leave brand blank.")
-                    }
+                    else -> csvValues[4].uppercase()
                 }
             } else {
                 null
