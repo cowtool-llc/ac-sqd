@@ -102,7 +102,7 @@ class Segment(
     val origin: String,
     val destination: String,
     val fareClass: String,
-    val fareBrand: String?,
+    private val fareBrand: String?,
     ticketNumber: String,
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
@@ -125,21 +125,6 @@ class Segment(
 
     private val distanceResult = earningResult?.distanceResult ?: getDistanceResult(origin, destination)
     val distance = distanceResult.distance
-
-    val distanceString = distanceResult.distance?.toString() ?: "???"
-    val distanceSourceString = distanceResult.source ?: "???"
-
-    val aeroplanMilesString = earningResult?.aeroplanMiles?.toString() ?: "???"
-    val bonusPointsString = earningResult?.bonusPoints?.toString() ?: "???"
-    val totalMilesString = earningResult?.totalMiles?.toString() ?: "???"
-
-    val sqmString = earningResult?.sqm?.toString() ?: "???"
-    val baseRateString = earningResult?.baseRate?.let { "${it}x" } ?: "???"
-    val statusRateString = earningResult?.statusRate?.let { "${it}x" } ?: "???"
-    val bonusRateString = earningResult?.bonusRate?.let { "${it}x" } ?: "???"
-    val totalRateString = earningResult?.totalRate?.let { "${it}x" } ?: "???"
-    val totalPointsString: String
-        get() = earningResult?.totalPoints?.toString() ?: "???"
 
     override fun toString(): String {
         return "$airline,$origin,$destination,$fareClass,$fareBrand"
