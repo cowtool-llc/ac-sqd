@@ -102,7 +102,7 @@ class Segment(
     val origin: String,
     val destination: String,
     val fareClass: String,
-    private val fareBrand: String?,
+    val fareBrand: String?,
     ticketNumber: String,
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
