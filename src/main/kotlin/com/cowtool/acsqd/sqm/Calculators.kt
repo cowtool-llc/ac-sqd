@@ -405,19 +405,21 @@ private val aiCalculator: EarningCalculator =
             null
         } else if (originCountry == "India" && destinationCountry == "India") {
             when (fareClass) {
-                "F", "A" -> AIEarningResult(sqmPercent = 150)
+                "F" -> AIEarningResult(sqmPercent = 150)
                 "C", "D", "J", "Z" -> AIEarningResult(sqmPercent = 125)
+                "R", "A", "N" -> AIEarningResult(sqmPercent = 110)
                 "Y", "B", "M", "H", "K", "Q", "V", "W", "G" -> AIEarningResult(sqmPercent = 100)
                 "L" -> AIEarningResult(sqmPercent = 50)
-                "U", "T", "S", "E" -> AIEarningResult(sqmPercent = 25)
+                "U", "T", "S" -> AIEarningResult(sqmPercent = 25)
                 else -> AIEarningResult(sqmPercent = 0)
             }
         } else {
             when (fareClass) {
                 "F", "A" -> AIEarningResult(sqmPercent = 150)
                 "C", "D", "J", "Z" -> AIEarningResult(sqmPercent = 125)
+                "R", "A", "N" -> AIEarningResult(sqmPercent = 110)
                 "Y", "B", "M", "H", "K", "Q", "V", "W", "G" -> AIEarningResult(sqmPercent = 100)
-                "L", "U", "T", "S", "E" -> AIEarningResult(sqmPercent = 50)
+                "L", "U", "T", "S" -> AIEarningResult(sqmPercent = 50)
                 else -> AIEarningResult(sqmPercent = 0)
             }
         }
@@ -1179,8 +1181,10 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
         "D", "Z", "R" -> 125
         "G" -> 100
         "Y", "B", "M", "U" -> 100
+        "E" -> 90
         "H", "Q" -> 70
-        "V", "W", "S", "E", "T", "P" -> 50
+        "V", "W", "S", "T" -> 50
+        "L", "P", "A", "K"  -> 50
         else -> 0
     }
 }
