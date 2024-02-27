@@ -405,7 +405,7 @@ private val aiCalculator: EarningCalculator =
             null
         } else if (originCountry == "India" && destinationCountry == "India") {
             when (fareClass) {
-                "F"-> AIEarningResult(sqmPercent = 150)
+                "F" -> AIEarningResult(sqmPercent = 150)
                 "C", "D", "J", "Z" -> AIEarningResult(sqmPercent = 125)
                 "R", "A", "N" -> AIEarningResult(sqmPercent = 110)
                 "Y", "B", "M", "H", "K", "Q", "V", "W", "G" -> AIEarningResult(sqmPercent = 100)
