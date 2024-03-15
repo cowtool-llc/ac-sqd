@@ -1083,20 +1083,18 @@ private val tpCalculator: EarningCalculator =
         val specialDestinations = setOf("LIS", "OPO", "PXO", "FNC")
         if (origin in specialDestinations && destination in specialDestinations) {
             when (fareClass) {
-                "C", "D", "Z", "J" -> TPEarningResult(sqmPercent = 200)
-                "Y", "B" -> TPEarningResult(sqmPercent = 125)
+                "C", "D", "Z", "J" -> TPEarningResult(sqmPercent = 150)
+                "Y", "B" -> TPEarningResult(sqmPercent = 100)
                 "M", "H", "Q", "W", "K", "U" -> TPEarningResult(sqmPercent = 100)
-                "V", "S", "L", "G", "A", "P", "E", "T" -> TPEarningResult(sqmPercent = 50)
-                "O" -> TPEarningResult(sqmPercent = 10)
+                "V", "S", "L", "G", "A", "P", "E" -> TPEarningResult(sqmPercent = 50)
                 else -> TPEarningResult(sqmPercent = 0)
             }
         } else {
             when (fareClass) {
-                "C", "D", "Z", "J" -> TPEarningResult(sqmPercent = 200)
-                "Y", "B" -> TPEarningResult(sqmPercent = 125)
+                "C", "D", "Z", "J" -> TPEarningResult(sqmPercent = 150)
+                "Y", "B" -> TPEarningResult(sqmPercent = 100)
                 "M", "H", "Q" -> TPEarningResult(sqmPercent = 100)
                 "V", "W", "S", "L", "K", "U", "G", "A", "P" -> TPEarningResult(sqmPercent = 50)
-                "O", "E", "T" -> TPEarningResult(sqmPercent = 10)
                 else -> TPEarningResult(sqmPercent = 0)
             }
         }
