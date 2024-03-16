@@ -72,12 +72,6 @@ data class Itinerary(
                 null
             }
 
-            val totalPoints = if (segments.none { it.earningResult?.totalPoints == null }) {
-                segments.mapNotNull { it.earningResult?.totalPoints }.sum()
-            } else {
-                null
-            }
-
             val totalRow =
                 TotalRow(
                     distance = totalDistance,
@@ -88,7 +82,6 @@ data class Itinerary(
 
                     sqm = totalSqm,
                     sqd = totalSqd,
-                    totalPoints = totalPoints
                 )
 
             return Itinerary(segments, totalRow)
@@ -106,8 +99,6 @@ class Segment(
     ticketNumber: String,
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
-    statusRate: Int,
-    bonusRate: Int
 ) {
     val earningResult = getEarningResult(
         airline,
@@ -119,8 +110,6 @@ class Segment(
         ticketNumber = ticketNumber,
         hasAeroplanStatus = hasAeroplanStatus,
         bonusPointsPercentage = bonusPointsPercentage,
-        statusRate = statusRate,
-        bonusRate = bonusRate
     )
 
     private val distanceResult = earningResult?.distanceResult ?: getDistanceResult(origin, destination)
@@ -168,9 +157,6 @@ class Segment(
             val hasAeroplanStatus = aeroplanStatus.isNotBlank()
             val bonusPointsPercentage = (if (hasBonusPointsPrivilege) aeroplanStatus.toIntOrNull() else null) ?: 0
 
-            val statusRate = convertBonusPointsPercentageToStatusEarnRate(aeroplanStatus.toIntOrNull() ?: 0)
-            val bonusRate = if (hasBonusPointsPrivilege) statusRate else 0
-
             return Segment(
                 airline,
                 marketingAirline = null,
@@ -181,19 +167,9 @@ class Segment(
                 ticketNumber,
                 hasAeroplanStatus,
                 bonusPointsPercentage,
-                statusRate,
-                bonusRate
             )
         }
     }
-}
-
-private fun convertBonusPointsPercentageToStatusEarnRate(bonusPointsPercentage: Int) = when (bonusPointsPercentage) {
-    25, 35 -> 1
-    50 -> 2
-    75 -> 3
-    100 -> 4
-    else -> 0
 }
 
 data class TotalRow(
@@ -205,5 +181,4 @@ data class TotalRow(
 
     val sqm: Int?,
     val sqd: Int?,
-    val totalPoints: Int?
 )
