@@ -15,8 +15,6 @@ data class SqdApiInput @JvmOverloads constructor(
     var ticketNumber: String = "",
     var hasAeroplanStatus: Boolean = false,
     var bonusPointsPercentage: Int = 0,
-    var statusRate: Int = 0,
-    var bonusRate: Int = 0,
 )
 
 class SqdApiHandler : RequestHandler<SqdApiInput, EarningResult?> {
@@ -31,8 +29,6 @@ class SqdApiHandler : RequestHandler<SqdApiInput, EarningResult?> {
             ticketNumber = input.ticketNumber,
             hasAeroplanStatus = input.hasAeroplanStatus,
             bonusPointsPercentage = input.bonusPointsPercentage,
-            statusRate = input.statusRate,
-            bonusRate = input.bonusRate,
         )
     }
 }
