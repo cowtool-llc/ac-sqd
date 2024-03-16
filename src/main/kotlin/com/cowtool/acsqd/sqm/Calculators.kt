@@ -12,6 +12,7 @@ import kotlin.math.roundToInt
 interface EarningResultCore {
     val distanceResult: DistanceResult
     val sqmPercent: Int
+    val isSqmPercentEstimated: Boolean
     val aeroplanPointsPercent: Int
     val bonusPointsPercent: Int
     val isSqdEligible: Boolean
@@ -26,6 +27,7 @@ interface EarningResultCore {
 open class EarningResult(
     override val distanceResult: DistanceResult,
     override val sqmPercent: Int,
+    override val isSqmPercentEstimated: Boolean,
     override val aeroplanPointsPercent: Int = sqmPercent,
     override val bonusPointsPercent: Int,
     eligibleForMinimumPoints: Boolean,
@@ -86,6 +88,7 @@ open class StarAllianceEarningResult(
 ) : EarningResult(
     distanceResult = distanceResult,
     sqmPercent = sqmPercent,
+    isSqmPercentEstimated = false,
     bonusPointsPercent = bonusPointsPercent,
     eligibleForMinimumPoints = hasAeroplanStatus,
     isSqdEligible = sqmPercent > 0 && ticketNumber.startsWith("014")
@@ -138,6 +141,7 @@ private abstract class SimpleStarAllianceEarningCalculator(
         return EarningResult(
             distanceResult = distanceResult,
             sqmPercent = percentage,
+            isSqmPercentEstimated = false,
             bonusPointsPercent = bonusPointsPercent,
             eligibleForMinimumPoints = hasAeroplanStatus,
             isSqdEligible = ticketNumber.startsWith("014") && percentage > 0
@@ -184,6 +188,7 @@ private abstract class SimplePartnerEarningCalculator(
         return EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
+            isSqmPercentEstimated = false,
             aeroplanPointsPercent = aeroplanMilesPercent,
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus || alwaysEarnsMinimumPoints,
@@ -218,10 +223,12 @@ private val acCalculator: EarningCalculator =
     calc@{ distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, fareBasis, _, hasAeroplanStatus, bonusPointsPercentage ->
         class ACEarningResult(
             sqmPercent: Int,
+            isSqmPercentEstimated: Boolean,
             aeroplanPointsPercent: Int = sqmPercent,
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = sqmPercent,
+            isSqmPercentEstimated = isSqmPercentEstimated,
             aeroplanPointsPercent = aeroplanPointsPercent,
             bonusPointsPercent = bonusPointsPercentage,
             eligibleForMinimumPoints = hasAeroplanStatus,
@@ -230,7 +237,7 @@ private val acCalculator: EarningCalculator =
 
         if (!fareBasis.isNullOrEmpty()) {
             if (isAeroplanFareBasis(fareBasis)) {
-                return@calc ACEarningResult(sqmPercent = 0)
+                return@calc ACEarningResult(sqmPercent = 0, isSqmPercentEstimated = false)
             }
 
             val split = fareBasis.split("/")
@@ -238,7 +245,7 @@ private val acCalculator: EarningCalculator =
             if (split.size > 1) {
                 val designator = split[1]
                 if (designator.startsWith("AE")) {
-                    return@calc ACEarningResult(sqmPercent = 0)
+                    return@calc ACEarningResult(sqmPercent = 0, isSqmPercentEstimated = false)
                 }
             }
 
@@ -250,66 +257,68 @@ private val acCalculator: EarningCalculator =
                     return@calc if (originCountry == null || destinationCountry == null) {
                         null
                     } else if (originCountry == "Canada" && destinationCountry == "Canada") {
-                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 10)
+                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 10, isSqmPercentEstimated = false)
                     } else {
-                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 25)
+                        ACEarningResult(sqmPercent = 0, aeroplanPointsPercent = 25, isSqmPercentEstimated = false)
                     }
 
                 "TG" ->
                     return@calc if (originCountry == null || destinationCountry == null) {
                         null
                     } else if (originCountry == "Canada" && destinationCountry == "Canada") {
-                        ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
+                        ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25, isSqmPercentEstimated = false)
                     } else {
-                        ACEarningResult(sqmPercent = 50)
+                        ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = false)
                     }
 
-                "FL" -> return@calc ACEarningResult(sqmPercent = 100)
-                "CO" -> return@calc ACEarningResult(sqmPercent = 115)
-                "LT" -> return@calc ACEarningResult(sqmPercent = 125)
+                "FL" -> return@calc ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = false)
+                "CO" -> return@calc ACEarningResult(sqmPercent = 115, isSqmPercentEstimated = false)
+                "LT" -> return@calc ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = false)
 
                 "PL", "PF" -> {
                     return@calc when (fareClass) {
-                        "Y", "B" -> ACEarningResult(sqmPercent = 125)
-                        "M" -> ACEarningResult(sqmPercent = 115)
-                        "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
+                        "O", "E", "A" -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = false)
+                        "Y", "B" -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = true)
+                        "M" -> ACEarningResult(sqmPercent = 115, isSqmPercentEstimated = true)
+                        "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = true)
                         "W" -> if ((originCountry == "Canada" || originCountry == "United States") &&
                             (destinationCountry == "Canada" || destinationCountry == "United States")
                         ) {
-                            ACEarningResult(sqmPercent = 100)
+                            ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = true)
                         } else {
-                            ACEarningResult(sqmPercent = 50)
+                            ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = true)
                         }
 
                         "S", "T", "L", "K", "G" -> if (originCountry == "Canada" && destinationCountry == "Canada") {
-                            ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
+                            ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25, isSqmPercentEstimated = true)
                         } else {
-                            ACEarningResult(sqmPercent = 50)
+                            ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = true)
                         }
-                        else -> ACEarningResult(sqmPercent = 125)
+                        else -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = true)
                     }
                 }
 
                 "EL", "EF" -> {
                     return@calc when (fareClass) {
-                        "O", "E", "A" -> ACEarningResult(sqmPercent = 125)
-                        "Y", "B" -> ACEarningResult(sqmPercent = 125)
-                        "M" -> ACEarningResult(sqmPercent = 115)
-                        "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
+                        "J", "C", "D", "Z", "P" -> ACEarningResult(sqmPercent = 150, isSqmPercentEstimated = false)
+                        "O", "E", "A" -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = true)
+                        "Y", "B" -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = true)
+                        "M" -> ACEarningResult(sqmPercent = 115, isSqmPercentEstimated = true)
+                        "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = true)
                         "W" -> if ((originCountry == "Canada" || originCountry == "United States") &&
                             (destinationCountry == "Canada" || destinationCountry == "United States")
                         ) {
-                            ACEarningResult(sqmPercent = 100)
+                            ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = true)
                         } else {
-                            ACEarningResult(sqmPercent = 50)
+                            ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = true)
                         }
 
                         "S", "T", "L", "K", "G" -> if (originCountry == "Canada" && destinationCountry == "Canada") {
-                            ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
+                            ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25, isSqmPercentEstimated = true)
                         } else {
-                            ACEarningResult(sqmPercent = 50)
+                            ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = true)
                         }
-                        else -> ACEarningResult(sqmPercent = 150)
+                        else -> ACEarningResult(sqmPercent = 150, isSqmPercentEstimated = true)
                     }
                 }
             }
@@ -327,19 +336,19 @@ private val acCalculator: EarningCalculator =
         }
 
         when (trueFareClass) {
-            "J", "C", "D", "Z", "P" -> ACEarningResult(sqmPercent = 150)
-            "O", "E", "A" -> ACEarningResult(sqmPercent = 125)
-            "Y", "B" -> ACEarningResult(sqmPercent = 125)
-            "M", "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
+            "J", "C", "D", "Z", "P" -> ACEarningResult(sqmPercent = 150, isSqmPercentEstimated = false)
+            "O", "E", "A" -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = false)
+            "Y", "B" -> ACEarningResult(sqmPercent = 125, isSqmPercentEstimated = false)
+            "M", "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = false)
             "W" ->
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if ((originCountry == "Canada" || originCountry == "United States") &&
                     (destinationCountry == "Canada" || destinationCountry == "United States")
                 ) {
-                    ACEarningResult(sqmPercent = 100)
+                    ACEarningResult(sqmPercent = 100, isSqmPercentEstimated = false)
                 } else {
-                    ACEarningResult(sqmPercent = 50)
+                    ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = false)
                 }
 
             // TODO: F may not be accurate here.  This needs more ACV data.
@@ -347,13 +356,13 @@ private val acCalculator: EarningCalculator =
                 if (originCountry == null || destinationCountry == null) {
                     null
                 } else if (originCountry == "Canada" && destinationCountry == "Canada") {
-                    ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
+                    ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25, isSqmPercentEstimated = false)
                 } else {
-                    ACEarningResult(sqmPercent = 50)
+                    ACEarningResult(sqmPercent = 50, isSqmPercentEstimated = false)
                 }
 
             null -> null
-            else -> ACEarningResult(sqmPercent = 0)
+            else -> ACEarningResult(sqmPercent = 0, isSqmPercentEstimated = false)
         }
     }
 
@@ -502,6 +511,7 @@ private val cxCalculator: EarningCalculator =
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
+            isSqmPercentEstimated = false,
             aeroplanPointsPercent = aeroplanMilesPercent,
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
@@ -585,6 +595,7 @@ private val eyCalculator: EarningCalculator =
         ) : EarningResult(
             distanceResult = distanceResult,
             sqmPercent = 0,
+            isSqmPercentEstimated = false,
             aeroplanPointsPercent = aeroplanMilesPercent,
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
@@ -1088,6 +1099,7 @@ private val uaCalculator: EarningCalculator =
             "N" -> EarningResult(
                 distanceResult = distanceResult,
                 sqmPercent = 0,
+                isSqmPercentEstimated = false,
                 aeroplanPointsPercent = 50,
                 bonusPointsPercent = 0,
                 eligibleForMinimumPoints = hasAeroplanStatus,
@@ -1210,6 +1222,7 @@ private val nonStarCalculator = object : EarningCalculator {
     ) = EarningResult(
         distanceResult = distanceResult,
         sqmPercent = 0,
+        isSqmPercentEstimated = false,
         bonusPointsPercent = 0,
         eligibleForMinimumPoints = false,
         isSqdEligible = false,
