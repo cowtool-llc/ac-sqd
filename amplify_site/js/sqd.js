@@ -74,12 +74,6 @@ var SqdCalculator = window.SqdCalculator || {};
         $("#resultsTable > tfoot").empty();
 
         itinerary.segments.forEach(segment => {
-            const baseRate = (segment.earningResult.baseRate != null) ? segment.earningResult.baseRate + 'x' : '???';
-            const statusRate = (segment.earningResult.statusRate != null) ? segment.earningResult.statusRate + 'x' : '???';
-            const bonusRate = (segment.earningResult.bonusRate != null) ? segment.earningResult.bonusRate + 'x' : '???';
-            const totalRate = (segment.earningResult.totalRate != null) ? segment.earningResult.totalRate + 'x' : '???';
-            const totalPoints = (segment.earningResult.totalPoints != null) ? segment.earningResult.totalPoints.toLocaleString('en-US') : '???';
-
             $("#resultsTable").find('tbody')
                 .append($('<tr>')
                     .append($('<td>')
@@ -132,26 +126,6 @@ var SqdCalculator = window.SqdCalculator || {};
                         .text(segment.earningResult.totalMiles)
                         .attr('align', 'right')
                     )
-                    .append($('<td>')
-                        .text(baseRate)
-                        .attr('align', 'right')
-                    )
-                    .append($('<td>')
-                        .text(statusRate)
-                        .attr('align', 'right')
-                    )
-                    .append($('<td>')
-                        .text(bonusRate)
-                        .attr('align', 'right')
-                    )
-                    .append($('<td>')
-                        .text(totalRate)
-                        .attr('align', 'right')
-                    )
-                    .append($('<td>')
-                        .text(totalPoints)
-                        .attr('align', 'right')
-                    )
                 )
         });
 
@@ -195,13 +169,6 @@ var SqdCalculator = window.SqdCalculator || {};
                 )
                 .append($('<td>')
                     .text(itinerary.totalRow.totalMiles.toLocaleString('en-US'))
-                    .attr('align', 'right')
-                )
-                .append($('<td>')
-                    .attr('colspan', 4)
-                )
-                .append($('<td>')
-                    .text(totalPoints.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
             )
