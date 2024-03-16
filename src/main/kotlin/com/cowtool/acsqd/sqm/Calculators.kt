@@ -267,10 +267,51 @@ private val acCalculator: EarningCalculator =
                 "FL" -> return@calc ACEarningResult(sqmPercent = 100)
                 "CO" -> return@calc ACEarningResult(sqmPercent = 115)
                 "LT" -> return@calc ACEarningResult(sqmPercent = 125)
-                "PL" -> return@calc ACEarningResult(sqmPercent = 125)
-                "PF" -> return@calc ACEarningResult(sqmPercent = 125)
-                "EL" -> return@calc ACEarningResult(sqmPercent = 150)
-                "EF" -> return@calc ACEarningResult(sqmPercent = 150)
+
+                "PL", "PF" -> {
+                    return@calc when (fareClass) {
+                        "Y", "B" -> ACEarningResult(sqmPercent = 125)
+                        "M" -> ACEarningResult(sqmPercent = 115)
+                        "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
+                        "W" -> if ((originCountry == "Canada" || originCountry == "United States") &&
+                            (destinationCountry == "Canada" || destinationCountry == "United States")
+                        ) {
+                            ACEarningResult(sqmPercent = 100)
+                        } else {
+                            ACEarningResult(sqmPercent = 50)
+                        }
+
+                        "S", "T", "L", "K", "G" -> if (originCountry == "Canada" && destinationCountry == "Canada") {
+                            ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
+                        } else {
+                            ACEarningResult(sqmPercent = 50)
+                        }
+                        else -> ACEarningResult(sqmPercent = 125)
+                    }
+                }
+
+                "EL", "EF" -> {
+                    return@calc when (fareClass) {
+                        "O", "E", "A" -> ACEarningResult(sqmPercent = 125)
+                        "Y", "B" -> ACEarningResult(sqmPercent = 125)
+                        "M" -> ACEarningResult(sqmPercent = 115)
+                        "U", "H", "Q", "V" -> ACEarningResult(sqmPercent = 100)
+                        "W" -> if ((originCountry == "Canada" || originCountry == "United States") &&
+                            (destinationCountry == "Canada" || destinationCountry == "United States")
+                        ) {
+                            ACEarningResult(sqmPercent = 100)
+                        } else {
+                            ACEarningResult(sqmPercent = 50)
+                        }
+
+                        "S", "T", "L", "K", "G" -> if (originCountry == "Canada" && destinationCountry == "Canada") {
+                            ACEarningResult(sqmPercent = 50, aeroplanPointsPercent = 25)
+                        } else {
+                            ACEarningResult(sqmPercent = 50)
+                        }
+                        else -> ACEarningResult(sqmPercent = 150)
+                    }
+                }
             }
         }
 
@@ -1100,7 +1141,7 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
         "E" -> 90
         "H", "Q" -> 70
         "V", "W", "S", "T" -> 50
-        "L", "P", "A", "K"  -> 50
+        "L", "P", "A", "K" -> 50
         else -> 0
     }
 }
