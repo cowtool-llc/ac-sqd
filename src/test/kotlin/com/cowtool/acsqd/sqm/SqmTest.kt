@@ -728,8 +728,7 @@ internal class SqmTest {
 
     @Test
     fun `getEarningResult() handles paid J seated in Y`() {
-        assertEquals(
-            313,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -740,11 +739,13 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(313, sqm)
+            assertEquals(true, isSqmPercentEstimated)
+        }
 
-        assertEquals(
-            313,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -755,11 +756,13 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(313, sqm)
+            assertEquals(isSqmPercentEstimated, true)
+        }
 
-        assertEquals(
-            288,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -770,11 +773,13 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(288, sqm)
+            assertEquals(true, isSqmPercentEstimated)
+        }
 
-        assertEquals(
-            250,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -785,14 +790,16 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(250, sqm)
+            assertEquals(true, isSqmPercentEstimated)
+        }
     }
 
     @Test
     fun `getEarningResult() handles paid J seated in PY`() {
-        assertEquals(
-            313,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -803,11 +810,13 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(313, sqm)
+            assertEquals(true, isSqmPercentEstimated)
+        }
 
-        assertEquals(
-            288,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -818,11 +827,13 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(288, sqm)
+            assertEquals(true, isSqmPercentEstimated)
+        }
 
-        assertEquals(
-            250,
+        with(
             getEarningResult(
                 operatingAirline = "AC",
                 marketingAirline = "AC",
@@ -833,7 +844,10 @@ internal class SqmTest {
                 ticketNumber = "014",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+            )!!
+        ) {
+            assertEquals(250, sqm)
+            assertEquals(true, isSqmPercentEstimated)
+        }
     }
 }
