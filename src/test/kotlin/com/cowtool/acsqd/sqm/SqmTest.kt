@@ -725,4 +725,115 @@ internal class SqmTest {
             )!!.sqm,
         )
     }
+
+    @Test
+    fun `getEarningResult() handles paid J seated in Y`() {
+        assertEquals(
+            313,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "O",
+                fareBasis = "P..EL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+
+        assertEquals(
+            313,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "Y",
+                fareBasis = "D..EL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+
+        assertEquals(
+            288,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "M",
+                fareBasis = "Z..EL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+
+        assertEquals(
+            250,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "V",
+                fareBasis = "P..EL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+    }
+
+    @Test
+    fun `getEarningResult() handles paid J seated in PY`() {
+        assertEquals(
+            313,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "Y",
+                fareBasis = "O..PL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+
+        assertEquals(
+            288,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "M",
+                fareBasis = "E..PL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+
+        assertEquals(
+            250,
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "V",
+                fareBasis = "A..EL",
+                ticketNumber = "014",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!.sqm,
+        )
+    }
 }
