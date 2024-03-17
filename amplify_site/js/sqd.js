@@ -97,6 +97,7 @@ var SqdCalculator = window.SqdCalculator || {};
                     .append($('<td>')
                         .text(segment.earningResult.sqmPercent)
                         .attr('align', 'right')
+                        .css('background-color', segment.earningResult.sqmPercentEstimated ? '#FFFF00' : 'transparent')
                     )
                     .append($('<td>')
                         .text(segment.earningResult.sqm.toLocaleString('en-US'))
