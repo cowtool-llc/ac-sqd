@@ -1,6 +1,7 @@
 origin,destination,old_distance,distance
 ADL,BNE,,1006
 ADL,SYD,,725
+AGP,LIS,,292
 AKL,BNE,1422,
 AKL,DUD,662,
 AKL,LAX,6511,
