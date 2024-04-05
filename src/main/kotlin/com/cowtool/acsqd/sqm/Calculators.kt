@@ -1266,7 +1266,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "SQ" -> sqCalculator // Singapore Airlines
     "TG" -> tgCalculator // Thai Airways
     "TK" -> tkCalculator // Turkish Airlines
-    "TP" -> tpCalculator // TAP Air Portugal
+    "TP", "NI" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
     "UK" -> ukCalculator // Vistara
     "WY" -> wyCalculator // Omar Air
