@@ -850,4 +850,23 @@ internal class SqmTest {
             assertEquals(true, isSqmPercentEstimated)
         }
     }
+
+    @Test
+    fun `getEarningResult() handles paid J with I-fare basis`() {
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "P",
+                fareBasis = "INX00YN0",
+                ticketNumber = "123",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!,
+        ) {
+            assertEquals(3114, sqm)
+        }
+    }
 }
