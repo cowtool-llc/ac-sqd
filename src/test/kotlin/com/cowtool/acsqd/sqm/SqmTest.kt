@@ -864,7 +864,7 @@ internal class SqmTest {
                 ticketNumber = "123",
                 hasAeroplanStatus = true,
                 bonusPointsPercentage = 0,
-            )!!
+            )!!,
         ) {
             assertEquals(3114, sqm)
         }
