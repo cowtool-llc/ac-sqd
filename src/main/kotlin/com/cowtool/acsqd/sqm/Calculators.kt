@@ -213,8 +213,8 @@ private abstract class SimplePartnerEarningCalculator(
     ) = calculate(distanceResult, fareClass, hasAeroplanStatus)
 }
 
-fun isAeroplanFareBasis(fareBasis: String) = fareBasis.contains("BP00") ||
-        fareBasis.contains("AERO")
+fun isAeroplanFareBasis(fareBasis: String) =
+    fareBasis.contains("BP00") || fareBasis.contains("AERO")
 
 private val acCalculator: EarningCalculator =
     calc@{ distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, fareBasis, _, hasAeroplanStatus, bonusPointsPercentage ->
