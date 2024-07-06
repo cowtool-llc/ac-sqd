@@ -869,4 +869,39 @@ internal class SqmTest {
             assertEquals(3114, sqm)
         }
     }
+
+    @Test
+    fun `partner issued X and I class earns 0 on AC`() {
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "X",
+                fareBasis = "RANDOM-LT",
+                ticketNumber = "016",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!,
+        ) {
+            assertEquals(0, sqm)
+        }
+
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "I",
+                fareBasis = "RANDOM-EL",
+                ticketNumber = "016",
+                hasAeroplanStatus = true,
+                bonusPointsPercentage = 0,
+            )!!,
+        ) {
+            assertEquals(0, sqm)
+        }
+    }
 }
