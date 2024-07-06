@@ -233,7 +233,7 @@ private val acCalculator: EarningCalculator =
         )
 
         if (!fareBasis.isNullOrEmpty()) {
-            if (isAeroplanFareBasis(fareBasis)) {
+            if (isAeroplanFareBasis(fareBasis) || fareClass in setOf("X", "I")) {
                 return@calc ACEarningResult(sqmPercent = 0, isSqmPercentEstimated = false)
             }
 
