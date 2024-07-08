@@ -1229,7 +1229,7 @@ private val nonStarCalculator = object : EarningCalculator {
 }
 
 private fun getCalculator(operatingAirline: String) = when (operatingAirline.uppercase(Locale.getDefault())) {
-    "AC", "KV", "QK", "RV", "ZX" -> acCalculator // Air Canada
+    "AC", "KV", "L4", "QK", "RV", "ZX" -> acCalculator // Air Canada
     "A3" -> a3Calculator // Aegean Airlines
     "AD" -> adCalculator // Azul Airlines
     "AI" -> aiCalculator // Air India
