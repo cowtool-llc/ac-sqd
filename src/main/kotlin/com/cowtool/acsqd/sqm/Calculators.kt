@@ -1119,6 +1119,34 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
     }
 }
 
+private val vaCalculator: EarningCalculator =
+    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, _, hasAeroplanStatus, _ ->
+        class VAEarningResult(
+            percent: Int,
+            isDomestic: Boolean,
+        ) : EarningResult(
+            distanceResult = distanceResult,
+            sqmPercent = if (isDomestic) percent else 0,
+            isSqmPercentEstimated = false,
+            aeroplanPointsPercent = percent,
+            bonusPointsPercent = 0,
+            eligibleForMinimumPoints = hasAeroplanStatus,
+            isSqdEligible = false,
+        )
+
+        val isDomestic = originCountry != null && originCountry == destinationCountry
+
+        when (fareClass) {
+            "J" -> VAEarningResult(percent = 150, isDomestic = isDomestic)
+            "C", "D" -> VAEarningResult(percent = 125, isDomestic = isDomestic)
+            "A", "Y", "B", "W", "H", "K", "L" -> VAEarningResult(percent = 100, isDomestic = isDomestic)
+            "R", "E", "O", "N", "V", "P", "Q", "T", "I", "S", "F", "U" -> VAEarningResult(percent = 50, isDomestic = isDomestic)
+            "M" -> VAEarningResult(percent = 25, isDomestic = isDomestic)
+            "G" -> VAEarningResult(percent = 50, isDomestic = isDomestic)
+            else -> VAEarningResult(percent = 0, isDomestic = isDomestic)
+        }
+    }
+
 private val wyCalculator = object : SimplePartnerEarningCalculator() {
     override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
         "P", "F" -> 150
@@ -1268,6 +1296,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "TP", "NI" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
     "UK" -> ukCalculator // Vistara
+    "VA" -> vaCalculator // Virgin Australia
     "WY" -> wyCalculator // Omar Air
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
