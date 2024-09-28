@@ -984,17 +984,6 @@ private val saCalculator: EarningCalculator =
         }
     }
 
-private val skCalculator = object : SimpleStarAllianceEarningCalculator() {
-    override fun getSqmPercentage(fareClass: String) = when (fareClass) {
-        "C", "D", "Z" -> 125
-        "A", "J", "P", "Y", "S", "B" -> 125
-        "E", "M", "H", "Q", "V", "W" -> 100
-        "U", "R", "K", "L", "N", "G" -> 50
-        // TODO SAS Go Light Fares are 0
-        else -> 0
-    }
-}
-
 private val snCalculator = object : SimpleStarAllianceEarningCalculator(
     bonusPercentage = BonusPercentage.FIXED_25
 ) {
@@ -1288,7 +1277,6 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "PB" -> pbCalculator // PAL Airlines
     "QH" -> qhCalculator // Bamboo Airways
     "SA" -> saCalculator // South African Airways
-    "SK" -> skCalculator // Scandinavian Airlines
     "SN" -> snCalculator // Brussels Airlines
     "SQ" -> sqCalculator // Singapore Airlines
     "TG" -> tgCalculator // Thai Airways
