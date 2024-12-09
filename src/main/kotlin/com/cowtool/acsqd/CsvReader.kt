@@ -5,7 +5,7 @@ fun <T> parseResourceToCsv(
     keyParser: (List<String>) -> String = { it.first() },
     lineParser: (Int, String, List<String>) -> T
 ): Map<String, T> {
-    val csvText = ::SqdCalculator.javaClass.getResource(resourcePath).readText()
+    val csvText = ::SqdCalculator.javaClass.getResource(resourcePath)!!.readText()
 
     return csvText.lines().filter { it.isNotBlank() }.mapIndexedNotNull { index, s ->
         if (index == 0) {
