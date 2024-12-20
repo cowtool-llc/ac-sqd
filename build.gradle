@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '2.0.21'
+    ext.kotlin_version = '2.1.0'
 
     repositories {
         gradlePluginPortal()
@@ -8,7 +8,7 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id "com.github.ben-manes.versions" version '0.51.0'
 }
@@ -22,7 +22,7 @@ dependencies {
     implementation('com.amazonaws:aws-lambda-java-core:1.2.3')
     implementation('com.amazonaws:aws-lambda-java-events:3.14.0')
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
     test.useJUnitPlatform()
 }
 
