@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '2.1.0'
+    ext.kotlin_version = '2.1.10'
 
     repositories {
         gradlePluginPortal()
@@ -8,9 +8,9 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.10'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
-    id "com.github.ben-manes.versions" version '0.51.0'
+    id "com.github.ben-manes.versions" version '0.52.0'
 }
 
 repositories {
