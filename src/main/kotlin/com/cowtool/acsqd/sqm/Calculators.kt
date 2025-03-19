@@ -1109,7 +1109,7 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
 }
 
 private val vaCalculator: EarningCalculator =
-    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, _, hasAeroplanStatus, _ ->
+    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _ ->
         class VAEarningResult(
             percent: Int,
             isDomestic: Boolean,
