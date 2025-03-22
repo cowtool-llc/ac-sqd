@@ -1120,7 +1120,7 @@ private val vaCalculator: EarningCalculator =
             aeroplanPointsPercent = percent,
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
-            isSqdEligible = isDomestic && percent > 0 && ticketNumber.startsWith("014")
+            isSqdEligible = isDomestic && percent > 0 && ticketNumber.startsWith("014"),
         )
 
         val isDomestic = originCountry != null && originCountry == destinationCountry
