@@ -1109,7 +1109,7 @@ private val ukCalculator = object : SimplePartnerEarningCalculator() {
 }
 
 private val vaCalculator: EarningCalculator =
-    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, _, hasAeroplanStatus, _ ->
+    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _ ->
         class VAEarningResult(
             percent: Int,
             isDomestic: Boolean,
@@ -1120,7 +1120,7 @@ private val vaCalculator: EarningCalculator =
             aeroplanPointsPercent = percent,
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
-            isSqdEligible = false,
+            isSqdEligible = isDomestic && percent > 0 && ticketNumber.startsWith("014"),
         )
 
         val isDomestic = originCountry != null && originCountry == destinationCountry
