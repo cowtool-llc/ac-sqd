@@ -40,7 +40,7 @@ class SqdCalculator(
             hasBonusPointsPrivilege = hasBonusPointsPrivilege,
             segmentsCsv = segments,
             baseFare = baseFare,
-            surcharges = surcharges
+            surcharges = surcharges,
         )
     }
 }

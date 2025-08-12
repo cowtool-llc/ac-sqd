@@ -5,7 +5,7 @@ import com.cowtool.acsqd.parseResourceToCsv
 val aeroplanDistances: Map<String, Pair<Int, Boolean>> by lazy {
     parseResourceToCsv(
         "/aeroplan_distances.csv",
-        keyParser = { "${it[0]}${it[1]}" }
+        keyParser = { "${it[0]}${it[1]}" },
     ) { index, line, values ->
         if (values.size != 4) {
             throw IllegalStateException("Invalid line $index: $line")

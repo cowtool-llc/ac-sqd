@@ -49,5 +49,5 @@ private const val earthRadiusMi = 3959.toDouble()
 
 data class HaversineResult(
     val distance: Int?,
-    val error: String? = null
+    val error: String? = null,
 )
