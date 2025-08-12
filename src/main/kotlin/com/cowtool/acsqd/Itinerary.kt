@@ -8,7 +8,7 @@ import kotlin.math.roundToInt
 
 data class Itinerary(
     val segments: List<Segment>,
-    val totalRow: TotalRow
+    val totalRow: TotalRow,
 ) {
     companion object {
         @Throws(SqdCalculatorException::class)
@@ -18,7 +18,7 @@ data class Itinerary(
             hasBonusPointsPrivilege: Boolean,
             segmentsCsv: String,
             baseFare: Double?,
-            surcharges: Double?
+            surcharges: Double?,
         ): Itinerary {
             if (baseFare == null || baseFare < 0) {
                 throw SqdCalculatorException("Invalid base fare.  If base fare is 0, enter 0.")
@@ -121,7 +121,12 @@ class Segment(
 
     companion object {
         @Throws(SqdCalculatorException::class)
-        fun parse(csv: String, ticketNumber: String, aeroplanStatus: String, hasBonusPointsPrivilege: Boolean): Segment {
+        fun parse(
+            csv: String,
+            ticketNumber: String,
+            aeroplanStatus: String,
+            hasBonusPointsPrivilege: Boolean,
+        ): Segment {
             val csvValues = csv.split(",")
 
             if (csvValues.size !in 4..5) {
