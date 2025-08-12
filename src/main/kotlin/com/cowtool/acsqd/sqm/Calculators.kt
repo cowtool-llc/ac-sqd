@@ -6,7 +6,7 @@ import com.cowtool.acsqd.distance.airports
 import com.cowtool.acsqd.distance.getSegmentDistance
 import java.lang.Integer.max
 import java.lang.Integer.min
-import java.util.*
+import java.util.Locale
 import kotlin.math.roundToInt
 
 interface EarningResultCore {
@@ -328,7 +328,7 @@ private val acCalculator: EarningCalculator =
             if (fareBasis.isNullOrBlank()) {
                 fareClass // Not really, but we want to continue
             } else {
-                fareBasis.substring(0, 1)
+                fareBasis.take(1)
             }
         } else {
             fareClass
@@ -1129,7 +1129,11 @@ private val vaCalculator: EarningCalculator =
             "J" -> VAEarningResult(percent = 150, isDomestic = isDomestic)
             "C", "D" -> VAEarningResult(percent = 125, isDomestic = isDomestic)
             "A", "Y", "B", "W", "H", "K", "L" -> VAEarningResult(percent = 100, isDomestic = isDomestic)
-            "R", "E", "O", "N", "V", "P", "Q", "T", "I", "S", "F", "U" -> VAEarningResult(percent = 50, isDomestic = isDomestic)
+            "R", "E", "O", "N", "V", "P", "Q", "T", "I", "S", "F", "U" -> VAEarningResult(
+                percent = 50,
+                isDomestic = isDomestic
+            )
+
             "M" -> VAEarningResult(percent = 25, isDomestic = isDomestic)
             "G" -> VAEarningResult(percent = 50, isDomestic = isDomestic)
             else -> VAEarningResult(percent = 0, isDomestic = isDomestic)
@@ -1304,9 +1308,9 @@ fun getEarningResult(
     hasAeroplanStatus: Boolean,
     bonusPointsPercentage: Int,
 ): EarningResult? {
-    val effectiveOperator = when {
-        marketingAirline == "AC" && operatingAirline == "PB" -> "AC"
-        marketingAirline == "LX" && operatingAirline in setOf("2L", "BT", "WK") -> "LX"
+    val effectiveOperator = when (marketingAirline) {
+        "AC" if operatingAirline == "PB" -> "AC"
+        "LX" if operatingAirline in setOf("2L", "BT", "WK") -> "LX"
         else -> operatingAirline
     }
 

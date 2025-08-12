@@ -36,7 +36,7 @@ data class Itinerary(
             val totalFare = baseFare + surcharges
             segments.forEach {
                 it.earningResult?.sqd = when {
-                    !missingAnyDistance || it.earningResult == null || it.distance == null -> null
+                    !missingAnyDistance || it.distance == null -> null
                     it.earningResult.isSqdEligible -> ceil(it.distance.toLong() * totalFare / totalDistance).roundToInt()
                     else -> 0
                 }
@@ -124,7 +124,7 @@ class Segment(
         fun parse(csv: String, ticketNumber: String, aeroplanStatus: String, hasBonusPointsPrivilege: Boolean): Segment {
             val csvValues = csv.split(",")
 
-            if (csvValues.size < 4 || csvValues.size > 5) {
+            if (csvValues.size !in 4..5) {
                 throw SqdCalculatorException("Each line must contain airline, origin, destination, fare class, and optionally fare brand.  Error parsing: $csv")
             }
 
