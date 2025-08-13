@@ -1172,6 +1172,27 @@ private val tgCalculator = object : StarAllianceEarningCalculator() {
     }
 }
 
+private val tkCalculator = object : StarAllianceEarningCalculator() {
+    override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
+
+    override fun getDistancePercentMultiplier(
+        fareClass: String?,
+        origin: String,
+        originCountry: String?,
+        originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
+        destinationContinent: String?,
+    ) = when (fareClass) {
+        "C", "D", "Z", "K" -> 125
+        "J" -> 110
+        "Y", "B", "M", "A", "H" -> 100
+        "S", "O", "E", "Q", "T", "L" -> 70
+        "V" -> 25
+        else -> 0
+    }
+}
+
 private val tpCalculator = object : StarAllianceEarningCalculator() {
     override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
 
@@ -1405,7 +1426,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "SN" -> snCalculator // Brussels Airlines
     "SQ" -> sqCalculator // Singapore Airlines
     "TG" -> tgCalculator // Thai Airways
-//    "TK" -> tkCalculator // Turkish Airlines
+    "TK" -> tkCalculator // Turkish Airlines
     "TP", "NI" -> tpCalculator // TAP Air Portugal
     "UA" -> uaCalculator // United Airlines
     "UK" -> ukCalculator // Vistara
