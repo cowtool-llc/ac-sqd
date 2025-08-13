@@ -150,6 +150,8 @@ var SqcCalculator = window.SqcCalculator || {};
                     .attr('align', 'right')
                 )
                 .append($('<td>')
+                )
+                .append($('<td>')
                     .text(itinerary.totalRow.bonusPoints.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
