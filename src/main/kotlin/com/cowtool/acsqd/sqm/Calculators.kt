@@ -164,7 +164,11 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
         } else {
             getDistancePercentMultiplier(
                 fareClass = fareClass,
+                origin = origin,
+                originCountry = originCountry,
                 originContinent = originContinent,
+                destination = destination,
+                destinationCountry = destinationCountry,
                 destinationContinent = destinationContinent,
             )?.let { percentMultiplier ->
                 EarningResultStarAllianceTicketAndFlight(
@@ -181,6 +185,10 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
         originCountry: String?,
         destinationCountry: String?,
     ): Int? {
+        if (!isEligibleForSqc(fareClass)) {
+            return 0
+        }
+
         if (!fareBasis.isNullOrEmpty()) {
             if (isAeroplanFareBasis(fareBasis) || fareClass in setOf("X", "I")) {
                 return 0
@@ -236,6 +244,10 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
         originCountry: String?,
         destinationCountry: String?,
     ): Int? {
+        if (!isEligibleForSqc(fareClass)) {
+            return 0
+        }
+
         return when (fareClass.take(1)) {
             "J", "C", "D", "Z", "P",
             "O", "E", "A",
@@ -260,9 +272,15 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
 
     abstract fun getDistancePercentMultiplier(
         fareClass: String?,
+        origin: String,
+        originCountry: String?,
         originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
         destinationContinent: String?,
     ): Int?
+
+    open fun isEligibleForSqc(fareClass: String?) = true
 }
 
 private abstract class NonStarAllianceEarningCalculator : EarningCalculator {
@@ -308,49 +326,6 @@ private abstract class NonStarAllianceEarningCalculator : EarningCalculator {
     ): Int?
 }
 
-//private abstract class SimplePartnerEarningCalculator(
-//    private val baseMinimumPoints: Int = 250,
-//    private val alwaysEarnsMinimumPoints: Boolean = false,
-//) : EarningCalculator {
-//    abstract fun getAeroplanMilesPercentage(fareClass: String): Int
-//
-//    fun calculate(
-//        distanceResult: DistanceResult,
-//        fareClass: String?,
-//        hasAeroplanStatus: Boolean,
-//    ): EarningResult? {
-//        if (fareClass == null) {
-//            return null
-//        }
-//        val aeroplanMilesPercent = getAeroplanMilesPercentage(fareClass)
-//        return EarningResult(
-//            distanceResult = distanceResult,
-//            sqmPercent = 0,
-//            isSqmPercentEstimated = false,
-//            aeroplanPointsPercent = aeroplanMilesPercent,
-//            bonusPointsPercent = 0,
-//            eligibleForMinimumPoints = hasAeroplanStatus || alwaysEarnsMinimumPoints,
-//            minimumPoints = if (hasAeroplanStatus || alwaysEarnsMinimumPoints) baseMinimumPoints else 0,
-//            isSqdEligible = false,
-//        )
-//    }
-//
-//    override fun invoke(
-//        distanceResult: DistanceResult,
-//        origin: String,
-//        originCountry: String?,
-//        originContinent: String?,
-//        destination: String,
-//        destinationCountry: String?,
-//        destinationContinent: String?,
-//        fareClass: String?,
-//        fareBasis: String?,
-//        ticketNumber: String,
-//        hasAeroplanStatus: Boolean,
-//        bonusPointsPercentage: Int,
-//    ) = calculate(distanceResult, fareClass, hasAeroplanStatus)
-//}
-
 fun isAeroplanFareBasis(fareBasis: String) =
     fareBasis.contains("BP00") || fareBasis.contains("AERO")
 
@@ -362,7 +337,11 @@ private val acCalculator = object : StarAllianceEarningCalculator() {
     // This will never be called
     override fun getDistancePercentMultiplier(
         fareClass: String?,
+        origin: String,
+        originCountry: String?,
         originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
         destinationContinent: String?,
     ) = throw IllegalStateException("AC flights are not handled this way")
 }
@@ -372,7 +351,11 @@ private val a3Calculator = object : StarAllianceEarningCalculator() {
 
     override fun getDistancePercentMultiplier(
         fareClass: String?,
+        origin: String,
+        originCountry: String?,
         originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
         destinationContinent: String?,
     ) = when (fareClass) {
         "A", "C", "D", "Z" -> 125
@@ -662,7 +645,11 @@ private val lhCalculator = object : StarAllianceEarningCalculator() {
 
     override fun getDistancePercentMultiplier(
         fareClass: String?,
+        origin: String,
+        originCountry: String?,
         originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
         destinationContinent: String?,
     ) =
         if (originContinent == null || destinationContinent == null) {
@@ -689,26 +676,40 @@ private val lhCalculator = object : StarAllianceEarningCalculator() {
         }
 }
 
-//private val loCalculator = object : SimpleStarAllianceEarningCalculator() {
-//    override fun getSqmPercentage(fareClass: String) = when (fareClass) {
-//        "C", "D" -> 125
-//        "Z", "F" -> 100
-//        "P" -> 105
-//        "A", "R" -> 100
-//        "Y", "B", "M" -> 100
-//        "E", "H", "K", "Q", "T", "G", "S" -> 75
-//        "V", "W", "L" -> 50
-//        "U", "O" -> 25
-//        else -> 0
-//    }
-//}
+private val loCalculator = object : StarAllianceEarningCalculator() {
+    override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
+
+    override fun getDistancePercentMultiplier(
+        fareClass: String?,
+        origin: String,
+        originCountry: String?,
+        originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
+        destinationContinent: String?,
+    ) = when (fareClass) {
+        "C", "D" -> 125
+        "Z", "F" -> 100
+        "P" -> 105
+        "A", "R" -> 100
+        "Y", "B", "M" -> 100
+        "E", "H", "K", "Q", "T", "G", "S" -> 75
+        "V", "W", "L" -> 50
+        "U", "O" -> 25
+        else -> 0
+    }
+}
 
 private val lxCalculator = object : StarAllianceEarningCalculator() {
     override fun isEligibleForElitePointsBonus(ticketNumber: String) = ticketNumber.startsWith("014")
 
     override fun getDistancePercentMultiplier(
         fareClass: String?,
+        origin: String,
+        originCountry: String?,
         originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
         destinationContinent: String?,
     ) =
         if (originContinent == null || destinationContinent == null) {
@@ -745,39 +746,40 @@ private val lxCalculator = object : StarAllianceEarningCalculator() {
 //        else -> 0
 //    }
 //}
-//
-//private val msCalculator: EarningCalculator =
-//    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _ ->
-//        class MSEarningResult(
-//            sqmPercent: Int,
-//        ) : StarAllianceEarningResult(
-//            distanceResult = distanceResult,
-//            sqmPercent = sqmPercent,
-//            hasAeroplanStatus = hasAeroplanStatus,
-//            ticketNumber = ticketNumber,
-//        )
-//
-//        if (originCountry == null || destinationCountry == null) {
-//            null
-//        } else if (originCountry == "Egypt" && destinationCountry == "Egypt") {
-//            when (fareClass) {
-//                "C", "D", "J", "Z" -> MSEarningResult(sqmPercent = 125)
-//                "Y", "B", "M", "H" -> MSEarningResult(sqmPercent = 100)
-//                "Q", "K" -> MSEarningResult(sqmPercent = 75)
-//                else -> MSEarningResult(sqmPercent = 0)
-//            }
-//        } else {
-//            when (fareClass) {
-//                "C", "D", "J", "Z" -> MSEarningResult(sqmPercent = 125)
-//                "Y", "B", "M", "H" -> MSEarningResult(sqmPercent = 100)
-//                "Q", "K" -> MSEarningResult(sqmPercent = 75)
-//                "V", "L" -> MSEarningResult(sqmPercent = 50)
-//                "G", "S", "W", "T" -> MSEarningResult(sqmPercent = 25)
-//                else -> MSEarningResult(sqmPercent = 0)
-//            }
-//        }
-//    }
-//
+
+
+private val msCalculator = object : StarAllianceEarningCalculator() {
+    override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
+
+    override fun getDistancePercentMultiplier(
+        fareClass: String?,
+        origin: String,
+        originCountry: String?,
+        originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
+        destinationContinent: String?,
+    ) = if (originCountry == null || destinationCountry == null) {
+        null
+    } else if (originCountry == "Egypt" && destinationCountry == "Egypt") {
+        when (fareClass) {
+            "C", "D", "J", "Z" -> 125
+            "Y", "B", "M", "H" -> 100
+            "Q", "K" -> 75
+            else -> 0
+        }
+    } else {
+        when (fareClass) {
+            "C", "D", "J", "Z" -> 125
+            "Y", "B", "M", "H" -> 100
+            "Q", "K" -> 75
+            "V", "L" -> 50
+            "G", "S", "W", "T" -> 25
+            else -> 0
+        }
+    }
+}
+
 //private val nhCalculator = object : SimpleStarAllianceEarningCalculator() {
 //    override fun getSqmPercentage(fareClass: String) = when (fareClass) {
 //        "F", "A" -> 150
@@ -1009,7 +1011,11 @@ private val tgCalculator = object : StarAllianceEarningCalculator() {
 
     override fun getDistancePercentMultiplier(
         fareClass: String?,
+        origin: String,
+        originCountry: String?,
         originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
         destinationContinent: String?,
     ) = when (fareClass) {
         "F", "A", "P" -> 150
@@ -1021,72 +1027,67 @@ private val tgCalculator = object : StarAllianceEarningCalculator() {
     }
 }
 
-//private val tpCalculator: EarningCalculator =
-//    { distanceResult, origin, _, _, destination, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, _ ->
-//        class TPEarningResult(
-//            sqmPercent: Int,
-//        ) : StarAllianceEarningResult(
-//            distanceResult = distanceResult,
-//            sqmPercent = sqmPercent,
-//            hasAeroplanStatus = hasAeroplanStatus,
-//            ticketNumber = ticketNumber,
-//        )
-//
-//        val specialDestinations = setOf("LIS", "OPO", "PXO", "FNC")
-//        if (origin in specialDestinations && destination in specialDestinations) {
-//            when (fareClass) {
-//                "C", "D", "Z", "J" -> TPEarningResult(sqmPercent = 150)
-//                "Y", "B" -> TPEarningResult(sqmPercent = 100)
-//                "M", "H", "Q", "W", "K", "U" -> TPEarningResult(sqmPercent = 100)
-//                "V", "S", "L", "G", "A", "P", "E" -> TPEarningResult(sqmPercent = 50)
-//                else -> TPEarningResult(sqmPercent = 0)
-//            }
-//        } else {
-//            when (fareClass) {
-//                "C", "D", "Z", "J" -> TPEarningResult(sqmPercent = 150)
-//                "Y", "B" -> TPEarningResult(sqmPercent = 100)
-//                "M", "H", "Q" -> TPEarningResult(sqmPercent = 100)
-//                "V", "W", "S", "L", "K", "U", "G", "A", "P" -> TPEarningResult(sqmPercent = 50)
-//                else -> TPEarningResult(sqmPercent = 0)
-//            }
-//        }
-//    }
-//
-//private val uaCalculator: EarningCalculator =
-//    { distanceResult, _, _, _, _, _, _, fareClass, _, ticketNumber, hasAeroplanStatus, bonusPointsPercentage ->
-//        class UAEarningResult(
-//            sqmPercent: Int,
-//        ) : StarAllianceEarningResult(
-//            distanceResult = distanceResult,
-//            sqmPercent = sqmPercent,
-//            bonusPointsPercent = bonusPointsPercentage,
-//            hasAeroplanStatus = hasAeroplanStatus,
-//            ticketNumber = ticketNumber,
-//        )
-//
-//        when (fareClass) {
-//            "J", "C", "D", "Z", "P" -> UAEarningResult(sqmPercent = 150)
-//            "O", "A" -> UAEarningResult(sqmPercent = 125)
-//            "R" -> UAEarningResult(sqmPercent = 100)
-//            "Y", "B" -> UAEarningResult(sqmPercent = 125)
-//            "M", "E", "U", "H" -> UAEarningResult(sqmPercent = 100)
-//            "Q", "V", "W" -> UAEarningResult(sqmPercent = 75)
-//            "S", "T", "L" -> UAEarningResult(sqmPercent = 50)
-//            "K", "G" -> UAEarningResult(sqmPercent = 25)
-//            "N" -> EarningResult(
-//                distanceResult = distanceResult,
-//                sqmPercent = 0,
-//                isSqmPercentEstimated = false,
-//                aeroplanPointsPercent = 50,
-//                bonusPointsPercent = 0,
-//                eligibleForMinimumPoints = hasAeroplanStatus,
-//                isSqdEligible = false,
-//            )
-//
-//            else -> UAEarningResult(sqmPercent = 0)
-//        }
-//    }
-//
+private val tpCalculator = object : StarAllianceEarningCalculator() {
+    override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
+
+    override fun getDistancePercentMultiplier(
+        fareClass: String?,
+        origin: String,
+        originCountry: String?,
+        originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
+        destinationContinent: String?,
+    ): Int {
+        val specialDestinations = setOf("LIS", "OPO", "PXO", "FNC")
+        return if (origin in specialDestinations && destination in specialDestinations) {
+            when (fareClass) {
+                "C", "D", "Z", "J" -> 150
+                "Y", "B" -> 100
+                "M", "H", "Q", "W", "K", "U" -> 100
+                "V", "S", "L", "G", "A", "P", "E" -> 50
+                else -> 0
+            }
+        } else {
+            when (fareClass) {
+                "C", "D", "Z", "J" -> 150
+                "Y", "B" -> 100
+                "M", "H", "Q" -> 100
+                "V", "W", "S", "L", "K", "U", "G", "A", "P" -> 50
+                else -> 0
+            }
+        }
+    }
+}
+
+private val uaCalculator = object : StarAllianceEarningCalculator() {
+    override fun isEligibleForElitePointsBonus(ticketNumber: String) = ticketNumber.startsWith("014")
+
+    override fun getDistancePercentMultiplier(
+        fareClass: String?,
+        origin: String,
+        originCountry: String?,
+        originContinent: String?,
+        destination: String,
+        destinationCountry: String?,
+        destinationContinent: String?,
+    ) = when (fareClass) {
+        "J", "C", "D", "Z", "P" -> 150
+        "O", "A" -> 125
+        "R" -> 100
+        "Y", "B" -> 125
+        "M", "E", "U", "H" -> 100
+        "Q", "V", "W" -> 75
+        "S", "T", "L" -> 50
+        "K", "G" -> 25
+        "N" -> 25
+
+        else -> 0
+    }
+
+    override fun isEligibleForSqc(fareClass: String?) = fareClass != "N"
+}
+
 //private val ukCalculator = object : SimplePartnerEarningCalculator() {
 //    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
 //        "C", "J", "D", "Z" -> 125
@@ -1233,10 +1234,10 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
 //    "GF" -> gfCalculator // Gulf Air
 //    "HO" -> hoCalculator // Juneyao Airlines
     "LH", "CL" -> lhCalculator // Lufthansa
-//    "LO" -> loCalculator // LOT Polish Airlines
+    "LO" -> loCalculator // LOT Polish Airlines
     "LX" -> lxCalculator // Swiss
 //    "MK" -> mkCalculator // Air Mauritius
-//    "MS" -> msCalculator // EgyptAir
+    "MS" -> msCalculator // EgyptAir
 //    "NH", "NQ" -> nhCalculator // ANA
 //    "NZ" -> nzCalculator // Air New Zealand
 //    "OA" -> oaCalculator // Olympic Air
@@ -1250,8 +1251,8 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
 //    "SQ" -> sqCalculator // Singapore Airlines
     "TG" -> tgCalculator // Thai Airways
 //    "TK" -> tkCalculator // Turkish Airlines
-//    "TP", "NI" -> tpCalculator // TAP Air Portugal
-//    "UA" -> uaCalculator // United Airlines
+    "TP", "NI" -> tpCalculator // TAP Air Portugal
+    "UA" -> uaCalculator // United Airlines
 //    "UK" -> ukCalculator // Vistara
 //    "VA" -> vaCalculator // Virgin Australia
 //    "WY" -> wyCalculator // Omar Air
