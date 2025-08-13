@@ -2,7 +2,7 @@ name: Deploy Lambda
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "sqc" ]
     paths:
       - '*gradle*'
       - 'src/**'
