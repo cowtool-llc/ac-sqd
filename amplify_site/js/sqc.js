@@ -93,7 +93,7 @@ var SqcCalculator = window.SqcCalculator || {};
                         .attr('align', 'center')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.eligibleDollars)
+                        .text(segment.earningResult.eligibleDollars.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
