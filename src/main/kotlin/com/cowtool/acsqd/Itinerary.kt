@@ -15,7 +15,6 @@ data class Itinerary(
         fun parse(
             ticket: String,
             aeroplanStatus: String,
-            hasBonusPointsPrivilege: Boolean,
             segmentsCsv: String,
             baseFare: Double?,
             surcharges: Double?,
@@ -28,28 +27,27 @@ data class Itinerary(
             }
 
             val segments = segmentsCsv.trim().split(Regex("\\s+")).map {
-                Segment.parse(it, ticket, aeroplanStatus, hasBonusPointsPrivilege)
+                Segment.parse(it, ticket, aeroplanStatus)
             }
-            // If we're missing any distance, we can't calculate SQD
+            // If we're missing any distance, we can't calculate SQC
             val missingAnyDistance = segments.none { it.distance == null }
             val totalDistance = segments.mapNotNull { it.distance }.sum()
             val totalFare = baseFare + surcharges
             segments.forEach {
-                it.earningResult?.sqd = when {
+                it.earningResult?.eligibleDollars = when {
                     !missingAnyDistance || it.distance == null -> null
-                    it.earningResult.isSqdEligible -> ceil(it.distance.toLong() * totalFare / totalDistance).roundToInt()
-                    else -> 0
+                    else -> ceil(it.distance.toLong() * totalFare / totalDistance).roundToInt()
                 }
             }
 
-            val totalSqd = if (segments.none { it.earningResult?.sqd == null }) {
-                segments.mapNotNull { it.earningResult?.sqd }.sum()
+            val totalSqc = if (segments.none { it.earningResult?.sqc == null }) {
+                segments.mapNotNull { it.earningResult?.sqc }.sum()
             } else {
                 null
             }
 
-            val totalAeroplanMiles = if (segments.none { it.earningResult?.aeroplanMiles == null }) {
-                segments.mapNotNull { it.earningResult?.aeroplanMiles }.sum()
+            val totalBasePoints = if (segments.none { it.earningResult?.basePoints == null }) {
+                segments.mapNotNull { it.earningResult?.basePoints }.sum()
             } else {
                 null
             }
@@ -60,14 +58,8 @@ data class Itinerary(
                 null
             }
 
-            val totalMiles = if (segments.none { it.earningResult?.totalMiles == null }) {
-                segments.mapNotNull { it.earningResult?.totalMiles }.sum()
-            } else {
-                null
-            }
-
-            val totalSqm = if (segments.none { it.earningResult?.sqm == null }) {
-                segments.mapNotNull { it.earningResult?.sqm }.sum()
+            val totalPoints = if (segments.none { it.earningResult?.totalPoints == null }) {
+                segments.mapNotNull { it.earningResult?.totalPoints }.sum()
             } else {
                 null
             }
@@ -76,12 +68,11 @@ data class Itinerary(
                 TotalRow(
                     distance = totalDistance,
 
-                    aeroplanMiles = totalAeroplanMiles,
+                    basePoints = totalBasePoints,
                     bonusPoints = totalBonusPoints,
-                    totalMiles = totalMiles,
+                    totalPoints = totalPoints,
 
-                    sqm = totalSqm,
-                    sqd = totalSqd,
+                    sqc = totalSqc,
                 )
 
             return Itinerary(segments, totalRow)
@@ -97,19 +88,17 @@ class Segment(
     val fareClass: String,
     val fareBrand: String?,
     ticketNumber: String,
-    hasAeroplanStatus: Boolean,
-    bonusPointsPercentage: Int,
+    eliteBonusMultiplier: Int,
 ) {
     val earningResult = getEarningResult(
-        airline,
+        operatingAirline = airline,
         marketingAirline = marketingAirline,
-        origin,
-        destination,
-        fareClass,
+        origin = origin,
+        destination = destination,
+        fareClass = fareClass,
         fareBasis = fareBrand,
         ticketNumber = ticketNumber,
-        hasAeroplanStatus = hasAeroplanStatus,
-        bonusPointsPercentage = bonusPointsPercentage,
+        eliteBonusMultiplier = eliteBonusMultiplier,
     )
 
     private val distanceResult = earningResult?.distanceResult ?: getDistanceResult(origin, destination)
@@ -125,7 +114,6 @@ class Segment(
             csv: String,
             ticketNumber: String,
             aeroplanStatus: String,
-            hasBonusPointsPrivilege: Boolean,
         ): Segment {
             val csvValues = csv.split(",")
 
@@ -159,31 +147,39 @@ class Segment(
                 null
             }
 
-            val hasAeroplanStatus = aeroplanStatus.isNotBlank()
-            val bonusPointsPercentage = (if (hasBonusPointsPrivilege) aeroplanStatus.toIntOrNull() else null) ?: 0
+            val eliteBonusMultiplier = getEliteBonusMultiplier(aeroplanStatus)
 
             return Segment(
-                airline,
+                airline = airline,
                 marketingAirline = null,
-                origin,
-                destination,
-                fareClass,
-                fareBrand,
-                ticketNumber,
-                hasAeroplanStatus,
-                bonusPointsPercentage,
+                origin = origin,
+                destination = destination,
+                fareClass = fareClass,
+                fareBrand = fareBrand,
+                ticketNumber = ticketNumber,
+                eliteBonusMultiplier = eliteBonusMultiplier,
             )
         }
     }
 }
 
+fun getEliteBonusMultiplier(
+    aeroplanStatus: String,
+) = when (aeroplanStatus.toIntOrNull()) {
+    100 -> 5
+    75 -> 4
+    50 -> 3
+    35 -> 2
+    25 -> 1
+    else -> 0
+}
+
 data class TotalRow(
     val distance: Int?,
 
-    val aeroplanMiles: Int?,
+    val basePoints: Int?,
     val bonusPoints: Int?,
-    val totalMiles: Int?,
+    val totalPoints: Int?,
 
-    val sqm: Int?,
-    val sqd: Int?,
+    val sqc: Int?,
 )
