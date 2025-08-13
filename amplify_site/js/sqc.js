@@ -19,7 +19,6 @@ var SqcCalculator = window.SqcCalculator || {};
     function callLambda(
         ticket,
         aeroplanStatus,
-        hasBonusPointsPrivilege,
         segments,
         baseFare,
         surcharges
@@ -42,7 +41,6 @@ var SqcCalculator = window.SqcCalculator || {};
             Payload : JSON.stringify({
                 ticket : ticket,
                 aeroplanStatus : aeroplanStatus,
-                hasBonusPointsPrivilege : hasBonusPointsPrivilege,
                 segments : segments,
                 baseFare : baseFare,
                 surcharges : surcharges,
@@ -60,7 +58,7 @@ var SqcCalculator = window.SqcCalculator || {};
                 } else {
                     const results = response.results;
                     populateResults(response.itinerary);
-                    populateUrl(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
+                    populateUrl(ticket, aeroplanStatus, segments, baseFare, surcharges);
                 }
             }
 
@@ -169,14 +167,12 @@ var SqcCalculator = window.SqcCalculator || {};
     function populateUrl(
         ticket,
         aeroplanStatus,
-        hasBonusPointsPrivilege,
         segments,
         baseFare,
         surcharges
     ) {
         let queryParams = "?ticket=" + ticket +
             "&aeroplanStatus=" + aeroplanStatus +
-            "&hasBonusPointsPrivilege=" + hasBonusPointsPrivilege +
             "&segments=" + encodeURIComponent(segments) +
             "&baseFare=" + baseFare +
             "&surcharges=" + surcharges;
@@ -217,11 +213,10 @@ var SqcCalculator = window.SqcCalculator || {};
     function performCalculateSqc() {
         const ticket = $('#ticket').val();
         const aeroplanStatus = $('#aeroplanStatus').val();
-        const hasBonusPointsPrivilege = $('#hasBonusPointsPrivilege').is(':checked');
         const segments = $('#segments').val();
         const baseFare = $('#baseFare').val();
         const surcharges = $('#surcharges').val();
-        callLambda(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
+        callLambda(ticket, aeroplanStatus, segments, baseFare, surcharges);
     }
 
     function handleRequestClick(event) {
@@ -245,9 +240,6 @@ var SqcCalculator = window.SqcCalculator || {};
         if (aeroplanStatus) {
             $('#aeroplanStatus').val(aeroplanStatus).change();
         }
-
-        const hasBonusPointsPrivilege = urlParams.get('hasBonusPointsPrivilege');
-        $('#hasBonusPointsPrivilege').prop( 'checked', hasBonusPointsPrivilege === 'true' );
 
         const segments = urlParams.get('segments');
         if (segments) {
