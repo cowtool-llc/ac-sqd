@@ -47,7 +47,7 @@ internal val defaultSegments =
     """
 AC,SFO,YVR,K,CO
 AC,YVR,LHR,P,EL
-LH,LHR,MUC,P,
-TG,MUC,BKK,M
-CX,BKK,HKG,C
+LH,LHR,MUC,P,EL
+TG,MUC,BKK,M,EL
+CX,BKK,HKG,C,EL
 """.trim()
