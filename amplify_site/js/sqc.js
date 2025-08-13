@@ -1,12 +1,12 @@
-/*global SqdCalculator _config*/
+/*global SqcCalculator _config*/
 
-var SqdCalculator = window.SqdCalculator || {};
+var SqcCalculator = window.SqcCalculator || {};
 
 (function flightStatusScopeWrapper($) {
     var authToken;
     var authTokenLoaded = false;
     var isDocReady = false;
-    SqdCalculator.authToken.then(function setAuthToken(token) {
+    SqcCalculator.authToken.then(function setAuthToken(token) {
         if (token) {
             authToken = token;
         }
@@ -24,7 +24,7 @@ var SqdCalculator = window.SqdCalculator || {};
         baseFare,
         surcharges
     ) {
-        $('#calculateSqd').buttonLoader('start');
+        $('#calculateSqc').buttonLoader('start');
 
         AWS.config.region = _config.cognito.region;
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -64,7 +64,7 @@ var SqdCalculator = window.SqdCalculator || {};
                 }
             }
 
-            $('#calculateSqd').buttonLoader('stop');
+            $('#calculateSqc').buttonLoader('stop');
         });
     }
 
@@ -104,7 +104,7 @@ var SqdCalculator = window.SqdCalculator || {};
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.sqd.toLocaleString('en-US'))
+                        .text(segment.earningResult.sqc.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
@@ -153,7 +153,7 @@ var SqdCalculator = window.SqdCalculator || {};
                     .attr('align', 'right')
                 )
                 .append($('<td>')
-                    .text(itinerary.totalRow.sqd.toLocaleString('en-US'))
+                    .text(itinerary.totalRow.sqc.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
                 .append($('<td>')
@@ -193,7 +193,7 @@ var SqdCalculator = window.SqdCalculator || {};
     }
 
     $(function onDocReady() {
-        $('#calculateSqd').click(handleRequestClick);
+        $('#calculateSqc').click(handleRequestClick);
 
         isDocReady = true;
         performOnLoad();
@@ -219,11 +219,11 @@ var SqdCalculator = window.SqdCalculator || {};
         const shouldCalculate = populateFields();
 
         if (shouldCalculate) {
-            performCalculateSqd();
+            performCalculateSqc();
         }
     }
 
-    function performCalculateSqd() {
+    function performCalculateSqc() {
         const ticket = $('#ticket').val();
         const aeroplanStatus = $('#aeroplanStatus').val();
         const hasBonusPointsPrivilege = $('#hasBonusPointsPrivilege').is(':checked');
@@ -235,10 +235,10 @@ var SqdCalculator = window.SqdCalculator || {};
 
     function handleRequestClick(event) {
         event.preventDefault();
-        const form = $('#sqdForm')[0];
+        const form = $('#sqcForm')[0];
         form.reportValidity();
         if (form.checkValidity()) {
-            performCalculateSqd();
+            performCalculateSqc();
         }
     }
 
