@@ -1214,7 +1214,7 @@ private val uaCalculator = object : StarAllianceEarningCalculator() {
 //        else -> 0
 //    }
 //}
-//
+
 //private val vaCalculator: EarningCalculator =
 //    { distanceResult, _, originCountry, _, _, destinationCountry, _, fareClass, _, ticketNumber, hasAeroplanStatus, _ ->
 //        class VAEarningResult(
@@ -1246,7 +1246,7 @@ private val uaCalculator = object : StarAllianceEarningCalculator() {
 //            else -> VAEarningResult(percent = 0, isDomestic = isDomestic)
 //        }
 //    }
-//
+
 //private val wyCalculator = object : SimplePartnerEarningCalculator() {
 //    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
 //        "P", "F" -> 150
@@ -1258,7 +1258,7 @@ private val uaCalculator = object : StarAllianceEarningCalculator() {
 //        else -> 0
 //    }
 //}
-//
+
 //private val ynCalculator = object : SimplePartnerEarningCalculator(
 //    baseMinimumPoints = 500,
 //    alwaysEarnsMinimumPoints = true,
@@ -1348,34 +1348,34 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
 //    "AD" -> adCalculator // Azul Airlines
 //    "AI" -> aiCalculator // Air India
 //    "AV" -> avCalculator // Avianca
-//    "BR" -> brCalculator // EVA Air
-//    "CA" -> caCalculator // Air China
-//    "CM" -> cmCalculator // COPA Airlines
+    "BR" -> brCalculator // EVA Air
+    "CA" -> caCalculator // Air China
+    "CM" -> cmCalculator // COPA Airlines
     "CX", "KA" -> cxCalculator // Cathay Pacific
 //    "EK" -> ekCalculator // Emirates
-//    "EN" -> enCalculator // Air Dolomiti
-//    "ET" -> etCalculator // Ethiopian Airlines
-//    "EW" -> ewCalculator // Eurowings
+    "EN" -> enCalculator // Air Dolomiti
+    "ET" -> etCalculator // Ethiopian Airlines
+    "EW" -> ewCalculator // Eurowings
 //    "EY" -> eyCalculator // Etihad Airways
 //    "G3" -> g3Calculator // GOL
 //    "GF" -> gfCalculator // Gulf Air
-//    "HO" -> hoCalculator // Juneyao Airlines
+    "HO" -> hoCalculator // Juneyao Airlines
     "LH", "CL" -> lhCalculator // Lufthansa
     "LO" -> loCalculator // LOT Polish Airlines
     "LX" -> lxCalculator // Swiss
 //    "MK" -> mkCalculator // Air Mauritius
     "MS" -> msCalculator // EgyptAir
-//    "NH", "NQ" -> nhCalculator // ANA
+    "NH", "NQ" -> nhCalculator // ANA
 //    "NZ" -> nzCalculator // Air New Zealand
-//    "OA" -> oaCalculator // Olympic Air
+    "OA" -> oaCalculator // Olympic Air
 //    "OS" -> osCalculator // Austrian
-//    "OU" -> ouCalculator // Croatia Airlines
+    "OU" -> ouCalculator // Croatia Airlines
 //    "OZ" -> ozCalculator // Asiana Airlines
 //    "PB" -> pbCalculator // PAL Airlines
 //    "QH" -> qhCalculator // Bamboo Airways
-//    "SA" -> saCalculator // South African Airways
-//    "SN" -> snCalculator // Brussels Airlines
-//    "SQ" -> sqCalculator // Singapore Airlines
+    "SA" -> saCalculator // South African Airways
+    "SN" -> snCalculator // Brussels Airlines
+    "SQ" -> sqCalculator // Singapore Airlines
     "TG" -> tgCalculator // Thai Airways
 //    "TK" -> tkCalculator // Turkish Airlines
     "TP", "NI" -> tpCalculator // TAP Air Portugal
@@ -1384,7 +1384,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
 //    "VA" -> vaCalculator // Virgin Australia
 //    "WY" -> wyCalculator // Omar Air
 //    "YN" -> ynCalculator // Air Creebec
-//    "ZH" -> zhCalculator // Shenzhen Airlines
+    "ZH" -> zhCalculator // Shenzhen Airlines
 //    "4Y" -> _4yCalculator // Eurowings Discover
 //    "5T" -> _5tCalculator // Canadian North
 //    else -> nonStarCalculator // Everything else
