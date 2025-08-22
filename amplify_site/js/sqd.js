@@ -127,6 +127,10 @@ var SqdCalculator = window.SqdCalculator || {};
                         .text(segment.earningResult.totalMiles)
                         .attr('align', 'right')
                     )
+                    .append($('<td>')
+                        .text(segment.earningResult.lqm.toLocaleString('en-US'))
+                        .attr('align', 'right')
+                    )
                 )
         });
 
@@ -170,6 +174,10 @@ var SqdCalculator = window.SqdCalculator || {};
                 )
                 .append($('<td>')
                     .text(itinerary.totalRow.totalMiles.toLocaleString('en-US'))
+                    .attr('align', 'right')
+                )
+                .append($('<td>')
+                    .text(itinerary.totalRow.lqm.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
             )
