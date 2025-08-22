@@ -195,5 +195,5 @@ data class TotalRow(
     val sqm: Int?,
     val sqd: Int?,
 
-    val lqm: Int?
+    val lqm: Int?,
 )
