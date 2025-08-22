@@ -22,6 +22,9 @@ interface EarningResultCore {
     val aeroplanMiles: Int?
     val bonusPoints: Int?
     val totalMiles: Int?
+
+    val isLqmEligible: Boolean
+    val lqm: Int?
 }
 
 open class EarningResult(
@@ -34,6 +37,7 @@ open class EarningResult(
     private val minimumPoints: Int = if (eligibleForMinimumPoints) 250 else 0,
     override val isSqdEligible: Boolean,
     override var sqd: Int? = null,
+    override val isLqmEligible: Boolean,
 ) : EarningResultCore {
     private val distance
         get() = distanceResult.distance
@@ -44,6 +48,15 @@ open class EarningResult(
                 0
             } else {
                 (max(distance, minimumPoints) * sqmPercent / 100.0).roundToInt()
+            }
+        }
+
+    override val lqm
+        get() = sqm?.let { sqm ->
+            if (isLqmEligible) {
+                sqm
+            } else {
+                0
             }
         }
 
@@ -92,6 +105,7 @@ open class StarAllianceEarningResult(
     bonusPointsPercent = bonusPointsPercent,
     eligibleForMinimumPoints = hasAeroplanStatus,
     isSqdEligible = sqmPercent > 0 && ticketNumber.startsWith("014"),
+    isLqmEligible = false,
 )
 
 typealias EarningCalculator = (
@@ -145,6 +159,7 @@ private abstract class SimpleStarAllianceEarningCalculator(
             bonusPointsPercent = bonusPointsPercent,
             eligibleForMinimumPoints = hasAeroplanStatus,
             isSqdEligible = ticketNumber.startsWith("014") && percentage > 0,
+            isLqmEligible = false,
         )
     }
 
@@ -194,6 +209,7 @@ private abstract class SimplePartnerEarningCalculator(
             eligibleForMinimumPoints = hasAeroplanStatus || alwaysEarnsMinimumPoints,
             minimumPoints = if (hasAeroplanStatus || alwaysEarnsMinimumPoints) baseMinimumPoints else 0,
             isSqdEligible = false,
+            isLqmEligible = false,
         )
     }
 
@@ -230,6 +246,7 @@ private val acCalculator: EarningCalculator =
             bonusPointsPercent = bonusPointsPercentage,
             eligibleForMinimumPoints = hasAeroplanStatus,
             isSqdEligible = sqmPercent > 0,
+            isLqmEligible = true,
         )
 
         if (!fareBasis.isNullOrEmpty()) {
@@ -515,6 +532,7 @@ private val cxCalculator: EarningCalculator =
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
             isSqdEligible = false,
+            isLqmEligible = false,
         )
 
         val other = when {
@@ -599,6 +617,7 @@ private val eyCalculator: EarningCalculator =
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
             isSqdEligible = false,
+            isLqmEligible = false,
         )
 
         // Miles earned on Etihad Airways is limited to flights ticketed and operated by Etihad Airways or flights marketed
@@ -1092,6 +1111,7 @@ private val uaCalculator: EarningCalculator =
                 bonusPointsPercent = 0,
                 eligibleForMinimumPoints = hasAeroplanStatus,
                 isSqdEligible = false,
+                isLqmEligible = false,
             )
 
             else -> UAEarningResult(sqmPercent = 0)
@@ -1121,6 +1141,7 @@ private val vaCalculator: EarningCalculator =
             bonusPointsPercent = 0,
             eligibleForMinimumPoints = hasAeroplanStatus,
             isSqdEligible = isDomestic && percent > 0 && ticketNumber.startsWith("014"),
+            isLqmEligible = false,
         )
 
         val isDomestic = originCountry != null && originCountry == destinationCountry
@@ -1246,6 +1267,7 @@ private val nonStarCalculator = object : EarningCalculator {
         bonusPointsPercent = 0,
         eligibleForMinimumPoints = false,
         isSqdEligible = false,
+        isLqmEligible = false,
     )
 }
 
