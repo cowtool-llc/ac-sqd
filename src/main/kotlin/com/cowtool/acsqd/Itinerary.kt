@@ -64,6 +64,12 @@ data class Itinerary(
                 null
             }
 
+            val totalLqm = if (segments.none { it.earningResult?.lqm == null }) {
+                segments.mapNotNull { it.earningResult?.lqm }.sum()
+            } else {
+                null
+            }
+
             val totalRow =
                 TotalRow(
                     distance = totalDistance,
@@ -73,6 +79,8 @@ data class Itinerary(
                     totalPoints = totalPoints,
 
                     sqc = totalSqc,
+
+                    lqm = totalLqm,
                 )
 
             return Itinerary(segments, totalRow)
@@ -182,4 +190,6 @@ data class TotalRow(
     val totalPoints: Int?,
 
     val sqc: Int?,
+
+    val lqm: Int?,
 )

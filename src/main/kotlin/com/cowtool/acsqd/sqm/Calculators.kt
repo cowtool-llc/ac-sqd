@@ -16,6 +16,9 @@ interface EarningResult {
     val basePoints: Int?
     val bonusPoints: Int?
     val totalPoints: Int?
+
+    val isLqmEligible: Boolean
+    val lqm: Int?
 }
 
 class EarningResultAcTicketOrFlight(
@@ -23,6 +26,7 @@ class EarningResultAcTicketOrFlight(
     override val sqcMultiplier: Int,
     override val eliteBonusMultiplier: Int,
     override var eligibleDollars: Int? = null,
+    override val isLqmEligible: Boolean,
 ) : EarningResult {
     override val sqc
         get() = eligibleDollars?.let { eligibleDollars ->
@@ -52,6 +56,13 @@ class EarningResultAcTicketOrFlight(
         val bonusPoints = bonusPoints
         return if (basePoints == null || bonusPoints == null) null else basePoints + bonusPoints
     }
+
+    override val lqm
+        get() = if (isLqmEligible) {
+            distanceResult.distance
+        } else {
+            0
+        }
 }
 
 class EarningResultStarAllianceTicketAndFlight(
@@ -79,6 +90,10 @@ class EarningResultStarAllianceTicketAndFlight(
 
     override val totalPoints
         get() = basePoints
+
+    override val isLqmEligible = false
+
+    override val lqm = 0
 }
 
 abstract class EarningResultNonStarAllianceFlight : EarningResult {
@@ -92,6 +107,10 @@ abstract class EarningResultNonStarAllianceFlight : EarningResult {
 
     override val totalPoints
         get() = basePoints
+
+    override val isLqmEligible = false
+
+    override val lqm = 0
 }
 
 class EarningResultAcTicketNonStarAllianceFlight(
@@ -116,6 +135,7 @@ class EarningResultNonAcTicketNonStarAllianceFlight(
 
 data class CalculatorArgs(
     val distanceResult: DistanceResult,
+    val operatingAirline: String,
     val origin: String,
     val originCountry: String?,
     val originContinent: String?,
@@ -144,6 +164,7 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
                     distanceResult = args.distanceResult,
                     sqcMultiplier = it,
                     eliteBonusMultiplier = args.eliteBonusMultiplier,
+                    isLqmEligible = args.operatingAirline == "AC",
                 )
             }
         } else {
@@ -1101,6 +1122,7 @@ fun getEarningResult(
 
     return calculator.calculate(
         CalculatorArgs(
+            operatingAirline = effectiveOperator,
             distanceResult = distanceResult,
             origin = origin,
             originCountry = originCountry,

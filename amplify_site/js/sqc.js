@@ -122,6 +122,10 @@ var SqcCalculator = window.SqcCalculator || {};
                         .text(segment.earningResult.totalPoints.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
+                    .append($('<td>')
+                        .text(segment.earningResult.lqm.toLocaleString('en-US'))
+                        .attr('align', 'right')
+                    )
                 )
         });
 
@@ -159,6 +163,10 @@ var SqcCalculator = window.SqcCalculator || {};
                 )
                 .append($('<td>')
                     .text(itinerary.totalRow.totalPoints.toLocaleString('en-US'))
+                    .attr('align', 'right')
+                )
+                .append($('<td>')
+                    .text(itinerary.totalRow.lqm.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
             )
