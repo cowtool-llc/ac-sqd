@@ -79,11 +79,11 @@ class EarningResultStarAllianceTicketAndFlight(
     override var eligibleDollars: Int? = null
 
     override val basePoints = distanceResult.distance?.let { distance ->
-        (distance * distanceMultiplierPercent.toDouble()).toInt()
+        (distance * distanceMultiplierPercent.toDouble() / 100.toDouble()).toInt()
     }
 
     override val sqc = basePoints?.let { points ->
-        (points / (100 * 5).toDouble()).toInt()
+        (points / 5.toDouble()).toInt()
     }
 
     override val bonusPoints = 0
