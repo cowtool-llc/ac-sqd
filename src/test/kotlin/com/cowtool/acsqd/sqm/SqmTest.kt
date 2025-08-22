@@ -363,7 +363,25 @@ internal class SqmTest {
     }
 
     @Test
-    fun `getEarningResult() handles Aeroplan SQM`() {
+    fun `getEarningResult() handles non-014 partner flights`() {
+        getEarningResult(
+            "TG",
+            marketingAirline = null,
+            "MUC",
+            "BKK",
+            "M",
+            "FL",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(5_449, it.totalPoints)
+            assertEquals(1089, it.sqc)
+        }
+    }
+
+    @Test
+    fun `getEarningResult() handles Aeroplan SQC`() {
         assertEquals(
             0,
             getEarningResult(
