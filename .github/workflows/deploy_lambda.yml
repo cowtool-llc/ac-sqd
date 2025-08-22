@@ -2,13 +2,13 @@ name: Deploy Lambda
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "sqc" ]
     paths:
       - '*gradle*'
       - 'src/**'
 
 concurrency: 
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
