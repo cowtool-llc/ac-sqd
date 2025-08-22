@@ -1022,6 +1022,10 @@ private val _5tCalculator = object : NonStarAllianceEarningCalculator() {
     }
 }
 
+private val nonPartnerCalculator = object : NonStarAllianceEarningCalculator() {
+    override fun getDistancePercentMultiplier(args: CalculatorArgs) = 0
+}
+
 private fun getCalculator(operatingAirline: String) = when (operatingAirline.uppercase(Locale.getDefault())) {
     "AC", "KV", "L4", "QK", "RV", "ZX" -> acCalculator // Air Canada
     "A3" -> a3Calculator // Aegean Airlines
@@ -1067,31 +1071,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "ZH" -> zhCalculator // Shenzhen Airlines
     "4Y" -> _4yCalculator // Eurowings Discover
     "5T" -> _5tCalculator // Canadian North
-//    else -> nonStarCalculator // Everything else
-    else -> object : EarningCalculator {
-        override fun calculate(args: CalculatorArgs) = object : EarningResult {
-            override val distanceResult
-                get() = TODO("Not yet implemented")
-            override val sqcMultiplier
-                get() = TODO("Not yet implemented")
-            override val eliteBonusMultiplier
-                get() = TODO("Not yet implemented")
-            override var eligibleDollars: Int?
-                get() = TODO("Not yet implemented")
-                set(value) {}
-            override val sqc
-                get() = TODO("Not yet implemented")
-            override val basePoints
-                get() = TODO("Not yet implemented")
-            override val bonusPoints
-                get() = TODO("Not yet implemented")
-            override val totalPoints
-                get() = TODO("Not yet implemented")
-
-        }
-
-        override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
-    }
+    else -> nonPartnerCalculator // Everything else
 }
 
 fun getEarningResult(
