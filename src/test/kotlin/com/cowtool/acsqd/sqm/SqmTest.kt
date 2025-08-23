@@ -377,6 +377,24 @@ internal class SqmTest {
             it.eligibleDollars = 100
             assertEquals(5_449, it.totalPoints)
             assertEquals(1089, it.sqc)
+            assertEquals(0, it.eliteBonusMultiplier)
+        }
+    }
+
+    @Test
+    fun `getEarningResult() handles elite points bonus`() {
+        getEarningResult(
+            operatingAirline = "TG",
+            marketingAirline = null,
+            origin = "MUC",
+            destination = "BKK",
+            fareClass = "M",
+            fareBasis = "FL",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(0, it.eliteBonusMultiplier)
         }
     }
 

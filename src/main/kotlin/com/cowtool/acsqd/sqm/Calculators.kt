@@ -24,7 +24,8 @@ interface EarningResult {
 class EarningResultAcTicketOrFlight(
     override val distanceResult: DistanceResult,
     override val sqcMultiplier: Int,
-    override val eliteBonusMultiplier: Int,
+    val isEligibleForElitePointsMultiplier: Boolean,
+    val eliteStatusBonusMultiplier: Int,
     override var eligibleDollars: Int? = null,
     override val isLqmEligible: Boolean,
 ) : EarningResult {
@@ -36,6 +37,13 @@ class EarningResultAcTicketOrFlight(
     override val basePoints
         get() = eligibleDollars
 
+    override val eliteBonusMultiplier: Int
+        get() = if (isEligibleForElitePointsMultiplier) {
+            eliteStatusBonusMultiplier
+        } else {
+            0
+        }
+
     override val bonusPoints
         get() = calculateBonusPoints()
 
@@ -43,7 +51,6 @@ class EarningResultAcTicketOrFlight(
         val eligibleDollars = eligibleDollars
         return when {
             eligibleDollars == null -> null
-            eliteBonusMultiplier == 0 -> 0
             else -> eligibleDollars * eliteBonusMultiplier
         }
     }
@@ -163,7 +170,8 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
                 EarningResultAcTicketOrFlight(
                     distanceResult = args.distanceResult,
                     sqcMultiplier = it,
-                    eliteBonusMultiplier = args.eliteBonusMultiplier,
+                    isEligibleForElitePointsMultiplier = isEligibleForElitePointsBonus(args.ticketNumber),
+                    eliteStatusBonusMultiplier = args.eliteBonusMultiplier,
                     isLqmEligible = args.operatingAirline == "AC",
                 )
             }
