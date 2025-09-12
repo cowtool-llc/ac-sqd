@@ -499,6 +499,69 @@ internal class SqmTest {
     }
 
     @Test
+    fun `getEarningResult() handles minimum mileage`() {
+        with(
+            getEarningResult(
+                "AC",
+                marketingAirline = null,
+                "YYJ",
+                "YVR",
+                "M",
+                "FL",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(38, lqm)
+        }
+
+        with(
+            getEarningResult(
+                "AC",
+                marketingAirline = null,
+                "YYJ",
+                "YVR",
+                "M",
+                "FL",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 3,
+            )!!,
+        ) {
+            assertEquals(250, lqm)
+        }
+
+        with(
+            getEarningResult(
+                "UA",
+                marketingAirline = null,
+                "YYJ",
+                "YVR",
+                "M",
+                "M",
+                ticketNumber = "016",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(7, sqc)
+        }
+
+        with(
+            getEarningResult(
+                "UA",
+                marketingAirline = null,
+                "YYJ",
+                "YVR",
+                "M",
+                "M",
+                ticketNumber = "016",
+                eliteBonusMultiplier = 3,
+            )!!,
+        ) {
+            assertEquals(50, sqc)
+        }
+    }
+
+    @Test
     fun `getEarningResult() handles AC single character fare bases`() {
         assertEquals(
             4,

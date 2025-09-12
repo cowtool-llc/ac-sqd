@@ -5,6 +5,7 @@ import com.cowtool.acsqd.distance.DistanceResult
 import com.cowtool.acsqd.distance.airports
 import com.cowtool.acsqd.distance.getSegmentDistance
 import java.util.Locale
+import kotlin.math.max
 
 interface EarningResult {
     val distanceResult: DistanceResult
@@ -66,7 +67,12 @@ class EarningResultAcTicketOrFlight(
 
     override val lqm
         get() = if (isLqmEligible) {
-            distanceResult.distance
+            val minimum = if (eliteBonusMultiplier > 0) {
+                250
+            } else {
+                0
+            }
+            distanceResult.distance?.let { max(minimum, it) }
         } else {
             0
         }
@@ -75,6 +81,7 @@ class EarningResultAcTicketOrFlight(
 class EarningResultStarAllianceTicketAndFlight(
     override val distanceResult: DistanceResult,
     val distanceMultiplierPercent: Int,
+    private val isAcElite: Boolean,
 ) : EarningResult {
     // SQC is handled differently
     override val sqcMultiplier = 0
@@ -86,7 +93,15 @@ class EarningResultStarAllianceTicketAndFlight(
     override var eligibleDollars: Int? = null
 
     override val basePoints = distanceResult.distance?.let { distance ->
-        (distance * distanceMultiplierPercent.toDouble() / 100.toDouble()).toInt()
+        val minimum = if (isAcElite) {
+            250
+        } else {
+            0
+        }
+
+        val adjustedDistance = max(minimum, distance)
+
+        (adjustedDistance * distanceMultiplierPercent.toDouble() / 100.toDouble()).toInt()
     }
 
     override val sqc = basePoints?.let { points ->
@@ -180,6 +195,7 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
                 EarningResultStarAllianceTicketAndFlight(
                     distanceResult = args.distanceResult,
                     distanceMultiplierPercent = percentMultiplier,
+                    isAcElite = args.eliteBonusMultiplier > 0,
                 )
             }
         }
