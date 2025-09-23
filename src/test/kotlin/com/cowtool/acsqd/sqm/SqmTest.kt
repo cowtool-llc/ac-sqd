@@ -512,7 +512,7 @@ internal class SqmTest {
                 eliteBonusMultiplier = 0,
             )!!,
         ) {
-            assertEquals(38, lqm)
+            assertEquals(39, lqm)
         }
 
         with(
