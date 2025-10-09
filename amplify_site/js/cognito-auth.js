@@ -1,6 +1,6 @@
-/*global SqdCalculator _config AmazonCognitoIdentity AWSCognito*/
+/*global SqcCalculator _config AmazonCognitoIdentity AWSCognito*/
 
-var SqdCalculator = window.SqdCalculator || {};
+var SqcCalculator = window.SqcCalculator || {};
 
 (function scopeWrapper($) {
     var signinUrl = 'https://www.cowtool.com/';
@@ -17,11 +17,11 @@ var SqdCalculator = window.SqdCalculator || {};
         AWSCognito.config.region = _config.cognito.region;
     }
 
-    SqdCalculator.signOut = function signOut() {
+    SqcCalculator.signOut = function signOut() {
         userPool.getCurrentUser().signOut();
     };
 
-    SqdCalculator.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
+    SqcCalculator.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
         var cognitoUser = userPool.getCurrentUser();
 
         if (cognitoUser) {
