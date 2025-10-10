@@ -1199,6 +1199,19 @@ private val zhCalculator = object : SimpleStarAllianceEarningCalculator() {
     }
 }
 
+private val _3hCalculator = object : SimplePartnerEarningCalculator(
+    baseMinimumPoints = 500,
+    alwaysEarnsMinimumPoints = true,
+) {
+    override fun getAeroplanMilesPercentage(fareClass: String) = when (fareClass) {
+        "Y", "V", "P", "R" -> 100
+        "B" -> 85
+        "H" -> 75
+        "T", "W" -> 25
+        else -> 0
+    }
+}
+
 private val _4yCalculator: EarningCalculator =
     { distanceResult, _, _, originContinent, _, _, destinationContinent, fareClass, _, ticketNumber, hasAeroplanStatus, _ ->
         class _4YEarningResult(
@@ -1314,6 +1327,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "WY" -> wyCalculator // Omar Air
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
+    "3H" -> _3hCalculator // Air Inuit
     "4Y" -> _4yCalculator // Eurowings Discover
     "5T" -> _5tCalculator // Canadian North
     else -> nonStarCalculator // Everything else
