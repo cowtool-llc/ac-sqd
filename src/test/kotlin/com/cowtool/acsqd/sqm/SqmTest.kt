@@ -800,4 +800,68 @@ internal class SqmTest {
             assertEquals(0, sqc)
         }
     }
+
+    @Test
+    fun `LQM is calculated correctly`() {
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "G",
+                fareBasis = "RANDOM-BA",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(0, lqm)
+        }
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "G",
+                fareBasis = "RANDOM-LT",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(2076, lqm)
+        }
+
+
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "A",
+                fareBasis = "RANDOM-PL",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(2595, lqm)
+        }
+
+
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "C",
+                fareBasis = "RANDOM-EF",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(3114, lqm)
+        }
+    }
 }

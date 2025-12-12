@@ -6,6 +6,7 @@ import com.cowtool.acsqd.distance.airports
 import com.cowtool.acsqd.distance.getSegmentDistance
 import java.util.Locale
 import kotlin.math.max
+import kotlin.math.round
 
 interface EarningResult {
     val distanceResult: DistanceResult
@@ -24,6 +25,8 @@ interface EarningResult {
 
 class EarningResultAcTicketOrFlight(
     override val distanceResult: DistanceResult,
+    val fareClass: String?,
+    val fareBasis: String?,
     override val sqcMultiplier: Int,
     val isEligibleForElitePointsMultiplier: Boolean,
     val eliteStatusBonusMultiplier: Int,
@@ -72,7 +75,25 @@ class EarningResultAcTicketOrFlight(
             } else {
                 0
             }
-            distanceResult.distance?.let { max(minimum, it) }
+
+            val split = fareBasis?.split("/")
+
+            val trueBasis = split?.get(0)
+            val brand = trueBasis?.takeLast(2)
+
+            val multiplier = when {
+                brand in setOf("BA", "GT") -> 0.0
+                split != null && split.size > 1 && split[1].startsWith("AE") -> 0.0
+                fareClass in setOf("J", "C", "D", "Z", "P") -> 1.5
+                fareClass in setOf("O", "E", "A") -> 1.25
+                else -> 1.0
+            }
+
+            val baseDistance = distanceResult.distance?.let { max(minimum, it) }
+
+            baseDistance?.let {
+                round(it * multiplier).toInt()
+            }
         } else {
             0
         }
@@ -184,6 +205,8 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
             getAcTicketSqcMultiplier(args)?.let {
                 EarningResultAcTicketOrFlight(
                     distanceResult = args.distanceResult,
+                    fareClass = args.fareClass,
+                    fareBasis = args.fareBasis,
                     sqcMultiplier = it,
                     isEligibleForElitePointsMultiplier = isEligibleForElitePointsBonus(args.ticketNumber),
                     eliteStatusBonusMultiplier = args.eliteBonusMultiplier,
