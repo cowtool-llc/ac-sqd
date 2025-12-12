@@ -394,8 +394,8 @@ internal class SqmTest {
             eliteBonusMultiplier = 3,
         )!!.let {
             it.eligibleDollars = 100
-            assertEquals(0, it.eliteBonusMultiplier)
-            assertEquals(100, it.totalPoints)
+            assertEquals(3, it.eliteBonusMultiplier)
+            assertEquals(400, it.totalPoints)
         }
         getEarningResult(
             operatingAirline = "LH",
@@ -410,6 +410,20 @@ internal class SqmTest {
             it.eligibleDollars = 100
             assertEquals(3, it.eliteBonusMultiplier)
             assertEquals(400, it.totalPoints)
+        }
+        getEarningResult(
+            operatingAirline = "LH",
+            marketingAirline = null,
+            origin = "MUC",
+            destination = "BKK",
+            fareClass = "M",
+            fareBasis = "FL",
+            ticketNumber = "220",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(0, it.eliteBonusMultiplier)
+            assertEquals(5449, it.totalPoints)
         }
     }
 
