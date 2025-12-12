@@ -1030,6 +1030,16 @@ private val zhCalculator = object : StarAllianceEarningCalculator() {
     }
 }
 
+private val _3hCalculator = object : NonStarAllianceEarningCalculator() {
+    override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
+        "Y", "V", "P", "R" -> 100
+        "B" -> 85
+        "H" -> 75
+        "T", "W" -> 25
+        else -> 0
+    }
+}
+
 private val _4yCalculator = object : StarAllianceEarningCalculator() {
     override fun isEligibleForElitePointsBonus(ticketNumber: String) = false
 
@@ -1114,6 +1124,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "WY" -> wyCalculator // Omar Air
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
+    "3H" -> _3hCalculator // Air Inuit
     "4Y" -> _4yCalculator // Eurowings Discover
     "5T" -> _5tCalculator // Canadian North
     else -> nonPartnerCalculator // Everything else
