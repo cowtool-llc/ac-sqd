@@ -3,7 +3,6 @@ package com.cowtool.acsqd
 class SqdCalculator(
     private val ticket: String,
     private val aeroplanStatus: String,
-    private val hasBonusPointsPrivilege: Boolean,
     private val segments: String,
     private val baseFare: Double?,
     private val surcharges: Double?,
@@ -37,7 +36,6 @@ class SqdCalculator(
         return Itinerary.parse(
             ticket = ticket,
             aeroplanStatus = aeroplanStatus,
-            hasBonusPointsPrivilege = hasBonusPointsPrivilege,
             segmentsCsv = segments,
             baseFare = baseFare,
             surcharges = surcharges,
@@ -49,7 +47,7 @@ internal val defaultSegments =
     """
 AC,SFO,YVR,K,CO
 AC,YVR,LHR,P,EL
-LH,LHR,MUC,P,
-TG,MUC,BKK,M
-CX,BKK,HKG,C
+LH,LHR,MUC,P,EL
+TG,MUC,BKK,M,EL
+CX,BKK,HKG,C,EL
 """.trim()

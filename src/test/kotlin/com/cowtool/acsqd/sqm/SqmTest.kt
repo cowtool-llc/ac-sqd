@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 internal class SqmTest {
     @Test
-    fun `getEarningResult() handles AC SQM`() {
+    fun `getEarningResult() handles AC flights`() {
         assertNull(
             getEarningResult(
                 "AC",
@@ -16,12 +16,11 @@ internal class SqmTest {
                 null,
                 null,
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )
+                eliteBonusMultiplier = 0,
+            ),
         )
         assertEquals(
-            125,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -30,9 +29,8 @@ internal class SqmTest {
                 "Y",
                 "YCONFPLT",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -44,9 +42,8 @@ internal class SqmTest {
                 "I",
                 "IJBP00",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -58,12 +55,11 @@ internal class SqmTest {
                 "J",
                 "IBP00EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            150,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -72,12 +68,11 @@ internal class SqmTest {
                 "J",
                 "J1234EF",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            150,
+            4,
             getEarningResult(
                 "RV",
                 marketingAirline = null,
@@ -86,12 +81,11 @@ internal class SqmTest {
                 "J",
                 "J1234EF",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            150,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -100,12 +94,11 @@ internal class SqmTest {
                 "Z",
                 "Z1234EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            125,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -114,12 +107,11 @@ internal class SqmTest {
                 "R",
                 "O1234PF",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            125,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -128,12 +120,11 @@ internal class SqmTest {
                 "E",
                 "E1234PL",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            100,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -142,12 +133,11 @@ internal class SqmTest {
                 "M",
                 "M1234FL",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            115,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -156,12 +146,11 @@ internal class SqmTest {
                 "K",
                 "K1234CO",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            100,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -170,12 +159,11 @@ internal class SqmTest {
                 "R",
                 "G1234FL",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            50,
+            2,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -184,12 +172,11 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            50,
+            2,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -198,26 +185,24 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            50,
+            2,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
                 "YVR",
                 "LHR",
                 "G",
-                "DUNNO",
+                "GFAKE",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            50,
+            2,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -226,12 +211,11 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            50,
+            2,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -240,9 +224,8 @@ internal class SqmTest {
                 "G",
                 "G1234TG",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -254,9 +237,8 @@ internal class SqmTest {
                 "G",
                 "G1234BA",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -268,9 +250,8 @@ internal class SqmTest {
                 "G",
                 "G123LGT",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -282,9 +263,8 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -296,9 +276,8 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -310,9 +289,8 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -324,9 +302,8 @@ internal class SqmTest {
                 "G",
                 "G123LBA",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             225,
@@ -338,9 +315,8 @@ internal class SqmTest {
                 "G",
                 "G123LFL",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.distanceResult.distance
+                eliteBonusMultiplier = 0,
+            )!!.distanceResult.distance,
         )
         getEarningResult(
             "AC",
@@ -350,12 +326,11 @@ internal class SqmTest {
             "G",
             "G123LBA",
             ticketNumber = "014",
-            hasAeroplanStatus = true,
-            bonusPointsPercentage = 0,
+            eliteBonusMultiplier = 3,
         )!!.let {
-            it.sqd = 100
-            assertEquals(1176, it.aeroplanMiles)
-            assertEquals(0, it.sqm)
+            it.eligibleDollars = 100
+            assertEquals(400, it.totalPoints)
+            assertEquals(0, it.sqc)
         }
         getEarningResult(
             "AC",
@@ -365,12 +340,11 @@ internal class SqmTest {
             "G",
             "G123LBA",
             ticketNumber = "014",
-            hasAeroplanStatus = true,
-            bonusPointsPercentage = 0,
+            eliteBonusMultiplier = 2,
         )!!.let {
-            it.sqd = 100
-            assertEquals(200, it.aeroplanMiles)
-            assertEquals(0, it.sqm)
+            it.eligibleDollars = 100
+            assertEquals(300, it.totalPoints)
+            assertEquals(0, it.sqc)
         }
         getEarningResult(
             "AC",
@@ -380,17 +354,81 @@ internal class SqmTest {
             "G",
             "G123LBA",
             ticketNumber = "014",
-            hasAeroplanStatus = true,
-            bonusPointsPercentage = 0,
+            eliteBonusMultiplier = 1,
         )!!.let {
-            it.sqd = 100
-            assertEquals(208, it.aeroplanMiles)
-            assertEquals(0, it.sqm)
+            it.eligibleDollars = 100
+            assertEquals(200, it.totalPoints)
+            assertEquals(0, it.sqc)
         }
     }
 
     @Test
-    fun `getEarningResult() handles Aeroplan SQM`() {
+    fun `getEarningResult() handles non-014 partner flights`() {
+        getEarningResult(
+            "TG",
+            marketingAirline = null,
+            "MUC",
+            "BKK",
+            "M",
+            "FL",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(5_449, it.totalPoints)
+            assertEquals(1089, it.sqc)
+            assertEquals(0, it.eliteBonusMultiplier)
+        }
+    }
+
+    @Test
+    fun `getEarningResult() handles elite points bonus`() {
+        getEarningResult(
+            operatingAirline = "TG",
+            marketingAirline = null,
+            origin = "MUC",
+            destination = "BKK",
+            fareClass = "M",
+            fareBasis = "FL",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(3, it.eliteBonusMultiplier)
+            assertEquals(400, it.totalPoints)
+        }
+        getEarningResult(
+            operatingAirline = "LH",
+            marketingAirline = null,
+            origin = "MUC",
+            destination = "BKK",
+            fareClass = "M",
+            fareBasis = "FL",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(3, it.eliteBonusMultiplier)
+            assertEquals(400, it.totalPoints)
+        }
+        getEarningResult(
+            operatingAirline = "LH",
+            marketingAirline = null,
+            origin = "MUC",
+            destination = "BKK",
+            fareClass = "M",
+            fareBasis = "FL",
+            ticketNumber = "220",
+            eliteBonusMultiplier = 3,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(0, it.eliteBonusMultiplier)
+            assertEquals(5449, it.totalPoints)
+        }
+    }
+
+    @Test
+    fun `getEarningResult() handles Aeroplan SQC`() {
         assertEquals(
             0,
             getEarningResult(
@@ -401,9 +439,8 @@ internal class SqmTest {
                 "I",
                 "IBP00EL/AE2",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -415,9 +452,8 @@ internal class SqmTest {
                 "I",
                 "DTAEROEL/AE1",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -429,9 +465,8 @@ internal class SqmTest {
                 "J",
                 "JAEROEF/AE1",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
             0,
@@ -443,9 +478,8 @@ internal class SqmTest {
                 "M",
                 "MAEROFL/AE1",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
     }
 
@@ -460,9 +494,8 @@ internal class SqmTest {
                 null,
                 null,
                 "014",
-                true,
-                bonusPointsPercentage = 0,
-            )
+                eliteBonusMultiplier = 0,
+            ),
         )
         assertEquals(
             0,
@@ -474,194 +507,78 @@ internal class SqmTest {
                 "F",
                 null,
                 "014",
-                true,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
     }
 
     @Test
-    fun `getEarningResult calculates the correct minimum mileage`() {
-        assertEquals(
-            375,
+    fun `getEarningResult() handles minimum mileage`() {
+        with(
             getEarningResult(
                 "AC",
                 marketingAirline = null,
-                "YOW",
-                "YYZ",
-                "Z",
-                "Z1234EL",
+                "YYJ",
+                "YVR",
+                "M",
+                "FL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.sqm
-        )
-        assertEquals(
-            313,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "YOW",
-                "YYZ",
-                "R",
-                "O1234PF",
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.sqm
-        )
-        assertEquals(
-            288,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "YOW",
-                "YYZ",
-                "K",
-                "K1234CO",
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.sqm
-        )
-        assertEquals(
-            250,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "YOW",
-                "YYZ",
-                "R",
-                "G1234FL",
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.sqm
-        )
-        assertEquals(
-            125,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "YOW",
-                "YYZ",
-                "G",
-                "G1234TG",
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.sqm
-        )
-        assertEquals(
-            63,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "CFK",
-                "ALG",
-                "G",
-                "G123LBA",
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.aeroplanMiles
-        )
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(39, lqm)
+        }
 
-        assertEquals(
-            188,
-            getEarningResult(
-                "HO",
-                marketingAirline = null,
-                "HKG",
-                "SZX",
-                "H",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.sqm
-        )
-
-        assertEquals(
-            500,
-            getEarningResult(
-                "YN",
-                marketingAirline = null,
-                "YOW",
-                "YUL",
-                "Y",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.aeroplanMiles
-        )
-        assertEquals(
-            375,
-            getEarningResult(
-                "YN",
-                marketingAirline = null,
-                "YOW",
-                "YUL",
-                "Q",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.aeroplanMiles
-        )
-        assertEquals(
-            250,
-            getEarningResult(
-                "YN",
-                marketingAirline = null,
-                "YOW",
-                "YUL",
-                "H",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.aeroplanMiles
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "YN",
-                marketingAirline = null,
-                "YOW",
-                "YUL",
-                "A",
-                fareBasis = null,
-                ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!.aeroplanMiles
-        )
-    }
-
-    @Test
-    fun `some weird minimum points bug`() {
-        assertEquals(
-            288,
+        with(
             getEarningResult(
                 "AC",
                 marketingAirline = null,
-                "YTZ",
-                "YOW",
-                "K",
-                "K1234CO",
+                "YYJ",
+                "YVR",
+                "M",
+                "FL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 100,
-            )!!.sqm
-        )
+                eliteBonusMultiplier = 3,
+            )!!,
+        ) {
+            assertEquals(250, lqm)
+        }
+
+        with(
+            getEarningResult(
+                "UA",
+                marketingAirline = null,
+                "YYJ",
+                "YVR",
+                "M",
+                "M",
+                ticketNumber = "016",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(7, sqc)
+        }
+
+        with(
+            getEarningResult(
+                "UA",
+                marketingAirline = null,
+                "YYJ",
+                "YVR",
+                "M",
+                "M",
+                ticketNumber = "016",
+                eliteBonusMultiplier = 3,
+            )!!,
+        ) {
+            assertEquals(50, sqc)
+        }
     }
 
     @Test
     fun `getEarningResult() handles AC single character fare bases`() {
         assertEquals(
-            125,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -670,12 +587,11 @@ internal class SqmTest {
                 "Y",
                 "Y",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent,
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
         assertEquals(
-            150,
+            4,
             getEarningResult(
                 "AC",
                 marketingAirline = null,
@@ -684,16 +600,14 @@ internal class SqmTest {
                 "J",
                 "J",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqmPercent,
+                eliteBonusMultiplier = 0,
+            )!!.sqcMultiplier,
         )
     }
 
     @Test
     fun `getEarningResult() handles LX marketed, WK operated segments`() {
-        assertEquals(
-            5661,
+        with(
             getEarningResult(
                 "WK",
                 marketingAirline = "LX",
@@ -702,16 +616,17 @@ internal class SqmTest {
                 "M",
                 "M",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            eligibleDollars = 100
+            assertEquals(400, sqc)
+        }
     }
 
     @Test
     fun `getEarningResult() handles AC Express (PAL) segments`() {
-        assertEquals(
-            415,
+        with(
             getEarningResult(
                 "PB",
                 marketingAirline = "AC",
@@ -720,10 +635,12 @@ internal class SqmTest {
                 "M",
                 "M",
                 ticketNumber = "014",
-                hasAeroplanStatus = false,
-                bonusPointsPercentage = 0,
-            )!!.sqm,
-        )
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            eligibleDollars = 100
+            assertEquals(400, sqc)
+        }
     }
 
     @Test
@@ -737,12 +654,11 @@ internal class SqmTest {
                 fareClass = "O",
                 fareBasis = "P..EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(313, sqm)
-            assertEquals(true, isSqmPercentEstimated)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
 
         with(
@@ -754,12 +670,11 @@ internal class SqmTest {
                 fareClass = "Y",
                 fareBasis = "D..EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(313, sqm)
-            assertEquals(isSqmPercentEstimated, true)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
 
         with(
@@ -771,12 +686,11 @@ internal class SqmTest {
                 fareClass = "M",
                 fareBasis = "Z..EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(288, sqm)
-            assertEquals(true, isSqmPercentEstimated)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
 
         with(
@@ -788,12 +702,11 @@ internal class SqmTest {
                 fareClass = "V",
                 fareBasis = "P..EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(250, sqm)
-            assertEquals(true, isSqmPercentEstimated)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
     }
 
@@ -808,12 +721,11 @@ internal class SqmTest {
                 fareClass = "Y",
                 fareBasis = "O..PL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(313, sqm)
-            assertEquals(true, isSqmPercentEstimated)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
 
         with(
@@ -825,12 +737,11 @@ internal class SqmTest {
                 fareClass = "M",
                 fareBasis = "E..PL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(288, sqm)
-            assertEquals(true, isSqmPercentEstimated)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
 
         with(
@@ -842,12 +753,11 @@ internal class SqmTest {
                 fareClass = "V",
                 fareBasis = "A..EL",
                 ticketNumber = "014",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
-            )!!
+                eliteBonusMultiplier = 0,
+            )!!,
         ) {
-            assertEquals(250, sqm)
-            assertEquals(true, isSqmPercentEstimated)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
     }
 
@@ -862,11 +772,11 @@ internal class SqmTest {
                 fareClass = "P",
                 fareBasis = "INX00YN0",
                 ticketNumber = "123",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
+                eliteBonusMultiplier = 0,
             )!!,
         ) {
-            assertEquals(3114, sqm)
+            eligibleDollars = 100
+            assertEquals(400, sqc)
         }
     }
 
@@ -881,11 +791,11 @@ internal class SqmTest {
                 fareClass = "X",
                 fareBasis = "RANDOM-LT",
                 ticketNumber = "016",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
+                eliteBonusMultiplier = 0,
             )!!,
         ) {
-            assertEquals(0, sqm)
+            eligibleDollars = 100
+            assertEquals(0, sqc)
         }
 
         with(
@@ -897,11 +807,75 @@ internal class SqmTest {
                 fareClass = "I",
                 fareBasis = "RANDOM-EL",
                 ticketNumber = "016",
-                hasAeroplanStatus = true,
-                bonusPointsPercentage = 0,
+                eliteBonusMultiplier = 0,
             )!!,
         ) {
-            assertEquals(0, sqm)
+            eligibleDollars = 100
+            assertEquals(0, sqc)
+        }
+    }
+
+    @Test
+    fun `LQM is calculated correctly`() {
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "G",
+                fareBasis = "RANDOM-BA",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(0, lqm)
+        }
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "G",
+                fareBasis = "RANDOM-LT",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(2076, lqm)
+        }
+
+
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "A",
+                fareBasis = "RANDOM-PL",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(2595, lqm)
+        }
+
+
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYZ",
+                fareClass = "C",
+                fareBasis = "RANDOM-EF",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(3114, lqm)
         }
     }
 }
