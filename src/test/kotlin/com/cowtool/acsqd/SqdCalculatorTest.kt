@@ -15,32 +15,30 @@ internal class SqdCalculatorTest {
                 surcharges = 500.0,
                 ticket = "014",
                 aeroplanStatus = "100",
-                hasBonusPointsPrivilege = true,
-                segments = defaultSegments
-            ).calculate()
+                segments = defaultSegments,
+            ).calculate(),
         )
     }
 
     /**
-     * This is a test of SQD rounding to try to match how AC credits.
+     * This is a test of SQC rounding to try to match how AC credits.
      */
     @Test
-    fun `SQD rounding should match AC`() {
+    fun `SQC rounding should match AC`() {
         with(
             SqdCalculator(
                 baseFare = 829.0,
                 surcharges = 0.0,
                 ticket = "014",
                 aeroplanStatus = "100",
-                hasBonusPointsPrivilege = true,
                 segments = """
                     AC,SFO,YVR,Y,LT
                     AC,YVR,YYZ,Y,LT
                 """.trimIndent(),
             ).calculate(),
         ) {
-            assertEquals(231, itinerary!!.segments[0].earningResult!!.sqd)
-            assertEquals(599, itinerary!!.segments[1].earningResult!!.sqd)
+            assertEquals(924, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(2396, itinerary.segments[1].earningResult!!.sqc)
         }
 
         with(
@@ -49,15 +47,14 @@ internal class SqdCalculatorTest {
                 surcharges = 0.0,
                 ticket = "014",
                 aeroplanStatus = "100",
-                hasBonusPointsPrivilege = true,
                 segments = """
                     AC,YYC,EWR,Y,LT
                     AC,EWR,YYC,Y,LT
                 """.trimIndent(),
             ).calculate(),
         ) {
-            assertEquals(609, itinerary!!.segments[0].earningResult!!.sqd)
-            assertEquals(609, itinerary!!.segments[1].earningResult!!.sqd)
+            assertEquals(2436, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(2436, itinerary.segments[1].earningResult!!.sqc)
         }
 
         with(
@@ -66,7 +63,6 @@ internal class SqdCalculatorTest {
                 surcharges = 0.0,
                 ticket = "014",
                 aeroplanStatus = "100",
-                hasBonusPointsPrivilege = true,
                 segments = """
                     AC,YYC,YUL,Y,LT
                     AC,YUL,GRU,Y,LT
@@ -77,12 +73,12 @@ internal class SqdCalculatorTest {
                 """.trimIndent(),
             ).calculate(),
         ) {
-            assertEquals(422, itinerary!!.segments[0].earningResult!!.sqd)
-            assertEquals(1142, itinerary!!.segments[1].earningResult!!.sqd)
-            assertEquals(242, itinerary!!.segments[2].earningResult!!.sqd)
-            assertEquals(242, itinerary!!.segments[3].earningResult!!.sqd)
-            assertEquals(1142, itinerary!!.segments[4].earningResult!!.sqd)
-            assertEquals(422, itinerary!!.segments[5].earningResult!!.sqd)
+            assertEquals(1688, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(4568, itinerary.segments[1].earningResult!!.sqc)
+            assertEquals(968, itinerary.segments[2].earningResult!!.sqc)
+            assertEquals(968, itinerary.segments[3].earningResult!!.sqc)
+            assertEquals(4568, itinerary.segments[4].earningResult!!.sqc)
+            assertEquals(1688, itinerary.segments[5].earningResult!!.sqc)
         }
 
         with(
@@ -91,7 +87,6 @@ internal class SqdCalculatorTest {
                 surcharges = 0.0,
                 ticket = "014",
                 aeroplanStatus = "100",
-                hasBonusPointsPrivilege = true,
                 segments = """
                     AC,YYC,YYZ,Y,LT
                     AC,YYZ,YUL,Y,LT
@@ -101,9 +96,9 @@ internal class SqdCalculatorTest {
                 """.trimIndent(),
             ).calculate(),
         ) {
-            assertEquals(492, itinerary!!.segments[0].earningResult!!.sqd)
-            assertEquals(93, itinerary!!.segments[1].earningResult!!.sqd)
-            assertEquals(829, itinerary!!.segments[2].earningResult!!.sqd)
+            assertEquals(1968, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(372, itinerary.segments[1].earningResult!!.sqc)
+            assertEquals(3316, itinerary.segments[2].earningResult!!.sqc)
         }
 
         with(
@@ -112,7 +107,6 @@ internal class SqdCalculatorTest {
                 surcharges = 0.0,
                 ticket = "014",
                 aeroplanStatus = "100",
-                hasBonusPointsPrivilege = true,
                 segments = """
                     AC,YEG,YVR,P,EL
                     AC,YVR,YYZ,P,EL
@@ -123,12 +117,12 @@ internal class SqdCalculatorTest {
                 """.trimIndent(),
             ).calculate(),
         ) {
-            assertEquals(183, itinerary!!.segments[0].earningResult!!.sqd)
-            assertEquals(755, itinerary!!.segments[1].earningResult!!.sqd)
-            assertEquals(1187, itinerary!!.segments[2].earningResult!!.sqd)
-            assertEquals(1187, itinerary!!.segments[3].earningResult!!.sqd)
-            assertEquals(755, itinerary!!.segments[4].earningResult!!.sqd)
-            assertEquals(183, itinerary!!.segments[5].earningResult!!.sqd)
+            assertEquals(732, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(3020, itinerary.segments[1].earningResult!!.sqc)
+            assertEquals(4748, itinerary.segments[2].earningResult!!.sqc)
+            assertEquals(4748, itinerary.segments[3].earningResult!!.sqc)
+            assertEquals(3020, itinerary.segments[4].earningResult!!.sqc)
+            assertEquals(732, itinerary.segments[5].earningResult!!.sqc)
         }
     }
 }

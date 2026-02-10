@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>AC SQD Calculator</title>
+    <title>AC SQC/Points Calculator</title>
     <script type="text/javascript" language="javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -14,7 +14,7 @@
     <script src="js/config.js"></script>
     <script src="js/cognito-auth.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
-    <script src="js/sqd.js"></script>
+    <script src="js/sqc.js"></script>
     <script src="js/jquery.buttonLoader.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -40,6 +40,11 @@
 
         .has-spinner.btn.active .spinner {
             min-width: 20px;
+        }
+
+        #resultsTable td, th {
+            padding-left: 2px;
+            padding-right: 2px;
         }
     </style>
 </head>
@@ -69,14 +74,13 @@
             <th>Fare (Brand)</th>
             <th>Distance</th>
             <th>Distance Source</th>
-            <th>SQM %</th>
-            <th>SQM</th>
-            <th>SQD</th>
-            <th>Aeroplan %</th>
-            <th>Aeroplan</th>
-            <th>Bonus %</th>
-            <th>Bonus</th>
-            <th>Aeroplan Points</th>
+            <th>Dollars</th>
+            <th>SQC Multiplier</th>
+            <th>SQC</th>
+            <th>Base Points</th>
+            <th>Bonus Multiplier</th>
+            <th>Bonus Points</th>
+            <th>Total Points</th>
             <th>LQM</th>
         </tr>
         </thead>
@@ -87,7 +91,7 @@
 </div>
 
 <div>
-    <form id="sqdForm" onsubmit="return false;">
+    <form id="sqcForm" onsubmit="return false;">
         <table border="0">
             <tr>
                 <td style="text-align:right"><label for="ticket">Ticket</label>
@@ -116,14 +120,6 @@
             </tr>
             <tr>
                 <td style="text-align:right">
-                    <label for="hasBonusPointsPrivilege">Bonus Aeroplan Points Select Privilege</label>
-                </td>
-                <td>
-                    <input type="checkbox" name="hasBonusPointsPrivilege" id="hasBonusPointsPrivilege" value="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align:right">
                     <label for="baseFare">Base Fare</label>
                 </td>
                 <td>
@@ -132,7 +128,7 @@
             </tr>
             <tr>
                 <td style="text-align:right">
-                    <label for="surcharges">SQD-eligible surcharges (YQ/YR)</label>
+                    <label for="surcharges">SQC-eligible surcharges (YQ/YR)</label>
                 </td>
                 <td>
                     <input type="number" min="0" step="0.01" name="surcharges" id="surcharges" required value="0"/>
@@ -141,20 +137,20 @@
             <tr>
                 <td colspan="2">
                     <label for="segments">Segments:<br/>Operating airline,Origin,Destination,Fare Class,Brand Code<br/>You
-                        can leave off fare brand for non-AC</label>
+                        can leave off fare brand for non-AC tickets, but it is necessary for AC tickets</label>
                 </td>
             <tr>
                 <td colspan="2">
                     <textarea rows="16" cols="50" name="segments" id="segments" required>AC,SFO,YVR,K,CO
 AC,YVR,LHR,P,EL
-LH,LHR,MUC,P,
-TG,MUC,BKK,M
-CX,BKK,HKG,C</textarea>
+LH,LHR,MUC,P,EL
+TG,MUC,BKK,M,EL
+CX,BKK,HKG,C,EL</textarea>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit" id="calculateSqd" class="btn has-spinner">Calculate SQM/SQD</button>
+                    <button type="submit" id="calculateSqc" class="btn has-spinner">Calculate SQC/Points</button>
                 </td>
             </tr>
         </table>
