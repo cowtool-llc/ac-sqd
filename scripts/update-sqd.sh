@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-MAIN_LAMBDA_NAME="ac-sqd"
-API_LAMBDA_NAME="ac-sqd-api"
+MAIN_LAMBDA_NAME="ac-sqc"
+API_LAMBDA_NAME="ac-sqc-api"
 MAIN_HANDLER="com.cowtool.acsqd.SqdHandler::handleRequest"
 API_HANDLER="com.cowtool.acsqd.SqdApiHandler::handleRequest"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
