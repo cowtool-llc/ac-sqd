@@ -189,6 +189,7 @@ data class CalculatorArgs(
     val fareBasis: String?,
     val ticketNumber: String,
     val eliteBonusMultiplier: Int,
+    val eligibleDollars: Int? = null,
 )
 
 interface EarningCalculator {
@@ -210,6 +211,7 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
                     sqcMultiplier = it,
                     isEligibleForElitePointsMultiplier = isEligibleForElitePointsBonus(args),
                     eliteStatusBonusMultiplier = args.eliteBonusMultiplier,
+                    eligibleDollars = args.eligibleDollars,
                     isLqmEligible = args.operatingAirline == "AC",
                 )
             }
@@ -1105,6 +1107,7 @@ fun getEarningResult(
     fareBasis: String?,
     ticketNumber: String,
     eliteBonusMultiplier: Int,
+    eligibleDollars: Int? = null,
 ): EarningResult? {
     val effectiveOperator = when (marketingAirline) {
         "AC" if operatingAirline == "PB" -> "AC"
@@ -1135,6 +1138,7 @@ fun getEarningResult(
             fareBasis = fareBasis,
             ticketNumber = ticketNumber,
             eliteBonusMultiplier = eliteBonusMultiplier,
+            eligibleDollars = eligibleDollars,
         ),
     )
 }
