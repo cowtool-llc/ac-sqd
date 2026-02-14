@@ -13,19 +13,19 @@ class SqdCalculator(
             return try {
                 val itinerary = calculateSqdBreakdown()
 
-                SqdResult(
+                SqdResultImpl(
                     itinerary = itinerary,
                     errorMessage = null,
                 )
             } catch (e: SqdCalculatorException) {
-                SqdResult(
+                SqdResultImpl(
                     itinerary = null,
                     errorMessage = e.message,
                 )
             }
         }
 
-        return SqdResult(
+        return SqdResultImpl(
             itinerary = null,
             errorMessage = "You must specify all required values",
         )
