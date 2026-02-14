@@ -1,6 +1,7 @@
 package com.cowtool.acsqd
 
 import com.cowtool.acsqd.distance.airports
+import com.cowtool.acsqd.sqm.EarningResult
 import com.cowtool.acsqd.sqm.getDistanceResult
 import com.cowtool.acsqd.sqm.getEarningResult
 import kotlin.math.ceil
@@ -95,7 +96,6 @@ data class ItineraryImpl(
 
 interface Segment {
     val airline: String
-    val marketingAirline: String?
     val origin: String
     val destination: String
     val fareClass: String
@@ -114,8 +114,6 @@ class SegmentImpl(
     ticketNumber: String,
     eliteBonusMultiplier: Int,
 ) : Segment {
-    override val marketingAirline = marketingAirline
-
     override val earningResult = getEarningResult(
         operatingAirline = airline,
         marketingAirline = marketingAirline,
