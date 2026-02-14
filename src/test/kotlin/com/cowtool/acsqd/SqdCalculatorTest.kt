@@ -38,7 +38,7 @@ internal class SqdCalculatorTest {
             ).calculate(),
         ) {
             assertEquals(924, itinerary!!.segments[0].earningResult!!.sqc)
-            assertEquals(2396, itinerary.segments[1].earningResult!!.sqc)
+            assertEquals(2396, itinerary!!.segments[1].earningResult!!.sqc)
         }
 
         with(
@@ -54,7 +54,7 @@ internal class SqdCalculatorTest {
             ).calculate(),
         ) {
             assertEquals(2436, itinerary!!.segments[0].earningResult!!.sqc)
-            assertEquals(2436, itinerary.segments[1].earningResult!!.sqc)
+            assertEquals(2436, itinerary!!.segments[1].earningResult!!.sqc)
         }
 
         with(
@@ -74,11 +74,11 @@ internal class SqdCalculatorTest {
             ).calculate(),
         ) {
             assertEquals(1688, itinerary!!.segments[0].earningResult!!.sqc)
-            assertEquals(4568, itinerary.segments[1].earningResult!!.sqc)
-            assertEquals(968, itinerary.segments[2].earningResult!!.sqc)
-            assertEquals(968, itinerary.segments[3].earningResult!!.sqc)
-            assertEquals(4568, itinerary.segments[4].earningResult!!.sqc)
-            assertEquals(1688, itinerary.segments[5].earningResult!!.sqc)
+            assertEquals(4568, itinerary!!.segments[1].earningResult!!.sqc)
+            assertEquals(968, itinerary!!.segments[2].earningResult!!.sqc)
+            assertEquals(968, itinerary!!.segments[3].earningResult!!.sqc)
+            assertEquals(4568, itinerary!!.segments[4].earningResult!!.sqc)
+            assertEquals(1688, itinerary!!.segments[5].earningResult!!.sqc)
         }
 
         with(
@@ -97,8 +97,8 @@ internal class SqdCalculatorTest {
             ).calculate(),
         ) {
             assertEquals(1968, itinerary!!.segments[0].earningResult!!.sqc)
-            assertEquals(372, itinerary.segments[1].earningResult!!.sqc)
-            assertEquals(3316, itinerary.segments[2].earningResult!!.sqc)
+            assertEquals(372, itinerary!!.segments[1].earningResult!!.sqc)
+            assertEquals(3316, itinerary!!.segments[2].earningResult!!.sqc)
         }
 
         with(
@@ -118,11 +118,11 @@ internal class SqdCalculatorTest {
             ).calculate(),
         ) {
             assertEquals(732, itinerary!!.segments[0].earningResult!!.sqc)
-            assertEquals(3020, itinerary.segments[1].earningResult!!.sqc)
-            assertEquals(4748, itinerary.segments[2].earningResult!!.sqc)
-            assertEquals(4748, itinerary.segments[3].earningResult!!.sqc)
-            assertEquals(3020, itinerary.segments[4].earningResult!!.sqc)
-            assertEquals(732, itinerary.segments[5].earningResult!!.sqc)
+            assertEquals(3020, itinerary!!.segments[1].earningResult!!.sqc)
+            assertEquals(4748, itinerary!!.segments[2].earningResult!!.sqc)
+            assertEquals(4748, itinerary!!.segments[3].earningResult!!.sqc)
+            assertEquals(3020, itinerary!!.segments[4].earningResult!!.sqc)
+            assertEquals(732, itinerary!!.segments[5].earningResult!!.sqc)
         }
     }
 }
