@@ -11,10 +11,15 @@ data class SqdInput @JvmOverloads constructor(
     var aeroplanStatus: String = "",
 )
 
-data class SqdResult(
-    val itinerary: Itinerary?,
-    val errorMessage: String?,
-)
+interface SqdResult {
+    val itinerary: Itinerary?
+    val errorMessage: String?
+}
+
+data class SqdResultImpl(
+    override val itinerary: Itinerary?,
+    override val errorMessage: String?,
+) : SqdResult
 
 class SqdHandler : RequestHandler<SqdInput, SqdResult> {
     override fun handleRequest(input: SqdInput, context: Context): SqdResult {
