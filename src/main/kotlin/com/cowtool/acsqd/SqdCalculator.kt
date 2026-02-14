@@ -33,7 +33,7 @@ class SqdCalculator(
 
     @Throws(SqdCalculatorException::class)
     private fun calculateSqdBreakdown(): Itinerary {
-        return Itinerary.parse(
+        return ItineraryImpl.parse(
             ticket = ticket,
             aeroplanStatus = aeroplanStatus,
             segmentsCsv = segments,
