@@ -33,22 +33,22 @@ var SqcCalculator = window.SqcCalculator || {};
             }
         });
 
-        lambda = new AWS.Lambda({region: 'us-east-1'});
+        lambda = new AWS.Lambda({ region: 'us-east-1' });
         const pullParams = {
-            FunctionName : _config.lambda.functionName,
-            InvocationType : 'RequestResponse',
-            LogType : 'None',
-            Payload : JSON.stringify({
-                ticket : ticket,
-                aeroplanStatus : aeroplanStatus,
-                segments : segments,
-                baseFare : baseFare,
-                surcharges : surcharges,
-                authToken : authToken
+            FunctionName: _config.lambda.functionName,
+            InvocationType: 'RequestResponse',
+            LogType: 'None',
+            Payload: JSON.stringify({
+                ticket: ticket,
+                aeroplanStatus: aeroplanStatus,
+                segments: segments,
+                baseFare: baseFare,
+                surcharges: surcharges,
+                authToken: authToken
             })
         };
 
-        lambda.invoke(pullParams, function(err, data) {
+        lambda.invoke(pullParams, function (err, data) {
             if (err) {
                 alert(err);
             } else {
@@ -184,7 +184,7 @@ var SqcCalculator = window.SqcCalculator || {};
             "&segments=" + encodeURIComponent(segments) +
             "&baseFare=" + baseFare +
             "&surcharges=" + surcharges;
-        window.history.pushState({"queryParams":queryParams}, "", queryParams);
+        window.history.pushState({ "queryParams": queryParams }, "", queryParams);
     }
 
     $(function onDocReady() {
@@ -246,7 +246,16 @@ var SqcCalculator = window.SqcCalculator || {};
 
         const aeroplanStatus = urlParams.get('aeroplanStatus');
         if (aeroplanStatus) {
-            $('#aeroplanStatus').val(aeroplanStatus).change();
+            const $aeroplanStatus = $('#aeroplanStatus');
+            const exists = $aeroplanStatus.find('option').filter(function () {
+                return $(this).val() === aeroplanStatus;
+            }).length > 0;
+
+            if (exists) {
+                $aeroplanStatus.val(aeroplanStatus).change();
+            } else {
+                $aeroplanStatus.val('').change();
+            }
         }
 
         const segments = urlParams.get('segments');
