@@ -1110,7 +1110,7 @@ fun getEarningResult(
     eligibleDollars: Int? = null,
 ): EarningResult? {
     val effectiveOperator = when (marketingAirline) {
-        "AC" if operatingAirline == "PB" -> "AC"
+        "AC" if operatingAirline in setOf("KV", "L4", "PB", "QK", "RV", "ZX") -> "AC"
         "LX" if operatingAirline in setOf("2L", "BT", "WK") -> "LX"
         else -> operatingAirline
     }
