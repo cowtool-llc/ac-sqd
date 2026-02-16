@@ -1050,7 +1050,7 @@ private val nonPartnerCalculator = object : NonStarAllianceEarningCalculator() {
 }
 
 private fun getCalculator(operatingAirline: String) = when (operatingAirline.uppercase(Locale.getDefault())) {
-    "AC", "KV", "L4", "QK", "RV", "ZX" -> acCalculator // Air Canada
+    "AC", "KV", "L4", "PB", "QK", "RV", "ZX" -> acCalculator // Air Canada
     "A3" -> a3Calculator // Aegean Airlines
     "AD" -> adCalculator // Azul Airlines
     "AI" -> aiCalculator // Air India
@@ -1109,9 +1109,9 @@ fun getEarningResult(
     eliteBonusMultiplier: Int,
     eligibleDollars: Int? = null,
 ): EarningResult? {
-    val effectiveOperator = when (marketingAirline) {
-        "AC" if operatingAirline in setOf("KV", "L4", "PB", "QK", "RV", "ZX") -> "AC"
-        "LX" if operatingAirline in setOf("2L", "BT", "WK") -> "LX"
+    val effectiveOperator = when (operatingAirline) {
+        in setOf("KV", "L4", "PB", "QK", "RV", "ZX") -> "AC"
+        in setOf("2L", "BT", "WK") -> "LX"
         else -> operatingAirline
     }
 
