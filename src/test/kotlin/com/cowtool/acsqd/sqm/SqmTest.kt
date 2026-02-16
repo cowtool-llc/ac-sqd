@@ -862,7 +862,6 @@ internal class SqmTest {
             assertEquals(2595, lqm)
         }
 
-
         with(
             getEarningResult(
                 operatingAirline = "AC",
@@ -876,6 +875,21 @@ internal class SqmTest {
             )!!,
         ) {
             assertEquals(3114, lqm)
+        }
+
+        with(
+            getEarningResult(
+                operatingAirline = "QK",
+                marketingAirline = "AC",
+                origin = "YVR",
+                destination = "YYJ",
+                fareClass = "M",
+                fareBasis = "RANDOM-FL",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(39, lqm)
         }
     }
 }
