@@ -628,7 +628,6 @@ private val lhCalculator = object : StarAllianceEarningCalculator() {
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
-
                 else -> 0
             }
         }
@@ -657,7 +656,6 @@ private val lxCalculator = object : StarAllianceEarningCalculator() {
                 "J", "C", "D", "Z" -> 150
                 "P" -> 50
                 "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L" -> 50
-
                 else -> 0
             }
         } else {
@@ -670,7 +668,6 @@ private val lxCalculator = object : StarAllianceEarningCalculator() {
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
-
                 else -> 0
             }
         }
@@ -785,7 +782,6 @@ private val osCalculator = object : StarAllianceEarningCalculator() {
                 "J", "C", "D", "Z" -> 150
                 "P" -> 50
                 "Y", "B", "M", "U", "H", "Q", "V", "W", "S", "T", "L" -> 50
-
                 else -> 0
             }
         } else {
@@ -797,7 +793,6 @@ private val osCalculator = object : StarAllianceEarningCalculator() {
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
-
                 else -> 0
             }
         }
