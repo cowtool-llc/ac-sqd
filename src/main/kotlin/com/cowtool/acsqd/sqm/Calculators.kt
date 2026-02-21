@@ -409,15 +409,15 @@ private val avCalculator = object : StarAllianceEarningCalculator() {
             null
         } else if (args.originCountry in domesticCountries && args.destinationCountry in domesticCountries) {
             when (args.fareClass) {
-                "F", "C", "J", "D" -> 125
-                "A", "K", "Y", "B", "M", "H", "Q", "V", "E", "G", "L", "O", "P", "Z" -> 100
+                "C", "J", "D", "F" -> 125
+                "Y", "B", "M", "H", "Q", "V", "A", "E", "G", "K", "L", "O", "P", "Z" -> 100
                 "T", "W", "S" -> 25
                 else -> 0
             }
         } else {
             when (args.fareClass) {
-                "F", "C", "J", "D" -> 125
-                "A", "K", "Y", "B", "M", "H", "Q", "V", "E", "G", "L", "O", "P", "Z" -> 100
+                "C", "J", "D", "F" -> 125
+                "Y", "B", "M", "H", "Q", "V", "A", "E", "G", "K", "L", "O", "P", "Z" -> 100
                 "T", "W", "S" -> 25
                 else -> 0
             }
@@ -619,14 +619,14 @@ private val lhCalculator = object : StarAllianceEarningCalculator() {
             }
         } else {
             when (args.fareClass) {
-                "F", "A" -> 150
                 "J", "C", "D", "Z" -> 150
                 "P" -> 100
-                "G", "E" -> 125
-                "N" -> 100
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
+                "F", "A" -> 150
+                "G", "E" -> 125
+                "N" -> 100
                 else -> 0
             }
         }
@@ -659,14 +659,14 @@ private val lxCalculator = object : StarAllianceEarningCalculator() {
             }
         } else {
             when (args.fareClass) {
-                "F", "A" -> 150
                 "J", "C", "D", "Z" -> 150
                 "P" -> 100
-                "G", "E" -> 125
-                "N" -> 100
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
+                "F", "A" -> 150
+                "G", "E" -> 125
+                "N" -> 100
                 else -> 0
             }
         }
@@ -787,11 +787,11 @@ private val osCalculator = object : StarAllianceEarningCalculator() {
             when (args.fareClass) {
                 "J", "C", "D", "Z" -> 150
                 "P" -> 100
-                "G", "E" -> 125
-                "N" -> 100
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
+                "G", "E" -> 125
+                "N" -> 100
                 else -> 0
             }
         }
@@ -933,8 +933,8 @@ private val tpCalculator = object : StarAllianceEarningCalculator() {
                 "C", "D", "Z", "J" -> 150
                 "Y", "B" -> 100
                 "M", "H", "Q", "W", "K", "U" -> 100
-                "V", "S", "L", "G", "A", "P" -> 50
-                "E", "O", "T" -> 0
+                "V", "S", "L", "A", "G", "P" -> 50
+                "O", "E", "T" -> 0
                 else -> 0
             }
         } else {
@@ -942,8 +942,8 @@ private val tpCalculator = object : StarAllianceEarningCalculator() {
                 "C", "D", "Z", "J" -> 150
                 "Y", "B" -> 100
                 "M", "H", "Q" -> 100
-                "V", "W", "S", "L", "K", "U", "G", "A", "P" -> 50
-                "E", "O", "T" -> 0
+                "V", "W", "S", "L", "K", "U", "A", "G", "P" -> 50
+                "O", "E", "T" -> 0
                 else -> 0
             }
         }
@@ -961,7 +961,6 @@ private val uaCalculator = object : StarAllianceEarningCalculator() {
         "S", "T", "L" -> 50
         "K", "G" -> 25
         "N" -> 25
-
         else -> 0
     }
 
@@ -1036,8 +1035,8 @@ private val zhCalculator = object : StarAllianceEarningCalculator() {
         "J", "C" -> 150
         "D", "Z", "R" -> 125
         "G" -> 100
-        "Y", "B", "M", "U" -> 100
         "E" -> 90
+        "Y", "B", "M", "U" -> 100
         "H", "Q" -> 70
         "V", "W", "S", "T" -> 50
         "L", "P", "A", "K" -> 25
@@ -1070,11 +1069,11 @@ private val _4yCalculator = object : StarAllianceEarningCalculator() {
             when (args.fareClass) {
                 "J", "C", "D", "Z" -> 150
                 "P" -> 100
-                "G", "E" -> 125
-                "N" -> 100
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
+                "G", "E" -> 125
+                "N" -> 100
                 else -> 0
             }
         }
@@ -1083,7 +1082,7 @@ private val _4yCalculator = object : StarAllianceEarningCalculator() {
 private val _5tCalculator = object : NonStarAllianceEarningCalculator() {
     override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
         "Y" -> 100
-        "C", "H", "P" -> 75
+        "C", "P", "H" -> 75
         "M", "O" -> 50
         "B", "A", "T" -> 25
         else -> 0
