@@ -409,17 +409,16 @@ private val avCalculator = object : StarAllianceEarningCalculator() {
             null
         } else if (args.originCountry in domesticCountries && args.destinationCountry in domesticCountries) {
             when (args.fareClass) {
-                "C", "J", "D", "A", "K" -> 125
-                "Y", "B", "M", "H", "Q", "V", "E", "G", "L", "O", "P", "Z" -> 100
+                "C", "J", "D", "F" -> 125
+                "Y", "B", "M", "H", "Q", "V", "A", "E", "G", "K", "L", "O", "P", "Z" -> 100
                 "T", "W", "S" -> 25
                 else -> 0
             }
         } else {
             when (args.fareClass) {
-                "C", "J", "D", "A", "K" -> 125
-                "Y", "B", "M", "H", "Q", "V", "E", "G", "L", "O", "P", "Z" -> 100
-                "T", "W" -> 50
-                "S" -> 25
+                "C", "J", "D", "F" -> 125
+                "Y", "B", "M", "H", "Q", "V", "A", "E", "G", "K", "L", "O", "P", "Z" -> 100
+                "T", "W", "S" -> 25
                 else -> 0
             }
         }
@@ -495,11 +494,13 @@ private val cxCalculator = object : NonStarAllianceEarningCalculator() {
 private val ekCalculator = object : NonStarAllianceEarningCalculator() {
     override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
         "F", "A" -> 150
-        "J", "C", "I", "O" -> 125
-        "H", "W", "E" -> 110
-        "R", "Y", "P", "X" -> 100
+        "C", "J", "I", "O" -> 125
+        "H" -> 110
+        "W", "E" -> 100
+        "R", "Y", "P", "X" -> 70
         "U", "B", "M", "K" -> 50
-        "G", "T", "L", "Q" -> 15
+        "T", "L", "Q" -> 15
+        "G", "V" -> 0
         else -> 0
     }
 }
@@ -528,9 +529,11 @@ private val etCalculator = object : StarAllianceEarningCalculator() {
 
 private val ewCalculator = object : StarAllianceEarningCalculator() {
     override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
-        "J", "D" -> 150
-        "E", "N" -> 125
-        "I", "C", "H", "Q", "V", "W", "S", "G", "K", "L", "T", "X", "Y", "B", "M", "F", "O", "R" -> 50
+        "J" -> 150
+        "D", "I" -> 125
+        "Y", "B", "M", "H", "Q", "C" -> 100
+        "W", "S", "G", "K", "L", "T", "X" -> 75
+        "N", "E", "F", "O", "R", "V" -> 50
         else -> 0
     }
 }
@@ -909,7 +912,8 @@ private val tpCalculator = object : StarAllianceEarningCalculator() {
                 "C", "D", "Z", "J" -> 150
                 "Y", "B" -> 100
                 "M", "H", "Q", "W", "K", "U" -> 100
-                "V", "S", "L", "G", "A", "P", "E" -> 50
+                "V", "S", "L", "A", "G", "P" -> 50
+                "O", "E", "T" -> 0
                 else -> 0
             }
         } else {
@@ -917,7 +921,8 @@ private val tpCalculator = object : StarAllianceEarningCalculator() {
                 "C", "D", "Z", "J" -> 150
                 "Y", "B" -> 100
                 "M", "H", "Q" -> 100
-                "V", "W", "S", "L", "K", "U", "G", "A", "P" -> 50
+                "V", "W", "S", "L", "K", "U", "A", "G", "P" -> 50
+                "O", "E", "T" -> 0
                 else -> 0
             }
         }
@@ -935,7 +940,6 @@ private val uaCalculator = object : StarAllianceEarningCalculator() {
         "S", "T", "L" -> 50
         "K", "G" -> 25
         "N" -> 25
-
         else -> 0
     }
 
@@ -952,7 +956,6 @@ private val ukCalculator = object : NonStarAllianceEarningCalculator() {
     }
 }
 
-
 private val vaCalculator = object : NonStarAllianceEarningCalculator() {
     override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
         "J" -> 150
@@ -965,13 +968,22 @@ private val vaCalculator = object : NonStarAllianceEarningCalculator() {
     }
 }
 
+private val vlCalculator = object : StarAllianceEarningCalculator() {
+    override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
+        "C", "D", "J", "Z" -> 150
+        "P" -> 50
+        "Y", "B", "H", "M", "U", "Q", "V", "W", "S", "L", "T" -> 50
+        else -> 0
+    }
+}
+
 private val wyCalculator = object : NonStarAllianceEarningCalculator() {
     override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
-        "P", "F" -> 150
-        "J", "C", "D", "R" -> 125
-        "Y", "H", "M", "B" -> 100
-        "K", "I", "Q", "T" -> 50
-        "N", "L", "U", "O", "G" -> 25
+        "F", "A" -> 150
+        "J", "C", "D", "I", "P" -> 125
+        "Y", "B", "H", "K", "M" -> 100
+        "L", "V", "S", "N", "Q", "O", "R", "T" -> 50
+        "W", "G" -> 25
         "E" -> 10
         else -> 0
     }
@@ -991,11 +1003,11 @@ private val zhCalculator = object : StarAllianceEarningCalculator() {
         "J", "C" -> 150
         "D", "Z", "R" -> 125
         "G" -> 100
-        "Y", "B", "M", "U" -> 100
         "E" -> 90
+        "Y", "B", "M", "U" -> 100
         "H", "Q" -> 70
         "V", "W", "S", "T" -> 50
-        "L", "P", "A", "K" -> 50
+        "L", "P", "A", "K" -> 25
         else -> 0
     }
 }
@@ -1038,7 +1050,7 @@ private val _4yCalculator = object : StarAllianceEarningCalculator() {
 private val _5tCalculator = object : NonStarAllianceEarningCalculator() {
     override fun getDistancePercentMultiplier(args: CalculatorArgs) = when (args.fareClass) {
         "Y" -> 100
-        "C", "H", "P" -> 75
+        "C", "P", "H" -> 75
         "M", "O" -> 50
         "B", "A", "T" -> 25
         else -> 0
@@ -1089,6 +1101,7 @@ private fun getCalculator(operatingAirline: String) = when (operatingAirline.upp
     "UA" -> uaCalculator // United Airlines
     "UK" -> ukCalculator // Vistara
     "VA" -> vaCalculator // Virgin Australia
+    "VL" -> vlCalculator // Lufthansa City Airlines
     "WY" -> wyCalculator // Omar Air
     "YN" -> ynCalculator // Air Creebec
     "ZH" -> zhCalculator // Shenzhen Airlines
