@@ -1042,7 +1042,6 @@ private val _4yCalculator = object : StarAllianceEarningCalculator() {
                 "Y", "B" -> 125
                 "M", "U", "H", "Q", "V" -> 100
                 "W", "S", "T", "L" -> 50
-
                 else -> 0
             }
         }
