@@ -99,6 +99,22 @@ class EarningResultAcTicketOrFlight(
         }
 }
 
+class EarningResultZero(
+    override val distanceResult: DistanceResult,
+) : EarningResult {
+    override val sqcMultiplier = 0
+    override val eliteBonusMultiplier = 0
+    override var eligibleDollars: Int? = null
+
+    override val sqc = 0
+    override val basePoints = 0
+    override val bonusPoints = 0
+    override val totalPoints = 0
+
+    override val isLqmEligible = false
+    override val lqm = 0
+}
+
 class EarningResultStarAllianceTicketAndFlight(
     override val distanceResult: DistanceResult,
     val distanceMultiplierPercent: Int,
@@ -202,6 +218,14 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
     protected open val forceAcCalculation = false
 
     override fun calculate(args: CalculatorArgs): EarningResult? {
+        if (!forceAcCalculation && args.fareClass == null) {
+            return null
+        }
+
+        if (!forceAcCalculation && getDistancePercentMultiplier(args) == 0) {
+            return EarningResultZero(args.distanceResult)
+        }
+
         return if (args.ticketNumber.startsWith("014") || forceAcCalculation) {
             getAcTicketSqcMultiplier(args)?.let {
                 EarningResultAcTicketOrFlight(
@@ -315,9 +339,18 @@ private abstract class NonStarAllianceEarningCalculator : EarningCalculator {
     final override fun isEligibleForElitePointsBonus(args: CalculatorArgs) = false
 
     override fun calculate(args: CalculatorArgs): EarningResult? {
+        if (args.fareClass == null) {
+            return null
+        }
+
+        if (getDistancePercentMultiplier(args) == 0) {
+            return EarningResultZero(args.distanceResult)
+        }
+
         return if (args.ticketNumber.startsWith("014")) {
             EarningResultAcTicketNonStarAllianceFlight(
                 distanceResult = args.distanceResult,
+                eligibleDollars = args.eligibleDollars,
             )
         } else {
             getDistancePercentMultiplier(args)?.let { percentMultiplier ->

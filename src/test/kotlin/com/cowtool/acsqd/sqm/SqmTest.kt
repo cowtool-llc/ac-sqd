@@ -497,19 +497,57 @@ internal class SqmTest {
                 eliteBonusMultiplier = 0,
             ),
         )
-        assertEquals(
-            0,
-            getEarningResult(
-                "A3",
-                marketingAirline = null,
-                "YYZ",
-                "YUL",
-                "F",
-                null,
-                "014",
-                eliteBonusMultiplier = 0,
-            )!!.sqcMultiplier,
-        )
+
+        val a3Result = getEarningResult(
+            "A3",
+            marketingAirline = null,
+            "YYZ",
+            "YUL",
+            "F",
+            null,
+            "014",
+            eliteBonusMultiplier = 0,
+        )!!
+
+        a3Result.eligibleDollars = 100
+        assertEquals(0, a3Result.sqc)
+        assertEquals(0, a3Result.totalPoints)
+        assertEquals(0, a3Result.sqcMultiplier)
+    }
+
+    @Test
+    fun `getEarningResult() handles ineligible fare classes on 014 tickets`() {
+        // Star Alliance (A3 F class)
+        val saResult = getEarningResult(
+            "A3",
+            marketingAirline = null,
+            "YYZ",
+            "YUL",
+            "F",
+            null,
+            "014",
+            eliteBonusMultiplier = 0,
+        )!!
+        saResult.eligibleDollars = 500
+        assertEquals(0, saResult.sqc)
+        assertEquals(0, saResult.totalPoints)
+        assertEquals(0, saResult.basePoints)
+
+        // Non-Star Alliance (EK G class)
+        val nsaResult = getEarningResult(
+            "EK",
+            marketingAirline = null,
+            "DXB",
+            "LHR",
+            "G",
+            null,
+            "014",
+            eliteBonusMultiplier = 0,
+        )!!
+        nsaResult.eligibleDollars = 500
+        assertEquals(0, nsaResult.sqc)
+        assertEquals(0, nsaResult.totalPoints)
+        assertEquals(0, nsaResult.basePoints)
     }
 
     @Test
