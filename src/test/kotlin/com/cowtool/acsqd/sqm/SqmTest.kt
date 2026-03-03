@@ -495,7 +495,7 @@ internal class SqmTest {
                 null,
                 "014",
                 eliteBonusMultiplier = 0,
-            )
+            ),
         )
 
         val a3Result = getEarningResult(
@@ -508,7 +508,7 @@ internal class SqmTest {
             "014",
             eliteBonusMultiplier = 0,
         )!!
-        
+
         a3Result.eligibleDollars = 100
         assertEquals(0, a3Result.sqc)
         assertEquals(0, a3Result.totalPoints)
