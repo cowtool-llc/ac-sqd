@@ -125,4 +125,25 @@ internal class SqdCalculatorTest {
             assertEquals(732, itinerary!!.segments[5].earningResult!!.sqc)
         }
     }
+
+    @Test
+    fun `AC tickets are nothing for partner non-earning fare classes`() {
+        with(
+            SqdCalculator(
+                baseFare = 1500.0,
+                surcharges = 0.0,
+                ticket = "014",
+                aeroplanStatus = "100",
+                segments = """
+                    BR,TPE,ICN,G
+                    AC,ICN,YVR,G,FL
+                    AC,YVR,YWG,G,FL
+                """.trimIndent(),
+            ).calculate(),
+        ) {
+            assertEquals(0, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(4272, itinerary!!.segments[1].earningResult!!.sqc)
+            assertEquals(972, itinerary!!.segments[2].earningResult!!.sqc)
+        }
+    }
 }
