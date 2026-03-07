@@ -83,6 +83,8 @@ class EarningResultAcTicketOrFlight(
 
             val multiplier = when {
                 brand in setOf("BA", "GT") -> 0.0
+                fareBasis != null && isAeroplanFareBasis(fareBasis) -> 0.0
+                fareClass in setOf("X", "I") -> 0.0
                 split != null && split.size > 1 && split[1].startsWith("AE") -> 0.0
                 fareClass in setOf("J", "C", "D", "Z", "P") -> 1.5
                 fareClass in setOf("O", "E", "A") -> 1.25
