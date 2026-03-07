@@ -6,7 +6,6 @@ import com.cowtool.acsqd.distance.airports
 import com.cowtool.acsqd.distance.getSegmentDistance
 import java.util.Locale
 import kotlin.math.max
-import kotlin.math.round
 
 interface EarningResult {
     val distanceResult: DistanceResult
@@ -94,7 +93,7 @@ class EarningResultAcTicketOrFlight(
             val baseDistance = distanceResult.distance?.let { max(minimum, it) }
 
             baseDistance?.let {
-                round(it * multiplier).toInt()
+                Math.round(it * multiplier).toInt()
             }
         } else {
             0
