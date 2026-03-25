@@ -278,7 +278,9 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
 
                 "TG" -> return 2
 
-                "FL", "CO", "LT", "PL", "PF", "EL", "EF" -> return 4
+                "FL", "CO", "LT" -> return if (args.ticketNumber.startsWith("014")) 4 else 2
+
+                "PL", "PF", "EL", "EF" -> return 4
             }
 
             getSqcMultiplierFromFareClass(args, args.fareBasis)?.let {
@@ -309,15 +311,17 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
         return when (fareClass.take(1)) {
             "J", "C", "D", "Z", "P",
             "O", "E", "A",
+                -> 4
+
             "Y", "B",
             "M", "U", "H", "Q", "V",
-                -> 4
+                -> if (args.ticketNumber.startsWith("014")) 4 else 2
 
             "W" ->
                 if ((args.originCountry == "Canada" || args.originCountry == "United States") &&
                     (args.destinationCountry == "Canada" || args.destinationCountry == "United States")
                 ) {
-                    4
+                    if (args.ticketNumber.startsWith("014")) 4 else 2
                 } else {
                     2
                 }

@@ -379,6 +379,48 @@ internal class SqmTest {
             assertEquals(1089, it.sqc)
             assertEquals(0, it.eliteBonusMultiplier)
         }
+
+        getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "M",
+            "M1234FL",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 0,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(2, it.sqcMultiplier)
+        }
+
+        getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "Y",
+            "Y",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 0,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(2, it.sqcMultiplier)
+        }
+
+        getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "YVR",
+            "YYZ",
+            "W",
+            "W",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 0,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(2, it.sqcMultiplier)
+        }
     }
 
     @Test
