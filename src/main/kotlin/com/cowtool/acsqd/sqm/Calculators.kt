@@ -6,7 +6,6 @@ import com.cowtool.acsqd.distance.airports
 import com.cowtool.acsqd.distance.getSegmentDistance
 import java.util.Locale
 import kotlin.math.max
-import kotlin.math.round
 
 interface EarningResult {
     val distanceResult: DistanceResult
@@ -83,6 +82,8 @@ class EarningResultAcTicketOrFlight(
 
             val multiplier = when {
                 brand in setOf("BA", "GT") -> 0.0
+                fareBasis != null && isAeroplanFareBasis(fareBasis) -> 0.0
+                fareClass in setOf("X", "I") -> 0.0
                 split != null && split.size > 1 && split[1].startsWith("AE") -> 0.0
                 fareClass in setOf("J", "C", "D", "Z", "P") -> 1.5
                 fareClass in setOf("O", "E", "A") -> 1.25
@@ -92,7 +93,7 @@ class EarningResultAcTicketOrFlight(
             val baseDistance = distanceResult.distance?.let { max(minimum, it) }
 
             baseDistance?.let {
-                round(it * multiplier).toInt()
+                Math.round(it * multiplier).toInt()
             }
         } else {
             0
@@ -277,7 +278,9 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
 
                 "TG" -> return 2
 
-                "FL", "CO", "LT", "PL", "PF", "EL", "EF" -> return 4
+                "FL", "CO", "LT" -> return if (args.ticketNumber.startsWith("014")) 4 else 2
+
+                "PL", "PF", "EL", "EF" -> return 4
             }
 
             getSqcMultiplierFromFareClass(args, args.fareBasis)?.let {
@@ -308,15 +311,17 @@ private abstract class StarAllianceEarningCalculator : EarningCalculator {
         return when (fareClass.take(1)) {
             "J", "C", "D", "Z", "P",
             "O", "E", "A",
+                -> 4
+
             "Y", "B",
             "M", "U", "H", "Q", "V",
-                -> 4
+                -> if (args.ticketNumber.startsWith("014")) 4 else 2
 
             "W" ->
                 if ((args.originCountry == "Canada" || args.originCountry == "United States") &&
                     (args.destinationCountry == "Canada" || args.destinationCountry == "United States")
                 ) {
-                    4
+                    if (args.ticketNumber.startsWith("014")) 4 else 2
                 } else {
                     2
                 }

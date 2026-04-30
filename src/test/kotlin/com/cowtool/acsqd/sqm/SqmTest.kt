@@ -379,6 +379,48 @@ internal class SqmTest {
             assertEquals(1089, it.sqc)
             assertEquals(0, it.eliteBonusMultiplier)
         }
+
+        getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "M",
+            "M1234FL",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 0,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(2, it.sqcMultiplier)
+        }
+
+        getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "Y",
+            "Y",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 0,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(2, it.sqcMultiplier)
+        }
+
+        getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "YVR",
+            "YYZ",
+            "W",
+            "W",
+            ticketNumber = "016",
+            eliteBonusMultiplier = 0,
+        )!!.let {
+            it.eligibleDollars = 100
+            assertEquals(2, it.sqcMultiplier)
+        }
     }
 
     @Test
@@ -429,58 +471,57 @@ internal class SqmTest {
 
     @Test
     fun `getEarningResult() handles Aeroplan SQC`() {
-        assertEquals(
-            0,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "SFO",
-                "YYZ",
-                "I",
-                "IBP00EL/AE2",
-                ticketNumber = "014",
-                eliteBonusMultiplier = 0,
-            )!!.sqcMultiplier,
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "SFO",
-                "YYZ",
-                "I",
-                "DTAEROEL/AE1",
-                ticketNumber = "014",
-                eliteBonusMultiplier = 0,
-            )!!.sqcMultiplier,
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "SFO",
-                "YYZ",
-                "J",
-                "JAEROEF/AE1",
-                ticketNumber = "014",
-                eliteBonusMultiplier = 0,
-            )!!.sqcMultiplier,
-        )
-        assertEquals(
-            0,
-            getEarningResult(
-                "AC",
-                marketingAirline = null,
-                "SFO",
-                "YYZ",
-                "M",
-                "MAEROFL/AE1",
-                ticketNumber = "014",
-                eliteBonusMultiplier = 0,
-            )!!.sqcMultiplier,
-        )
+        val result1 = getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "I",
+            "IBP00EL/AE2",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 0,
+        )!!
+        assertEquals(0, result1.sqcMultiplier)
+        assertEquals(0, result1.lqm)
+
+        val result2 = getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "I",
+            "DTAEROEL/AE1",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 0,
+        )!!
+        assertEquals(0, result2.sqcMultiplier)
+        assertEquals(0, result2.lqm)
+
+        val result3 = getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "J",
+            "JAEROEF/AE1",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 0,
+        )!!
+        assertEquals(0, result3.sqcMultiplier)
+        assertEquals(0, result3.lqm)
+
+        val result4 = getEarningResult(
+            "AC",
+            marketingAirline = null,
+            "SFO",
+            "YYZ",
+            "M",
+            "MAEROFL/AE1",
+            ticketNumber = "014",
+            eliteBonusMultiplier = 0,
+        )!!
+        assertEquals(0, result4.sqcMultiplier)
+        assertEquals(0, result4.lqm)
     }
 
     @Test
@@ -868,6 +909,21 @@ internal class SqmTest {
             )!!,
         ) {
             assertEquals(0, lqm)
+        }
+
+        with(
+            getEarningResult(
+                operatingAirline = "AC",
+                marketingAirline = "AC",
+                origin = "SFO",
+                destination = "YVR",
+                fareClass = "J",
+                fareBasis = "RANDOM",
+                ticketNumber = "014",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(1199, lqm)
         }
         with(
             getEarningResult(
