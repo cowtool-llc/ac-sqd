@@ -1,3 +1,3 @@
-# Air Canada Aeroplan SQD/SQM Calculator
+# Air Canada Aeroplan SQC/Points Calculator
 
-Accessible via https://acsqd.cowtool.com/
+Accessible via https://acsqc.cowtool.com/
