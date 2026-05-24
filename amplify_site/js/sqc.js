@@ -1,12 +1,12 @@
-/*global SqdCalculator _config*/
+/*global SqcCalculator _config*/
 
-var SqdCalculator = window.SqdCalculator || {};
+var SqcCalculator = window.SqcCalculator || {};
 
 (function flightStatusScopeWrapper($) {
     var authToken;
     var authTokenLoaded = false;
     var isDocReady = false;
-    SqdCalculator.authToken.then(function setAuthToken(token) {
+    SqcCalculator.authToken.then(function setAuthToken(token) {
         if (token) {
             authToken = token;
         }
@@ -19,12 +19,11 @@ var SqdCalculator = window.SqdCalculator || {};
     function callLambda(
         ticket,
         aeroplanStatus,
-        hasBonusPointsPrivilege,
         segments,
         baseFare,
         surcharges
     ) {
-        $('#calculateSqd').buttonLoader('start');
+        $('#calculateSqc').buttonLoader('start');
 
         AWS.config.region = _config.cognito.region;
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -34,23 +33,22 @@ var SqdCalculator = window.SqdCalculator || {};
             }
         });
 
-        lambda = new AWS.Lambda({region: 'us-east-1'});
+        lambda = new AWS.Lambda({ region: 'us-east-1' });
         const pullParams = {
-            FunctionName : _config.lambda.functionName,
-            InvocationType : 'RequestResponse',
-            LogType : 'None',
-            Payload : JSON.stringify({
-                ticket : ticket,
-                aeroplanStatus : aeroplanStatus,
-                hasBonusPointsPrivilege : hasBonusPointsPrivilege,
-                segments : segments,
-                baseFare : baseFare,
-                surcharges : surcharges,
-                authToken : authToken
+            FunctionName: _config.lambda.functionName,
+            InvocationType: 'RequestResponse',
+            LogType: 'None',
+            Payload: JSON.stringify({
+                ticket: ticket,
+                aeroplanStatus: aeroplanStatus,
+                segments: segments,
+                baseFare: baseFare,
+                surcharges: surcharges,
+                authToken: authToken
             })
         };
 
-        lambda.invoke(pullParams, function(err, data) {
+        lambda.invoke(pullParams, function (err, data) {
             if (err) {
                 alert(err);
             } else {
@@ -60,11 +58,11 @@ var SqdCalculator = window.SqdCalculator || {};
                 } else {
                     const results = response.results;
                     populateResults(response.itinerary);
-                    populateUrl(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
+                    populateUrl(ticket, aeroplanStatus, segments, baseFare, surcharges);
                 }
             }
 
-            $('#calculateSqd').buttonLoader('stop');
+            $('#calculateSqc').buttonLoader('stop');
         });
     }
 
@@ -78,9 +76,11 @@ var SqdCalculator = window.SqdCalculator || {};
                 .append($('<tr>')
                     .append($('<td>')
                         .text(segment.airline)
+                        .attr('align', 'center')
                     )
                     .append($('<td>')
                         .text(segment.origin + '-' + segment.destination)
+                        .attr('align', 'center')
                     )
                     .append($('<td>')
                         .text(segment.fareClass + ('fareBrand' in segment ? ' (' + segment.fareBrand + ')' : ''))
@@ -95,36 +95,31 @@ var SqdCalculator = window.SqdCalculator || {};
                         .attr('align', 'center')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.sqmPercent)
-                        .attr('align', 'right')
-                        .css('background-color', segment.earningResult.sqmPercentEstimated ? '#FFFF00' : 'transparent')
-                    )
-                    .append($('<td>')
-                        .text(segment.earningResult.sqm.toLocaleString('en-US'))
+                        .text(segment.earningResult.eligibleDollars.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.sqd.toLocaleString('en-US'))
+                        .text(segment.earningResult.sqcMultiplier)
+                        .attr('align', 'center')
+                    )
+                    .append($('<td>')
+                        .text(segment.earningResult.sqc.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.aeroplanPointsPercent)
+                        .text(segment.earningResult.basePoints.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.aeroplanMiles.toLocaleString('en-US'))
+                        .text(segment.earningResult.eliteBonusMultiplier)
+                        .attr('align', 'center')
+                    )
+                    .append($('<td>')
+                        .text(segment.earningResult.bonusPoints.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
-                        .text(segment.earningResult.bonusPointsPercent)
-                        .attr('align', 'right')
-                    )
-                    .append($('<td>')
-                        .text(segment.earningResult.bonusPoints)
-                        .attr('align', 'right')
-                    )
-                    .append($('<td>')
-                        .text(segment.earningResult.totalMiles)
+                        .text(segment.earningResult.totalPoints.toLocaleString('en-US'))
                         .attr('align', 'right')
                     )
                     .append($('<td>')
@@ -150,20 +145,14 @@ var SqdCalculator = window.SqdCalculator || {};
                     .attr('align', 'right')
                 )
                 .append($('<td>')
-                    .attr('colspan', 2)
+                    .attr('colspan', 3)
                 )
                 .append($('<td>')
-                    .text(itinerary.totalRow.sqm.toLocaleString('en-US'))
+                    .text(itinerary.totalRow.sqc.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
                 .append($('<td>')
-                    .text(itinerary.totalRow.sqd.toLocaleString('en-US'))
-                    .attr('align', 'right')
-                )
-                .append($('<td>')
-                )
-                .append($('<td>')
-                    .text(itinerary.totalRow.aeroplanMiles.toLocaleString('en-US'))
+                    .text(itinerary.totalRow.basePoints.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
                 .append($('<td>')
@@ -173,7 +162,7 @@ var SqdCalculator = window.SqdCalculator || {};
                     .attr('align', 'right')
                 )
                 .append($('<td>')
-                    .text(itinerary.totalRow.totalMiles.toLocaleString('en-US'))
+                    .text(itinerary.totalRow.totalPoints.toLocaleString('en-US'))
                     .attr('align', 'right')
                 )
                 .append($('<td>')
@@ -186,22 +175,20 @@ var SqdCalculator = window.SqdCalculator || {};
     function populateUrl(
         ticket,
         aeroplanStatus,
-        hasBonusPointsPrivilege,
         segments,
         baseFare,
         surcharges
     ) {
         let queryParams = "?ticket=" + ticket +
             "&aeroplanStatus=" + aeroplanStatus +
-            "&hasBonusPointsPrivilege=" + hasBonusPointsPrivilege +
             "&segments=" + encodeURIComponent(segments) +
             "&baseFare=" + baseFare +
             "&surcharges=" + surcharges;
-        window.history.pushState({"queryParams":queryParams}, "", queryParams);
+        window.history.pushState({ "queryParams": queryParams }, "", queryParams);
     }
 
     $(function onDocReady() {
-        $('#calculateSqd').click(handleRequestClick);
+        $('#calculateSqc').click(handleRequestClick);
 
         isDocReady = true;
         performOnLoad();
@@ -227,26 +214,25 @@ var SqdCalculator = window.SqdCalculator || {};
         const shouldCalculate = populateFields();
 
         if (shouldCalculate) {
-            performCalculateSqd();
+            performCalculateSqc();
         }
     }
 
-    function performCalculateSqd() {
+    function performCalculateSqc() {
         const ticket = $('#ticket').val();
         const aeroplanStatus = $('#aeroplanStatus').val();
-        const hasBonusPointsPrivilege = $('#hasBonusPointsPrivilege').is(':checked');
         const segments = $('#segments').val();
         const baseFare = $('#baseFare').val();
         const surcharges = $('#surcharges').val();
-        callLambda(ticket, aeroplanStatus, hasBonusPointsPrivilege, segments, baseFare, surcharges);
+        callLambda(ticket, aeroplanStatus, segments, baseFare, surcharges);
     }
 
     function handleRequestClick(event) {
         event.preventDefault();
-        const form = $('#sqdForm')[0];
+        const form = $('#sqcForm')[0];
         form.reportValidity();
         if (form.checkValidity()) {
-            performCalculateSqd();
+            performCalculateSqc();
         }
     }
 
@@ -260,11 +246,17 @@ var SqdCalculator = window.SqdCalculator || {};
 
         const aeroplanStatus = urlParams.get('aeroplanStatus');
         if (aeroplanStatus) {
-            $('#aeroplanStatus').val(aeroplanStatus).change();
-        }
+            const $aeroplanStatus = $('#aeroplanStatus');
+            const exists = $aeroplanStatus.find('option').filter(function () {
+                return $(this).val() === aeroplanStatus;
+            }).length > 0;
 
-        const hasBonusPointsPrivilege = urlParams.get('hasBonusPointsPrivilege');
-        $('#hasBonusPointsPrivilege').prop( 'checked', hasBonusPointsPrivilege === 'true' );
+            if (exists) {
+                $aeroplanStatus.val(aeroplanStatus).change();
+            } else {
+                $aeroplanStatus.val('').change();
+            }
+        }
 
         const segments = urlParams.get('segments');
         if (segments) {
