@@ -943,26 +943,47 @@ private val tkCalculator = object : StarAllianceEarningCalculator() {
 }
 
 private val tpCalculator = object : StarAllianceEarningCalculator() {
+    /**
+     * TAP identifies its fare brand with a three-letter code embedded in the fare
+     * basis (e.g. Y15CLC0A), rather than the two-letter suffix Air Canada uses.
+     * Callers may instead name the brand directly (e.g. TP,ARN,LIS,O,PLUS), so
+     * accept both spellings and search rather than slice at a fixed offset.
+     *
+     * Top Prime and Top Executive earn the same as Prime and Executive, so the
+     * "Top" variants need no cases of their own.  Prime must be matched before
+     * Executive, or "TOP PRIME" would be read as business.
+     *
+     * Returns null when no brand could be identified.
+     */
+    private fun getBrandPercentMultiplier(args: CalculatorArgs): Int? {
+        val brand = args.fareBasis?.split("/")?.first()?.uppercase()
+
+        if (brand.isNullOrBlank()) {
+            return null
+        }
+
+        return when {
+            "DSC" in brand || "DISCOUNT" in brand -> 0
+            "BSC" in brand || "BASIC" in brand -> 50
+            "CLC" in brand || "CLASSIC" in brand -> 100
+            "PLU" in brand -> 100
+            "PRIME" in brand -> 115
+            "TOP" in brand || "EXE" in brand -> 150
+            else -> null
+        }
+    }
+
     override fun getDistancePercentMultiplier(args: CalculatorArgs): Int {
-        val specialDestinations = setOf("LIS", "OPO", "PXO", "FNC")
-        return if (args.origin in specialDestinations && args.destination in specialDestinations) {
-            when (args.fareClass) {
-                "C", "D", "Z", "J" -> 150
-                "Y", "B" -> 100
-                "M", "H", "Q", "W", "K", "U" -> 100
-                "V", "S", "L", "A", "G", "P" -> 50
-                "O", "E", "T" -> 0
-                else -> 0
-            }
-        } else {
-            when (args.fareClass) {
-                "C", "D", "Z", "J" -> 150
-                "Y", "B" -> 100
-                "M", "H", "Q" -> 100
-                "V", "W", "S", "L", "K", "U", "A", "G", "P" -> 50
-                "O", "E", "T" -> 0
-                else -> 0
-            }
+        getBrandPercentMultiplier(args)?.let { return it }
+
+        // Without a brand, the booking class alone is ambiguous: TAP sells the same
+        // class across several brands at different rates.  Assume the Economy
+        // Plus/Classic rate, which covers most economy inventory; Comfort's 115% is
+        // only awarded when the brand confirms it.
+        return when (args.fareClass) {
+            "C", "D", "Z", "J" -> 150
+            "Y", "B", "M", "S", "H", "Q", "V", "W", "A", "K", "L", "U", "E", "T", "O" -> 100
+            else -> 0
         }
     }
 }
