@@ -1001,4 +1001,68 @@ internal class SqmTest {
             assertEquals(39, lqm)
         }
     }
+
+    private fun tpResult(fareClass: String, fareBasis: String?) =
+        getEarningResult(
+            operatingAirline = "TP",
+            marketingAirline = null,
+            origin = "LIS",
+            destination = "YYZ",
+            fareClass = fareClass,
+            fareBasis = fareBasis,
+            ticketNumber = "047",
+            eliteBonusMultiplier = 0,
+        )!!
+
+    @Test
+    fun `TP earns by brand code parsed from a fare basis`() {
+        // LIS-YYZ is 3562
+        assertEquals(5343, tpResult("C", "C15TOP0A").basePoints)
+        assertEquals(5343, tpResult("D", "D15EXE0A").basePoints)
+        assertEquals(3562, tpResult("Y", "Y15PLU0A").basePoints)
+        assertEquals(3562, tpResult("M", "M15CLC0A").basePoints)
+        assertEquals(1781, tpResult("H", "H15BSC0A").basePoints)
+        assertEquals(0, tpResult("V", "V15DSC0A").basePoints)
+    }
+
+    @Test
+    fun `TP earns by brand name entered directly`() {
+        assertEquals(5343, tpResult("C", "TOP EXECUTIVE").basePoints)
+        assertEquals(5343, tpResult("D", "EXECUTIVE").basePoints)
+        assertEquals(4096, tpResult("W", "TOP PRIME").basePoints)
+        assertEquals(4096, tpResult("S", "PRIME").basePoints)
+        assertEquals(3562, tpResult("O", "PLUS").basePoints)
+        assertEquals(3562, tpResult("M", "CLASSIC").basePoints)
+        assertEquals(1781, tpResult("H", "BASIC").basePoints)
+        assertEquals(0, tpResult("V", "DISCOUNT").basePoints)
+    }
+
+    @Test
+    fun `TP reads TOP PRIME as comfort rather than business`() {
+        assertEquals(4096, tpResult("W", "TOP PRIME").basePoints)
+        assertEquals(5343, tpResult("W", "TOP EXECUTIVE").basePoints)
+    }
+
+    @Test
+    fun `TP brand overrides the fare class default`() {
+        // K alone assumes Classic/Plus, but Basic and Discount drop it further
+        assertEquals(3562, tpResult("K", null).basePoints)
+        assertEquals(1781, tpResult("K", "BASIC").basePoints)
+        assertEquals(0, tpResult("K", "DISCOUNT").basePoints)
+    }
+
+    @Test
+    fun `TP falls back to fare class when the brand is absent or unrecognized`() {
+        assertEquals(5343, tpResult("J", null).basePoints)
+        assertEquals(5343, tpResult("J", "RANDOM").basePoints)
+        assertEquals(3562, tpResult("W", null).basePoints)
+        assertEquals(3562, tpResult("O", null).basePoints)
+    }
+
+    @Test
+    fun `TP earns nothing in classes absent from the table`() {
+        assertEquals(0, tpResult("G", null).basePoints)
+        assertEquals(0, tpResult("P", null).basePoints)
+        assertEquals(0, tpResult("N", null).basePoints)
+    }
 }
