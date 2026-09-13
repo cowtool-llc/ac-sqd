@@ -9,10 +9,15 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1069.0.min.js"></script>
-    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-    <script src="js/vendor/amazon-cognito-identity.min.js"></script> <!-- TODO: What is this? Do I need it? -->
-    <script src="js/config.js"></script>
-    <script src="js/cognito-auth.js"></script>
+    <script src="/js/config.js"></script>
+    <script>
+        window.SqcCalculator = window.SqcCalculator || {};
+        window.SqcCalculator.authToken = new Promise(function(resolve, reject) {
+            window.SqcCalculator._resolveAuthToken = resolve;
+            window.SqcCalculator._rejectAuthToken = reject;
+        });
+    </script>
+    <script type="module" src="/js/cognito-auth.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.4/pako.min.js"></script>
     <script src="js/sqc.js"></script>
     <script src="js/jquery.buttonLoader.min.js"></script>

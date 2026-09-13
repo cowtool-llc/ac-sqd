@@ -26,11 +26,13 @@ var SqcCalculator = window.SqcCalculator || {};
         $('#calculateSqc').buttonLoader('start');
 
         AWS.config.region = _config.cognito.region;
+        const logins = {};
+        if (authToken) {
+            logins['cognito-idp.' + _config.cognito.region + '.amazonaws.com/' + _config.cognito.userPoolId] = authToken;
+        }
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: _config.cognito.identityPoolId,
-            Logins: {
-                ['cognito-idp.' + _config.cognito.region + '.amazonaws.com/' + _config.cognito.userPoolId]: authToken
-            }
+            Logins: logins
         });
 
         lambda = new AWS.Lambda({ region: 'us-east-1' });
