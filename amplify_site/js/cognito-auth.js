@@ -1,41 +1,50 @@
-/*global SqcCalculator _config AmazonCognitoIdentity AWSCognito*/
+import { Amplify } from 'aws-amplify';
+import { fetchAuthSession, signOut } from 'aws-amplify/auth';
+import { cognitoUserPoolsTokenProvider } from 'aws-amplify/auth/cognito';
+import { CookieStorage } from 'aws-amplify/utils';
 
-var SqcCalculator = window.SqcCalculator || {};
+var config = window._config || {};
 
-(function scopeWrapper($) {
-    var signinUrl = 'https://www.cowtool.com/';
-
-    var poolData = {
-        UserPoolId: _config.cognito.userPoolId,
-        ClientId: _config.cognito.userPoolClientId,
-        Storage: new AmazonCognitoIdentity.CookieStorage({secure: true, domain: '.cowtool.com'})
-    };
-
-    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
-    if (typeof AWSCognito !== 'undefined') {
-        AWSCognito.config.region = _config.cognito.region;
-    }
-
-    SqcCalculator.signOut = function signOut() {
-        userPool.getCurrentUser().signOut();
-    };
-
-    SqcCalculator.authToken = new Promise(function fetchCurrentAuthToken(resolve, reject) {
-        var cognitoUser = userPool.getCurrentUser();
-
-        if (cognitoUser) {
-            cognitoUser.getSession(function sessionCallback(err, session) {
-                if (err) {
-                    reject(err);
-                } else if (!session.isValid()) {
-                    resolve(null);
-                } else {
-                    resolve(session.getIdToken().getJwtToken());
-                }
-            });
-        } else {
-            resolve(null);
+if (config.cognito) {
+    Amplify.configure({
+        Auth: {
+            Cognito: {
+                userPoolId: config.cognito.userPoolId,
+                userPoolClientId: config.cognito.userPoolClientId,
+                identityPoolId: config.cognito.identityPoolId,
+            }
         }
     });
-}(jQuery));
+
+    cognitoUserPoolsTokenProvider.setKeyValueStorage(new CookieStorage({
+        domain: '.cowtool.com',
+        secure: true,
+        sameSite: 'lax',
+    }));
+}
+
+window.SqcCalculator = window.SqcCalculator || {};
+
+window.SqcCalculator.signOut = async function signOutUser() {
+    try {
+        await signOut();
+    } catch (err) {
+        console.error('Error signing out:', err);
+    }
+};
+
+const authPromise = fetchAuthSession()
+    .then(session => {
+        const idToken = session.tokens?.idToken?.toString();
+        return idToken || null;
+    })
+    .catch(err => {
+        console.warn('Could not fetch Cognito auth session:', err);
+        return null;
+    });
+
+if (typeof window.SqcCalculator._resolveAuthToken === 'function') {
+    authPromise.then(token => window.SqcCalculator._resolveAuthToken(token));
+} else {
+    window.SqcCalculator.authToken = authPromise;
+}
