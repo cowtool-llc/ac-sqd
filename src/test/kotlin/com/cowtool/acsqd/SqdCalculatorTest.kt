@@ -146,4 +146,33 @@ internal class SqdCalculatorTest {
             assertEquals(972, itinerary!!.segments[2].earningResult!!.sqc)
         }
     }
+
+    @Test
+    fun `non-014 ticket with partner segments calculates points correctly`() {
+        with(
+            SqdCalculator(
+                baseFare = 3999.0,
+                surcharges = 0.0,
+                ticket = "000",
+                aeroplanStatus = "75",
+                segments = """
+                    AC,YYT,YYZ,Y,FL
+                    AC,YYZ,YEG,Y,FL
+                    5T,YEG,YZF,Y
+                    5T,YZF,YCB,Y
+                    5T,YCB,YZF,Y
+                    5T,YZF,YEG,Y
+                    AC,YEG,YUL,Y,FL
+                    AC,YUL,YYT,Y,FL
+                """.trimIndent(),
+            ).calculate(),
+        ) {
+            assertEquals(633, itinerary!!.segments[2].earningResult!!.basePoints)
+            assertEquals(528, itinerary!!.segments[3].earningResult!!.basePoints)
+            assertEquals(528, itinerary!!.segments[4].earningResult!!.basePoints)
+            assertEquals(633, itinerary!!.segments[5].earningResult!!.basePoints)
+            assertEquals(5184, itinerary!!.totalRow.basePoints)
+            assertEquals(16632, itinerary!!.totalRow.totalPoints)
+        }
+    }
 }

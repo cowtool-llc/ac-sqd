@@ -1065,4 +1065,43 @@ internal class SqmTest {
         assertEquals(0, tpResult("P", null).basePoints)
         assertEquals(0, tpResult("N", null).basePoints)
     }
+
+    @Test
+    fun `non-AC ticket on non-Star Alliance flight calculates points correctly`() {
+        with(
+            getEarningResult(
+                operatingAirline = "5T",
+                marketingAirline = null,
+                origin = "YEG",
+                destination = "YZF",
+                fareClass = "Y",
+                fareBasis = null,
+                ticketNumber = "000",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(633, basePoints)
+            assertEquals(633, totalPoints)
+            assertEquals(0, sqc)
+            assertEquals(0, lqm)
+        }
+
+        with(
+            getEarningResult(
+                operatingAirline = "5T",
+                marketingAirline = null,
+                origin = "YEG",
+                destination = "YZF",
+                fareClass = "C",
+                fareBasis = null,
+                ticketNumber = "000",
+                eliteBonusMultiplier = 0,
+            )!!,
+        ) {
+            assertEquals(474, basePoints)
+            assertEquals(474, totalPoints)
+            assertEquals(0, sqc)
+            assertEquals(0, lqm)
+        }
+    }
 }
