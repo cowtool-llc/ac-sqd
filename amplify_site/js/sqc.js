@@ -16,6 +16,58 @@ var SqcCalculator = window.SqcCalculator || {};
         alert(error);
     });
 
+    function getLambda(token) {
+        AWS.config.region = _config.cognito.region;
+        const logins = {};
+        const activeToken = token || authToken;
+        if (activeToken) {
+            logins['cognito-idp.' + _config.cognito.region + '.amazonaws.com/' + _config.cognito.userPoolId] = activeToken;
+        }
+        const credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: _config.cognito.identityPoolId,
+            Logins: logins
+        });
+        AWS.config.credentials = credentials;
+        return new AWS.Lambda({ region: 'us-east-1', credentials: credentials });
+    }
+
+    async function getFreshAuthToken(forceRefresh = false) {
+        if (typeof SqcCalculator.getAuthToken === 'function') {
+            try {
+                const token = await SqcCalculator.getAuthToken(forceRefresh);
+                authToken = token || null;
+                updateAuthSection();
+            } catch (err) {
+                console.warn('Error getting fresh auth token:', err);
+            }
+        }
+        return authToken;
+    }
+
+    async function invokeLambda(payload, callback) {
+        const freshToken = await getFreshAuthToken();
+        const lambda = getLambda(freshToken);
+        const params = {
+            FunctionName: _config.lambda.functionName,
+            InvocationType: 'RequestResponse',
+            LogType: 'None',
+            Payload: JSON.stringify(Object.assign({}, payload, { authToken: freshToken || "" }))
+        };
+
+        return new Promise(function (resolve, reject) {
+            lambda.invoke(params, function (err, data) {
+                if (typeof callback === 'function') {
+                    callback(err, data);
+                }
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
     function callLambda(
         ticket,
         aeroplanStatus,
@@ -25,32 +77,13 @@ var SqcCalculator = window.SqcCalculator || {};
     ) {
         $('#calculateSqc').buttonLoader('start');
 
-        AWS.config.region = _config.cognito.region;
-        const logins = {};
-        if (authToken) {
-            logins['cognito-idp.' + _config.cognito.region + '.amazonaws.com/' + _config.cognito.userPoolId] = authToken;
-        }
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: _config.cognito.identityPoolId,
-            Logins: logins
-        });
-
-        lambda = new AWS.Lambda({ region: 'us-east-1' });
-        const pullParams = {
-            FunctionName: _config.lambda.functionName,
-            InvocationType: 'RequestResponse',
-            LogType: 'None',
-            Payload: JSON.stringify({
-                ticket: ticket,
-                aeroplanStatus: aeroplanStatus,
-                segments: segments,
-                baseFare: baseFare,
-                surcharges: surcharges,
-                authToken: authToken
-            })
-        };
-
-        lambda.invoke(pullParams, function (err, data) {
+        invokeLambda({
+            ticket: ticket,
+            aeroplanStatus: aeroplanStatus,
+            segments: segments,
+            baseFare: baseFare,
+            surcharges: surcharges
+        }, function (err, data) {
             if (err) {
                 alert(err);
             } else {
@@ -196,8 +229,8 @@ var SqcCalculator = window.SqcCalculator || {};
         performOnLoad();
     });
 
-    function performOnLoad() {
-        if (!isDocReady || !authTokenLoaded) {
+    function updateAuthSection() {
+        if (!authTokenLoaded) {
             return;
         }
 
@@ -212,6 +245,14 @@ var SqcCalculator = window.SqcCalculator || {};
             $('#signedInContainer').hide();
             $('#notSignedInContainer').show();
         }
+    }
+
+    function performOnLoad() {
+        if (!isDocReady || !authTokenLoaded) {
+            return;
+        }
+
+        updateAuthSection();
 
         const shouldCalculate = populateFields();
 

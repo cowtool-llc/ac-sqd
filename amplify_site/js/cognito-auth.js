@@ -33,15 +33,20 @@ window.SqcCalculator.signOut = async function signOutUser() {
     }
 };
 
-const authPromise = fetchAuthSession()
-    .then(session => {
+window.SqcCalculator.fetchAuthSession = fetchAuthSession;
+
+window.SqcCalculator.getAuthToken = async function (forceRefresh = false) {
+    try {
+        const session = await fetchAuthSession({ forceRefresh });
         const idToken = session.tokens?.idToken?.toString();
         return idToken || null;
-    })
-    .catch(err => {
+    } catch (err) {
         console.warn('Could not fetch Cognito auth session:', err);
         return null;
-    });
+    }
+};
+
+const authPromise = window.SqcCalculator.getAuthToken();
 
 if (typeof window.SqcCalculator._resolveAuthToken === 'function') {
     authPromise.then(token => window.SqcCalculator._resolveAuthToken(token));
