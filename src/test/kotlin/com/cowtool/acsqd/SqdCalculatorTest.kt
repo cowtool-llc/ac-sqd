@@ -124,6 +124,30 @@ internal class SqdCalculatorTest {
             assertEquals(3020, itinerary!!.segments[4].earningResult!!.sqc)
             assertEquals(732, itinerary!!.segments[5].earningResult!!.sqc)
         }
+
+        with(
+            SqdCalculator(
+                baseFare = 2016.50,
+                surcharges = 0.0,
+                ticket = "014",
+                aeroplanStatus = "100",
+                segments = """
+                    AC,YYC,YYZ,Y,LT
+                    AC,YYZ,YXU,Y,LT
+                    AC,YXU,YYZ,Y,LT
+                    AC,YYZ,YQG,Y,LT
+                    AC,YQG,YYZ,Y,LT
+                    AC,YYZ,YYC,Y,LT
+                """.trimIndent(),
+            ).calculate(),
+        ) {
+            assertEquals(3452, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(184, itinerary!!.segments[1].earningResult!!.sqc)
+            assertEquals(184, itinerary!!.segments[2].earningResult!!.sqc)
+            assertEquals(404, itinerary!!.segments[3].earningResult!!.sqc)
+            assertEquals(404, itinerary!!.segments[4].earningResult!!.sqc)
+            assertEquals(3452, itinerary!!.segments[5].earningResult!!.sqc)
+        }
     }
 
     @Test
