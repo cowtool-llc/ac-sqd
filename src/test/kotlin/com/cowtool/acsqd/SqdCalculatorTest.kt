@@ -124,6 +124,30 @@ internal class SqdCalculatorTest {
             assertEquals(3020, itinerary!!.segments[4].earningResult!!.sqc)
             assertEquals(732, itinerary!!.segments[5].earningResult!!.sqc)
         }
+
+        with(
+            SqdCalculator(
+                baseFare = 2016.50,
+                surcharges = 0.0,
+                ticket = "014",
+                aeroplanStatus = "100",
+                segments = """
+                    AC,YYC,YYZ,Y,LT
+                    AC,YYZ,YXU,Y,LT
+                    AC,YXU,YYZ,Y,LT
+                    AC,YYZ,YQG,Y,LT
+                    AC,YQG,YYZ,Y,LT
+                    AC,YYZ,YYC,Y,LT
+                """.trimIndent(),
+            ).calculate(),
+        ) {
+            assertEquals(3452, itinerary!!.segments[0].earningResult!!.sqc)
+            assertEquals(184, itinerary!!.segments[1].earningResult!!.sqc)
+            assertEquals(184, itinerary!!.segments[2].earningResult!!.sqc)
+            assertEquals(404, itinerary!!.segments[3].earningResult!!.sqc)
+            assertEquals(404, itinerary!!.segments[4].earningResult!!.sqc)
+            assertEquals(3452, itinerary!!.segments[5].earningResult!!.sqc)
+        }
     }
 
     @Test
@@ -144,6 +168,35 @@ internal class SqdCalculatorTest {
             assertEquals(0, itinerary!!.segments[0].earningResult!!.sqc)
             assertEquals(4272, itinerary!!.segments[1].earningResult!!.sqc)
             assertEquals(972, itinerary!!.segments[2].earningResult!!.sqc)
+        }
+    }
+
+    @Test
+    fun `non-014 ticket with partner segments calculates points correctly`() {
+        with(
+            SqdCalculator(
+                baseFare = 3999.0,
+                surcharges = 0.0,
+                ticket = "000",
+                aeroplanStatus = "75",
+                segments = """
+                    AC,YYT,YYZ,Y,FL
+                    AC,YYZ,YEG,Y,FL
+                    5T,YEG,YZF,Y
+                    5T,YZF,YCB,Y
+                    5T,YCB,YZF,Y
+                    5T,YZF,YEG,Y
+                    AC,YEG,YUL,Y,FL
+                    AC,YUL,YYT,Y,FL
+                """.trimIndent(),
+            ).calculate(),
+        ) {
+            assertEquals(633, itinerary!!.segments[2].earningResult!!.basePoints)
+            assertEquals(528, itinerary!!.segments[3].earningResult!!.basePoints)
+            assertEquals(528, itinerary!!.segments[4].earningResult!!.basePoints)
+            assertEquals(633, itinerary!!.segments[5].earningResult!!.basePoints)
+            assertEquals(5184, itinerary!!.totalRow.basePoints)
+            assertEquals(16632, itinerary!!.totalRow.totalPoints)
         }
     }
 }

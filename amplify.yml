@@ -1,0 +1,20 @@
+version: 1
+applications:
+  - appRoot: amplify_site
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - nvm install 24
+            - nvm use 24
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
